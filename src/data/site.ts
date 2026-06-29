@@ -1,22 +1,27 @@
 // Central place for site-wide data: identity, navigation, contact, services.
 // Edit values here and they update across every page.
 
+export const isDemo =
+  import.meta.env.PUBLIC_IS_DEMO === "true" ||
+  import.meta.env.IS_DEMO === "true";
+
 export const site = {
-  name: "Elena Roehrborn",
+  name: isDemo ? "Erika Mustermann" : "Elena Roehrborn",
+  firstName: isDemo ? "Erika" : "Elena",
   role: "Heilpraktikerin für Psychotherapie",
   tagline: "Online-Psychotherapie, Paar- & Sexualtherapie",
   // Used in SEO, structured data and the footer. Swap before launch.
   url: "https://www.elena-roehrborn.de",
   locale: "de-DE",
   lang: "de",
-  email: "elena.roehrborn@gmail.com",
+  email: isDemo ? "erika.mustermann@example.com" : "elena.roehrborn@gmail.com",
   // Placeholder external booking link — replace with the real one
   // (Calendly, Doctolib, eterminservice …) when it exists.
   bookingUrl: "#termin",
   // Optional phone — leave empty to hide it everywhere.
   phone: "",
   city: "Online · deutschlandweit",
-} as const;
+};
 
 export type NavItem = {
   label: string;

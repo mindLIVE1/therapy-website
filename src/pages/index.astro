@@ -5,7 +5,7 @@ import ServiceCard from "@/components/ServiceCard.astro";
 import ImagePlaceholder from "@/components/ImagePlaceholder.astro";
 import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
-import { site, services } from "@/data/site";
+import { site, services, isDemo } from "@/data/site";
 import elenaPhoto from "@/assets/elena-roehrborn.webp";
 
 const heroChips = [
@@ -82,8 +82,8 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="Online-Psychotherapie, Paar- & Sexualtherapie | Elena Roehrborn"
-  description="Vertrauliche Online-Psychotherapie, Paar- und Sexualtherapie bei Elena Roehrborn. Einfühlsame, professionelle Begleitung per Video – deutschlandweit und ganz bequem von zu Hause."
+  title={`Online-Psychotherapie, Paar- & Sexualtherapie | ${site.name}`}
+  description={`Vertrauliche Online-Psychotherapie, Paar- und Sexualtherapie bei ${site.name}. Einfühlsame, professionelle Begleitung per Video – deutschlandweit und ganz bequem von zu Hause.`}
   jsonLd={jsonLd}
 >
   <!-- ───────────────────────── Hero ───────────────────────── -->
@@ -134,8 +134,8 @@ const jsonLd = {
           shape="blob"
           ratio="4/5"
           tone="sage"
-          src={elenaPhoto}
-          alt="Elena Roehrborn, Heilpraktikerin für Psychotherapie, an ihrem Arbeitsplatz"
+          src={isDemo ? undefined : elenaPhoto}
+          alt={`${site.name}, Heilpraktikerin für Psychotherapie, an ihrem Arbeitsplatz`}
           position="46% 22%"
           class="w-full"
         />
@@ -229,8 +229,8 @@ const jsonLd = {
         <ImagePlaceholder
           shape="circle"
           tone="sage"
-          src={elenaPhoto}
-          alt="Elena Roehrborn"
+          src={isDemo ? undefined : elenaPhoto}
+          alt={site.name}
           position="46% 24%"
         />
       </div>
@@ -240,7 +240,7 @@ const jsonLd = {
           Ich begleite Menschen mit Wärme&nbsp;– und mit Klarheit
         </h2>
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
-          Mein Name ist Elena Roehrborn, Heilpraktikerin für Psychotherapie. Mir
+          Mein Name ist {site.name}, Heilpraktikerin für Psychotherapie. Mir
           ist wichtig, dass Sie sich von der ersten Minute an sicher und ernst
           genommen fühlen. Mein Ansatz verbindet einfühlsames Zuhören mit einem
           klaren, strukturierten Vorgehen.

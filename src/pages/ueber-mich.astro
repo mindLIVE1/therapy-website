@@ -4,7 +4,7 @@ import SectionHeading from "@/components/SectionHeading.astro";
 import ImagePlaceholder from "@/components/ImagePlaceholder.astro";
 import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
-import { site } from "@/data/site";
+import { site, isDemo } from "@/data/site";
 import elenaPhoto from "@/assets/elena-roehrborn.webp";
 
 const values = [
@@ -41,8 +41,8 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="Über mich – Elena Roehrborn"
-  description="Lernen Sie Elena Roehrborn kennen – Heilpraktikerin für Psychotherapie. Mein Werdegang, mein therapeutischer Ansatz und was Sie in der Zusammenarbeit erwartet."
+  title={`Über mich – ${site.name}`}
+  description={`Lernen Sie ${site.name} kennen – Heilpraktikerin für Psychotherapie. Mein Werdegang, mein therapeutischer Ansatz und was Sie in der Zusammenarbeit erwartet.`}
   jsonLd={jsonLd}
 >
   <!-- Hero -->
@@ -55,14 +55,14 @@ const jsonLd = {
           shape="blob"
           ratio="4/5"
           tone="sage"
-          src={elenaPhoto}
-          alt="Porträt von Elena Roehrborn, Heilpraktikerin für Psychotherapie"
+          src={isDemo ? undefined : elenaPhoto}
+          alt={`Porträt von ${site.name}, Heilpraktikerin für Psychotherapie`}
           position="46% 22%"
         />
       </div>
       <div class="reveal">
         <p class="eyebrow">Schön, dass Sie hier sind</p>
-        <h1 class="mt-5 text-4xl sm:text-5xl">Hallo, ich bin Elena</h1>
+        <h1 class="mt-5 text-4xl sm:text-5xl">Hallo, ich bin {site.firstName}</h1>
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
           Als Heilpraktikerin für Psychotherapie begleite ich Menschen dabei,
           sich selbst wieder näherzukommen – in Krisen, in Übergängen und überall

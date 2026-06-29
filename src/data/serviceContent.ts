@@ -1,5 +1,6 @@
 // Long-form content for each therapy offering. Rendered by the dynamic
 // route src/pages/therapieangebote/[slug].astro.
+import { site } from "./site";
 
 export type ServiceContent = {
   slug: string;
@@ -24,9 +25,9 @@ export type ServiceContent = {
 export const serviceContent: Record<string, ServiceContent> = {
   einzeltherapie: {
     slug: "einzeltherapie",
-    metaTitle: "Einzeltherapie online | Elena Roehrborn",
+    metaTitle: `Einzeltherapie online | ${site.name}`,
     metaDescription:
-      "Online-Einzeltherapie bei Elena Roehrborn: vertrauliche, einfühlsame Begleitung bei Ängsten, depressiven Phasen, Stress und Lebenskrisen – per Video, deutschlandweit.",
+      `Online-Einzeltherapie bei ${site.name}: vertrauliche, einfühlsame Begleitung bei Ängsten, depressiven Phasen, Stress und Lebenskrisen – per Video, deutschlandweit.`,
     eyebrow: "Einzeltherapie",
     heroTitle: "Ein Raum, der ganz Ihnen gehört",
     heroLead:
@@ -81,9 +82,9 @@ export const serviceContent: Record<string, ServiceContent> = {
 
   paartherapie: {
     slug: "paartherapie",
-    metaTitle: "Paartherapie online | Elena Roehrborn",
+    metaTitle: `Paartherapie online | ${site.name}`,
     metaDescription:
-      "Online-Paartherapie bei Elena Roehrborn: einfühlsame Begleitung bei Konflikten, Distanz und Sprachlosigkeit. Gemeinsam zurück zu Verständnis und Nähe – per Video.",
+      `Online-Paartherapie bei ${site.name}: einfühlsame Begleitung bei Konflikten, Distanz und Sprachlosigkeit. Gemeinsam zurück zu Verständnis und Nähe – per Video.`,
     eyebrow: "Paartherapie",
     heroTitle: "Wieder zueinander finden",
     heroLead:
@@ -138,9 +139,9 @@ export const serviceContent: Record<string, ServiceContent> = {
 
   sexualtherapie: {
     slug: "sexualtherapie",
-    metaTitle: "Sexualtherapie online | Elena Roehrborn",
+    metaTitle: `Sexualtherapie online | ${site.name}`,
     metaDescription:
-      "Online-Sexualtherapie bei Elena Roehrborn: ein geschützter, wertfreier Raum für Fragen rund um Sexualität, Lust, Unsicherheiten und Intimität – diskret und per Video.",
+      `Online-Sexualtherapie bei ${site.name}: ein geschützter, wertfreier Raum für Fragen rund um Sexualität, Lust, Unsicherheiten und Intimität – diskret und per Video.`,
     eyebrow: "Sexualtherapie",
     heroTitle: "Über Intimität sprechen – ohne Scham",
     heroLead:

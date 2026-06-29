@@ -5,7 +5,7 @@ import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
 import { site } from "@/data/site";
 
-// NOTE: prices are placeholders — replace the values with Elena's real rates.
+// NOTE: prices are placeholders — replace the values with actual rates.
 const rates = [
   {
     title: "Einzel- & Sexualtherapie",
@@ -53,7 +53,7 @@ const steps = [
 ---
 <BaseLayout
   title="Honorar & Ablauf"
-  description="Transparente Informationen zu Honorar, Ablauf und Zahlungsmodalitäten der Online-Therapie bei Elena Roehrborn. Kostenloses Erstgespräch, faire Konditionen."
+  description={`Transparente Informationen zu Honorar, Ablauf und Zahlungsmodalitäten der Online-Therapie bei ${site.name}. Kostenloses Erstgespräch, faire Konditionen.`}
 >
   <!-- Hero -->
   <section class="relative overflow-hidden">
