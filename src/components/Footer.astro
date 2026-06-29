@@ -1,0 +1,87 @@
+---
+import { site, services } from "@/data/site";
+import Icon from "@/components/Icon.astro";
+const year = new Date().getFullYear();
+---
+<footer class="mt-24 bg-forest-deep text-cream/85">
+  <div class="container-page py-16">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+      <!-- Brand -->
+      <div class="max-w-sm">
+        <div class="flex items-center gap-3">
+          <span
+            class="flex h-11 w-11 items-center justify-center rounded-full bg-sage/30 text-cream"
+          >
+            <Icon name="leaf" class="h-6 w-6" />
+          </span>
+          <span class="font-display text-lg font-semibold text-cream"
+            >{site.name}</span
+          >
+        </div>
+        <p class="mt-5 leading-relaxed text-cream/70">
+          {site.role}. Vertrauliche Online-Begleitung in der Einzel-, Paar- und
+          Sexualtherapie – einfühlsam, professionell und ortsunabhängig.
+        </p>
+        <p
+          class="mt-5 inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-cream/80"
+        >
+          <Icon name="lock" class="h-4 w-4" />
+          Diskret &amp; verschwiegen
+        </p>
+      </div>
+
+      <!-- Angebote -->
+      <nav aria-label="Therapieangebote">
+        <h2 class="font-display text-sm font-semibold uppercase tracking-[0.14em] text-sage-soft">
+          Therapieangebote
+        </h2>
+        <ul class="mt-5 space-y-3">
+          {
+            services.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  class="text-cream/75 transition-colors hover:text-cream"
+                >
+                  {s.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Praxis + Kontakt -->
+      <nav aria-label="Praxis">
+        <h2 class="font-display text-sm font-semibold uppercase tracking-[0.14em] text-sage-soft">
+          Praxis
+        </h2>
+        <ul class="mt-5 space-y-3">
+          <li><a href="/ueber-mich" class="text-cream/75 transition-colors hover:text-cream">Über mich</a></li>
+          <li><a href="/honorar" class="text-cream/75 transition-colors hover:text-cream">Honorar &amp; Ablauf</a></li>
+          <li><a href="/kontakt" class="text-cream/75 transition-colors hover:text-cream">Kontakt</a></li>
+          <li>
+            <a
+              href={`mailto:${site.email}`}
+              class="inline-flex items-center gap-2 text-cream/75 transition-colors hover:text-cream"
+            >
+              <Icon name="mail" class="h-4 w-4" />
+              {site.email}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div
+      class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-7 text-sm text-cream/60 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {site.name} · {site.tagline}</p>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <a href="/impressum" class="transition-colors hover:text-cream">Impressum</a>
+        <a href="/datenschutz" class="transition-colors hover:text-cream">Datenschutz</a>
+        <a href="/kontakt" class="transition-colors hover:text-cream">Kontakt</a>
+      </div>
+    </div>
+  </div>
+</footer>

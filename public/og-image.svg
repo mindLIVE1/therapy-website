@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6f1e9" />
+      <stop offset="1" stop-color="#e4e8da" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <!-- organic blobs -->
+  <circle cx="1040" cy="120" r="240" fill="#9ca891" opacity="0.35" />
+  <circle cx="170" cy="560" r="220" fill="#bd7850" opacity="0.18" />
+  <!-- leaf mark -->
+  <g transform="translate(110,120)">
+    <rect width="96" height="96" rx="28" fill="#3f5141" />
+    <g fill="none" stroke="#f6f1e9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(16,16) scale(2.66)">
+      <path d="M12 21V11" />
+      <path d="M12 12c5 0 8-3 8-8-5 0-8 3-8 8Z" />
+      <path d="M12 12c-4 0-6.5-2.5-6.5-6.5C9 5.5 12 8 12 12Z" />
+    </g>
+  </g>
+  <text x="112" y="320" font-family="Manrope, sans-serif" font-size="68" font-weight="700" fill="#322a24">Elena Roehrborn</text>
+  <text x="112" y="392" font-family="Manrope, sans-serif" font-size="38" font-weight="500" fill="#3f5141">Online-Psychotherapie · Paar- &amp; Sexualtherapie</text>
+  <text x="114" y="470" font-family="'Nunito Sans', sans-serif" font-size="30" fill="#6b5b4d">Vertraulich, einfühlsam und professionell – bequem von zu Hause.</text>
+</svg>

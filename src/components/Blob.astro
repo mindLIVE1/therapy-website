@@ -1,0 +1,23 @@
+---
+// Ambient, blurred organic shape used to add soft depth behind sections.
+// Purely decorative.
+interface Props {
+  color?: "sage" | "clay" | "forest" | "sand";
+  class?: string;
+}
+const { color = "sage", class: className = "" } = Astro.props;
+const colors: Record<string, string> = {
+  sage: "bg-sage/40",
+  clay: "bg-clay/25",
+  forest: "bg-forest/20",
+  sand: "bg-sand-deep/60",
+};
+---
+<span
+  aria-hidden="true"
+  class:list={[
+    "pointer-events-none absolute -z-10 rounded-[46%_54%_57%_43%/52%_46%_54%_48%] blur-3xl",
+    colors[color],
+    className,
+  ]}
+></span>

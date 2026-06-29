@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.elena-roehrborn.de/sitemap-index.xml

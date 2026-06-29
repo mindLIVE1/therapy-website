@@ -1,0 +1,43 @@
+---
+import Icon from "@/components/Icon.astro";
+import type { Service } from "@/data/site";
+
+interface Props {
+  service: Service;
+  /** larger variant used on the overview page */
+  feature?: boolean;
+}
+const { service, feature = false } = Astro.props;
+---
+<a
+  href={service.href}
+  class:list={[
+    "group relative flex flex-col overflow-hidden rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-soft)] focus-visible:-translate-y-1.5",
+    feature && "sm:p-9",
+  ]}
+>
+  <!-- soft corner accent that warms on hover -->
+  <span
+    aria-hidden="true"
+    class="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-sage-mist transition-colors duration-300 group-hover:bg-clay-soft"
+  ></span>
+
+  <span
+    class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-forest text-cream shadow-sm transition-colors duration-300 group-hover:bg-clay"
+  >
+    <Icon name={service.icon} class="h-7 w-7" />
+  </span>
+
+  <h3 class="relative mt-6 text-2xl">{service.title}</h3>
+  <p class="relative mt-3 flex-1 leading-relaxed text-taupe-ink/85">
+    {feature ? service.blurb : service.short}
+  </p>
+
+  <span class="relative mt-6 link-arrow">
+    Mehr erfahren
+    <Icon
+      name="arrow-right"
+      class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+    />
+  </span>
+</a>

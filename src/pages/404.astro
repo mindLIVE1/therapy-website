@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Blob from "@/components/Blob.astro";
+---
+<BaseLayout
+  title="Seite nicht gefunden"
+  description="Diese Seite existiert nicht mehr oder wurde verschoben."
+  noindex
+>
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
+    <Blob color="clay" class="left-[-8rem] bottom-[-4rem] h-72 w-72" />
+    <div class="container-page flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+      <p class="font-display text-7xl font-bold text-forest">404</p>
+      <h1 class="mt-4 text-3xl sm:text-4xl">Diese Seite konnten wir nicht finden</h1>
+      <p class="mt-4 max-w-md text-taupe-ink/85">
+        Vielleicht hat sich der Link geändert. Kein Grund zur Sorge – von hier
+        aus finden Sie schnell zurück.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn btn-primary">Zur Startseite</a>
+        <a href="/kontakt#termin" class="btn btn-outline">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

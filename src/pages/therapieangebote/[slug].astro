@@ -1,0 +1,226 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ImagePlaceholder from "@/components/ImagePlaceholder.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import Blob from "@/components/Blob.astro";
+import Icon from "@/components/Icon.astro";
+import { serviceContent } from "@/data/serviceContent";
+import { services, site } from "@/data/site";
+
+export async function getStaticPaths() {
+  return Object.values(serviceContent).map((content) => ({
+    params: { slug: content.slug },
+    props: { content },
+  }));
+}
+
+const { content } = Astro.props;
+const current = services.find((s) => s.slug === content.slug)!;
+const others = services.filter((s) => s.slug !== content.slug);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: current.title,
+    name: `${current.title} – Online`,
+    description: content.metaDescription,
+    areaServed: "DE",
+    provider: {
+      "@type": "MedicalBusiness",
+      name: site.name,
+      url: site.url,
+    },
+    url: new URL(current.href, site.url).href,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Start", item: site.url },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Therapieangebote",
+        item: new URL("/therapieangebote", site.url).href,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: current.title,
+        item: new URL(current.href, site.url).href,
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+<BaseLayout
+  title={content.metaTitle}
+  description={content.metaDescription}
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
+    <div class="container-page py-14 lg:py-20">
+      <nav aria-label="Brotkrumen" class="mb-8 text-sm text-taupe-soft">
+        <a href="/" class="transition-colors hover:text-forest">Start</a>
+        <span class="mx-2">/</span>
+        <a href="/therapieangebote" class="transition-colors hover:text-forest">Therapieangebote</a>
+        <span class="mx-2">/</span>
+        <span class="text-taupe-ink">{current.title}</span>
+      </nav>
+
+      <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="reveal">
+          <p class="eyebrow">{content.eyebrow}</p>
+          <h1 class="mt-5 text-4xl sm:text-5xl">{content.heroTitle}</h1>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-taupe-ink/85">
+            {content.heroLead}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/kontakt#termin" class="btn btn-primary">
+              Kostenloses Erstgespräch
+            </a>
+            <a href={site.bookingUrl} class="btn btn-outline">
+              <Icon name="calendar" class="h-5 w-5" />
+              Termin buchen
+            </a>
+          </div>
+        </div>
+        <div class="reveal relative mx-auto w-full max-w-md" style="--reveal-delay:120ms">
+          <ImagePlaceholder
+            shape="blob"
+            ratio="1/1"
+            tone="sage"
+            label={content.imageLabel}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro + pull-quote -->
+  <section class="container-page py-14 sm:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div class="reveal">
+        <h2 class="text-3xl sm:text-4xl">{content.introHeading}</h2>
+        {content.introParagraphs.map((p) => (
+          <p class="mt-5 text-lg leading-relaxed text-taupe-ink/85">{p}</p>
+        ))}
+      </div>
+      <figure class="reveal relative rounded-[2rem] bg-sage-mist p-8 sm:p-10">
+        <Icon name="feather" class="h-8 w-8 text-clay-deep" />
+        <blockquote class="mt-4 font-display text-2xl leading-snug text-forest">
+          „{content.quote}“
+        </blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- For whom -->
+  <section class="relative overflow-hidden bg-sage-mist py-14 sm:py-20">
+    <Blob color="clay" class="left-[-6rem] bottom-[-5rem] h-72 w-72" />
+    <div class="container-page">
+      <SectionHeading
+        eyebrow={content.eyebrow}
+        title={content.forWhomHeading}
+        lead={content.forWhomIntro}
+        class="reveal"
+      />
+      <ul class="reveal mt-10 grid gap-4 sm:grid-cols-2">
+        {content.forWhom.map((item) => (
+          <li class="flex items-start gap-3 rounded-2xl border border-line-soft bg-cream/70 px-5 py-4">
+            <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-forest/10 text-forest">
+              <Icon name="check" class="h-4 w-4" />
+            </span>
+            <span class="text-taupe-ink/90">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="container-page py-14 sm:py-20">
+    <SectionHeading
+      eyebrow="Mein Vorgehen"
+      title={content.approachHeading}
+      lead={content.approachIntro}
+      align="center"
+      class="reveal"
+    />
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {content.approach.map((step, i) => (
+        <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]" style={`--reveal-delay:${i * 90}ms`}>
+          <span class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-clay-deep">
+            0{i + 1}
+          </span>
+          <h3 class="mt-3 text-xl">{step.title}</h3>
+          <p class="mt-3 leading-relaxed text-taupe-ink/85">{step.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container-page pb-6">
+    <div class="reveal mx-auto max-w-3xl rounded-[2rem] border border-line-soft bg-sand-deep/40 p-7 sm:p-10">
+      <h2 class="text-2xl sm:text-3xl">Häufige Fragen zur {current.title}</h2>
+      <div class="mt-6 divide-y divide-line">
+        {content.faqs.map((faq) => (
+          <details class="group py-4">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-semibold text-ink">
+              {faq.q}
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream text-forest transition-transform duration-300 group-open:rotate-45">
+                <Icon name="arrow-right" class="h-4 w-4 rotate-[-45deg] group-open:rotate-0" />
+              </span>
+            </summary>
+            <p class="mt-3 pr-12 leading-relaxed text-taupe-ink/85">{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="container-page py-14">
+    <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-forest px-8 py-12 text-cream shadow-[var(--shadow-soft)] sm:px-14">
+      <span aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sage/20 blur-2xl"></span>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div>
+          <h2 class="text-cream text-2xl sm:text-3xl">Bereit für einen ersten Schritt?</h2>
+          <p class="mt-3 max-w-xl text-cream/80">
+            Schreiben Sie mir, was Sie bewegt – das Erstgespräch ist kostenlos und unverbindlich.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="/kontakt#termin" class="btn btn-light">Termin anfragen</a>
+          <a href={site.bookingUrl} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">Termin buchen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other offerings -->
+  <section class="container-page pb-8">
+    <h2 class="reveal text-2xl">Weitere Angebote</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
+      {others.map((s) => (
+        <div class="reveal">
+          <ServiceCard service={s} />
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,92 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro";
+import { site } from "@/data/site";
+---
+<LegalLayout
+  title="Datenschutzerklärung"
+  description="Informationen zum Datenschutz und zur Verarbeitung personenbezogener Daten auf der Website von Elena Roehrborn."
+  heading="Datenschutz&shy;erklärung"
+  updated="bitte Datum eintragen"
+>
+  <p>
+    <strong>Hinweis:</strong> Dies ist eine sorgfältig vorbereitete Vorlage. Bitte
+    lassen Sie sie vor Veröffentlichung prüfen und ergänzen Sie die
+    <span class="placeholder">markierten Stellen</span>. Sie ist auf eine
+    datensparsame, DSGVO-freundliche Website ausgelegt (keine externen Tracker,
+    selbst gehostete Schriften).
+  </p>
+
+  <h2>1. Verantwortliche Stelle</h2>
+  <p>
+    Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br />
+    {site.name}<br />
+    <span class="placeholder">Straße &amp; Hausnummer, PLZ Ort</span><br />
+    E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+  </p>
+
+  <h2>2. Ihre Rechte</h2>
+  <p>Sie haben jederzeit das Recht auf:</p>
+  <ul>
+    <li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li>
+    <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+    <li>Löschung (Art. 17 DSGVO) und Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+    <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+    <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+    <li>Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
+  </ul>
+
+  <h2>3. Hosting</h2>
+  <p>
+    Diese Website wird bei <span class="placeholder">Name des Hosters</span>
+    gehostet. Beim Aufruf der Seite verarbeitet der Hoster technisch notwendige
+    Server-Logdaten (z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs,
+    aufgerufene Seite) auf Grundlage unseres berechtigten Interesses an einem
+    sicheren und stabilen Betrieb (Art. 6 Abs. 1 lit. f DSGVO). Mit dem Hoster
+    besteht ein Auftragsverarbeitungsvertrag (Art. 28 DSGVO).
+  </p>
+
+  <h2>4. Schriftarten</h2>
+  <p>
+    Die verwendeten Schriftarten (Manrope, Nunito Sans) werden lokal vom eigenen
+    Server geladen. Es besteht keine Verbindung zu Servern Dritter (z. B. Google
+    Fonts); Ihre IP-Adresse wird dabei nicht an Dritte übermittelt.
+  </p>
+
+  <h2>5. Kontaktformular und E-Mail-Kontakt</h2>
+  <p>
+    Wenn Sie uns über das Kontaktformular oder per E-Mail eine Anfrage senden,
+    verarbeiten wir die von Ihnen mitgeteilten Daten (Name, E-Mail-Adresse,
+    ggf. Telefonnummer und Ihre Nachricht) zur Bearbeitung Ihres Anliegens auf
+    Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) bzw. zur
+    Durchführung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO). Diese
+    Daten geben wir nicht ohne Ihre Einwilligung weiter und löschen sie, sobald
+    sie nicht mehr erforderlich sind.
+  </p>
+  <p>
+    <span class="placeholder">Falls ein Formulardienst (z. B. Formspree,
+    Web3Forms) eingesetzt wird, hier den Anbieter und die
+    Auftragsverarbeitung ergänzen.</span>
+  </p>
+
+  <h2>6. Terminbuchung</h2>
+  <p>
+    <span class="placeholder">Falls ein externes Buchungstool (z. B. Calendly,
+    Doctolib) eingebunden wird, hier Anbieter, verarbeitete Daten und
+    Rechtsgrundlage ergänzen.</span>
+  </p>
+
+  <h2>7. Besondere Kategorien personenbezogener Daten</h2>
+  <p>
+    Im Rahmen einer therapeutischen Begleitung können Gesundheitsdaten (Art. 9
+    DSGVO) anfallen. Diese verarbeiten wir ausschließlich auf Grundlage Ihrer
+    ausdrücklichen Einwilligung sowie im Rahmen der gesetzlichen Schweigepflicht
+    und behandeln sie streng vertraulich.
+  </p>
+
+  <h2>8. Verschlüsselung</h2>
+  <p>
+    Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung.
+    Video-Sitzungen finden über einen datenschutzkonformen, verschlüsselten
+    Dienst statt (<span class="placeholder">Anbieter ergänzen</span>).
+  </p>
+</LegalLayout>

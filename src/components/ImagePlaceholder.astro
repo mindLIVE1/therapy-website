@@ -1,0 +1,87 @@
+---
+import Icon from "@/components/Icon.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  /** Caption telling the editor which photo belongs here (placeholder mode). */
+  label?: string;
+  shape?: "rounded" | "circle" | "blob";
+  /** aspect ratio as "w/h", ignored for circle */
+  ratio?: string;
+  tone?: "sand" | "sage" | "forest" | "clay";
+  class?: string;
+  /** Pass an imported image to show a real, optimised photo instead of the placeholder. */
+  src?: ImageMetadata;
+  alt?: string;
+  /** CSS object-position for the crop, e.g. "50% 25%" to favour a face. */
+  position?: string;
+}
+const {
+  label = "Bild",
+  shape = "rounded",
+  ratio = "4/3",
+  tone = "sage",
+  class: className = "",
+  src,
+  alt = "",
+  position = "center",
+} = Astro.props;
+
+const tones: Record<string, string> = {
+  sand: "from-sand to-sand-deep text-taupe",
+  sage: "from-sage-mist to-sage-soft text-forest",
+  forest: "from-forest to-forest-deep text-cream",
+  clay: "from-clay-soft to-clay/40 text-clay-deep",
+};
+
+const shapeClass =
+  shape === "circle"
+    ? "rounded-full aspect-square"
+    : shape === "blob"
+      ? "rounded-[42%_58%_60%_40%/45%_42%_58%_55%]"
+      : "rounded-[2rem]";
+
+const style = shape === "circle" ? "" : `aspect-ratio:${ratio};`;
+---
+<div
+  class:list={[
+    "relative isolate flex items-center justify-center overflow-hidden shadow-[var(--shadow-soft)] ring-1 ring-black/5",
+    !src && "bg-gradient-to-br",
+    tones[tone],
+    shapeClass,
+    className,
+  ]}
+  style={style}
+  role="img"
+  aria-label={src ? alt : `Bildplatzhalter: ${label}`}
+>
+  {
+    src ? (
+      <Image
+        src={src}
+        alt={alt}
+        widths={[400, 640, 900, 1200]}
+        sizes="(min-width: 1024px) 40vw, 90vw"
+        class="absolute inset-0 h-full w-full object-cover"
+        style={`object-position:${position};`}
+      />
+    ) : (
+      <>
+        {/* subtle texture: drifting soft circles */}
+        <span class="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
+        <span class="pointer-events-none absolute -bottom-12 -left-8 h-44 w-44 rounded-full bg-black/5 blur-2xl" />
+
+        <div class="relative z-10 flex flex-col items-center gap-3 px-6 text-center">
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white/35 backdrop-blur-sm">
+            <Icon name="leaf" class="h-7 w-7 opacity-80" />
+          </span>
+          <span class="font-display text-sm font-semibold tracking-wide opacity-90">
+            {label}
+          </span>
+          <span class="text-xs opacity-60">Platzhalter · Foto einsetzen</span>
+        </div>
+      </>
+    )
+  }
+</div>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import Blob from "@/components/Blob.astro";
+import Icon from "@/components/Icon.astro";
+import { services, site } from "@/data/site";
+
+const benefits = [
+  {
+    icon: "video",
+    title: "Bequem von zu Hause",
+    text: "Keine Anfahrt, kein Wartezimmer. Sie sprechen aus Ihrer vertrauten Umgebung – das macht vieles leichter.",
+  },
+  {
+    icon: "lock",
+    title: "Vertraulich & sicher",
+    text: "Verschlüsselte Videoverbindung und Schweigepflicht. Was Sie teilen, bleibt geschützt.",
+  },
+  {
+    icon: "calendar",
+    title: "Flexibel & ortsunabhängig",
+    text: "Termine, die zu Ihrem Alltag passen – deutschlandweit, auch wenn sich Ihr Leben verändert.",
+  },
+];
+---
+<BaseLayout
+  title="Therapieangebote – Einzel-, Paar- & Sexualtherapie"
+  description="Die Online-Therapieangebote von Elena Roehrborn im Überblick: Einzeltherapie, Paartherapie und Sexualtherapie – vertraulich, einfühlsam und per Video."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-6rem] top-[-7rem] h-96 w-96" />
+    <Blob color="clay" class="left-[-9rem] top-[12rem] h-72 w-72" />
+    <div class="container-page py-16 text-center lg:py-24">
+      <div class="reveal mx-auto max-w-2xl">
+        <p class="eyebrow eyebrow--center justify-center">Therapieangebote</p>
+        <h1 class="mt-5 text-4xl sm:text-5xl">
+          Begleitung, die zu Ihrem Leben passt
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
+          Ob für sich allein, als Paar oder rund um Intimität – jedes Anliegen
+          bekommt bei mir den Raum, den es braucht. Wählen Sie den Bereich, der
+          Sie gerade anspricht.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service cards -->
+  <section class="container-page pb-4">
+    <div class="grid gap-6 md:grid-cols-3">
+      {services.map((service, i) => (
+        <div class="reveal" style={`--reveal-delay:${i * 90}ms`}>
+          <ServiceCard service={service} feature />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Why online -->
+  <section class="container-page py-16 sm:py-24">
+    <SectionHeading
+      eyebrow="Warum online"
+      title="Therapie, die zu Ihnen kommt"
+      lead="Online-Therapie ist kein Kompromiss. Für viele Menschen ist sie der Weg, der überhaupt erst möglich macht, sich Unterstützung zu holen."
+      align="center"
+      class="reveal"
+    />
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {benefits.map((b, i) => (
+        <div class="reveal flex flex-col rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]" style={`--reveal-delay:${i * 90}ms`}>
+          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-forest text-cream">
+            <Icon name={b.icon} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-5 text-xl">{b.title}</h3>
+          <p class="mt-3 leading-relaxed text-taupe-ink/85">{b.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-page pb-8">
+    <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-clay px-8 py-12 text-cream shadow-[var(--shadow-soft)] sm:px-14">
+      <span aria-hidden="true" class="pointer-events-none absolute -right-16 -bottom-16 h-64 w-64 rounded-full bg-white/10 blur-2xl"></span>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div>
+          <h2 class="text-cream text-2xl sm:text-3xl">Noch unsicher, was das Richtige ist?</h2>
+          <p class="mt-3 max-w-xl text-cream/85">
+            Das müssen Sie nicht allein entscheiden. Im kostenlosen Erstgespräch
+            finden wir gemeinsam heraus, was zu Ihnen passt.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="/kontakt#termin" class="btn btn-light">Erstgespräch anfragen</a>
+          <a href={site.bookingUrl} class="btn btn-outline border-cream/50 !text-cream hover:!bg-white/10">Termin buchen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

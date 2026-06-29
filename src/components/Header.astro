@@ -1,0 +1,169 @@
+---
+import { nav, site } from "@/data/site";
+import Icon from "@/components/Icon.astro";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path === href || path.startsWith(href + "/");
+---
+<header
+  id="site-header"
+  class="sticky top-0 z-50 border-b border-transparent bg-cream/85 backdrop-blur-md transition-all duration-300"
+>
+  <div class="container-page flex h-20 items-center justify-between gap-4">
+    <!-- Brand -->
+    <a
+      href="/"
+      class="flex items-center gap-3"
+      aria-label={`${site.name} – Startseite`}
+    >
+      <span
+        class="flex h-11 w-11 items-center justify-center rounded-full bg-forest text-cream"
+      >
+        <Icon name="leaf" class="h-6 w-6" />
+      </span>
+      <span class="leading-tight">
+        <span class="block font-display text-lg font-semibold text-ink"
+          >{site.name}</span
+        >
+        <span class="block text-[0.72rem] uppercase tracking-[0.14em] text-taupe-soft"
+          >Psychotherapie · Online</span
+        >
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Hauptnavigation">
+      {
+        nav.map((item) =>
+          item.children ? (
+            <div class="group relative">
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                class:list={[
+                  "flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium font-display transition-colors hover:text-forest",
+                  isActive(item.href) ? "text-forest" : "text-taupe-ink",
+                ]}
+              >
+                {item.label}
+                <Icon
+                  name="chevron-down"
+                  class="h-4 w-4 transition-transform duration-200 group-hover:rotate-180"
+                />
+              </a>
+              <div class="invisible absolute left-1/2 top-full w-60 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div class="overflow-hidden rounded-3xl border border-line-soft bg-cream p-2 shadow-[var(--shadow-soft)]">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      aria-current={isActive(child.href) ? "page" : undefined}
+                      class:list={[
+                        "block rounded-2xl px-4 py-3 text-sm transition-colors hover:bg-sage-mist",
+                        isActive(child.href)
+                          ? "bg-sage-mist text-forest"
+                          : "text-taupe-ink",
+                      ]}
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              class:list={[
+                "rounded-full px-4 py-2 text-sm font-medium font-display transition-colors hover:text-forest",
+                isActive(item.href) ? "text-forest" : "text-taupe-ink",
+              ]}
+            >
+              {item.label}
+            </a>
+          ),
+        )
+      }
+    </nav>
+
+    <div class="hidden items-center lg:flex">
+      <a href="/kontakt#termin" class="btn btn-primary !px-5 !py-2.5 text-sm">
+        Termin anfragen
+      </a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button
+      id="menu-toggle"
+      type="button"
+      class="flex h-11 w-11 items-center justify-center rounded-full text-forest transition-colors hover:bg-sage-mist lg:hidden"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <Icon name="menu" class="h-6 w-6" id="menu-icon" />
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-line-soft bg-cream lg:hidden"
+  >
+    <nav class="container-page flex flex-col gap-1 py-5" aria-label="Mobile Navigation">
+      {
+        nav.map((item) => (
+          <>
+            <a
+              href={item.href}
+              class:list={[
+                "rounded-2xl px-4 py-3 font-display font-medium transition-colors hover:bg-sage-mist",
+                isActive(item.href) ? "text-forest" : "text-taupe-ink",
+              ]}
+            >
+              {item.label}
+            </a>
+            {item.children && (
+              <div class="ml-3 flex flex-col gap-1 border-l border-line pl-3">
+                {item.children.map((child) => (
+                  <a
+                    href={child.href}
+                    class="rounded-xl px-3 py-2 text-sm text-taupe-ink/90 transition-colors hover:bg-sage-mist"
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
+        ))
+      }
+      <a href="/kontakt#termin" class="btn btn-primary mt-4">
+        Termin anfragen
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header");
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+
+  // Shadow / border once the page is scrolled.
+  const onScroll = () => {
+    if (!header) return;
+    header.classList.toggle("border-line", window.scrollY > 8);
+    header.classList.toggle("shadow-[0_8px_30px_-22px_rgba(57,47,38,0.5)]", window.scrollY > 8);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // Mobile menu toggle.
+  toggle?.addEventListener("click", () => {
+    const open = menu?.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+  });
+</script>

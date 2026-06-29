@@ -1,0 +1,180 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ImagePlaceholder from "@/components/ImagePlaceholder.astro";
+import Blob from "@/components/Blob.astro";
+import Icon from "@/components/Icon.astro";
+import { site } from "@/data/site";
+import elenaPhoto from "@/assets/elena-roehrborn.webp";
+
+const values = [
+  {
+    icon: "heart",
+    title: "Auf Augenhöhe",
+    text: "Sie sind Expertin oder Experte für Ihr Leben. Ich begegne Ihnen ohne Belehrung – als Mensch, nicht als Diagnose.",
+  },
+  {
+    icon: "lock",
+    title: "Diskret & geschützt",
+    text: "Schweigepflicht und ein sicherer Rahmen sind selbstverständlich. Was Sie mir anvertrauen, bleibt bei mir.",
+  },
+  {
+    icon: "compass",
+    title: "Klar & strukturiert",
+    text: "Einfühlsames Zuhören und ein klares Vorgehen schließen sich nicht aus. Wir wissen gemeinsam, wohin wir gehen.",
+  },
+  {
+    icon: "bloom",
+    title: "In Ihrem Tempo",
+    text: "Nichts muss. Sie bestimmen, wie schnell wir gehen und worüber wir sprechen – ohne Druck.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  jobTitle: site.role,
+  url: new URL("/ueber-mich", site.url).href,
+  worksFor: { "@type": "MedicalBusiness", name: `${site.name} – ${site.tagline}` },
+  knowsLanguage: "de",
+};
+---
+<BaseLayout
+  title="Über mich – Elena Roehrborn"
+  description="Lernen Sie Elena Roehrborn kennen – Heilpraktikerin für Psychotherapie. Mein Werdegang, mein therapeutischer Ansatz und was Sie in der Zusammenarbeit erwartet."
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
+    <Blob color="clay" class="left-[-8rem] bottom-[-4rem] h-72 w-72" />
+    <div class="container-page grid items-center gap-12 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
+      <div class="reveal relative mx-auto w-full max-w-sm">
+        <ImagePlaceholder
+          shape="blob"
+          ratio="4/5"
+          tone="sage"
+          src={elenaPhoto}
+          alt="Porträt von Elena Roehrborn, Heilpraktikerin für Psychotherapie"
+          position="46% 22%"
+        />
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Schön, dass Sie hier sind</p>
+        <h1 class="mt-5 text-4xl sm:text-5xl">Hallo, ich bin Elena</h1>
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
+          Als Heilpraktikerin für Psychotherapie begleite ich Menschen dabei,
+          sich selbst wieder näherzukommen – in Krisen, in Übergängen und überall
+          dort, wo das Leben gerade schwer wiegt. Mir liegt am Herzen, dass Sie
+          sich bei mir vom ersten Moment an sicher, willkommen und ernst genommen
+          fühlen.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/kontakt#termin" class="btn btn-primary">Kostenloses Erstgespräch</a>
+          <a href="/therapieangebote" class="btn btn-outline">Meine Angebote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Werdegang -->
+  <section class="container-page py-14 sm:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+      <div class="reveal max-w-2xl">
+        <SectionHeading title="Mein Weg zu dieser Arbeit" eyebrow="Hintergrund" />
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
+          Schon früh hat mich beschäftigt, was Menschen im Innersten bewegt und
+          was sie wieder ins Gleichgewicht bringt. Aus dieser Neugier wurde mein
+          Beruf: die Ausbildung zur Heilpraktikerin für Psychotherapie und die
+          fortlaufende Weiterbildung in Verfahren, die Wärme und Wirksamkeit
+          verbinden.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Heute arbeite ich ausschließlich online – nicht als Notlösung, sondern
+          aus Überzeugung. So kann ich Menschen begleiten, für die der Weg in
+          eine Praxis schwierig wäre, und Therapie dorthin bringen, wo Sie sich
+          am wohlsten fühlen: nach Hause.
+        </p>
+      </div>
+      <figure class="reveal relative self-start rounded-[2rem] bg-forest p-8 text-cream sm:p-10">
+        <Icon name="feather" class="h-8 w-8 text-sage-soft" />
+        <blockquote class="mt-4 font-display text-xl leading-snug text-cream">
+          „Veränderung beginnt dort, wo sich jemand wirklich verstanden fühlt.“
+        </blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Werte -->
+  <section class="relative overflow-hidden bg-sage-mist py-14 sm:py-24">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Mein Ansatz"
+        title="Wie ich mit Ihnen arbeite"
+        lead="Vier Haltungen, die meine Arbeit tragen – und auf die Sie sich bei mir verlassen können."
+        align="center"
+        class="reveal"
+      />
+      <div class="mt-12 grid gap-6 sm:grid-cols-2">
+        {values.map((v, i) => (
+          <div class="reveal flex gap-5 rounded-[2rem] border border-line-soft bg-cream p-7 shadow-[var(--shadow-card)]" style={`--reveal-delay:${i * 80}ms`}>
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-forest text-cream">
+              <Icon name={v.icon} class="h-6 w-6" />
+            </span>
+            <div>
+              <h3 class="text-lg">{v.title}</h3>
+              <p class="mt-2 leading-relaxed text-taupe-ink/85">{v.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Persönliche Note -->
+  <section class="container-page py-14 sm:py-20">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div class="reveal relative mx-auto w-full max-w-md">
+        <ImagePlaceholder
+          shape="rounded"
+          ratio="4/3"
+          tone="sand"
+          label="Persönliches Detail – Arbeitsplatz, Pflanzen, Lieblingsort"
+        />
+      </div>
+      <div class="reveal">
+        <SectionHeading eyebrow="Abseits der Praxis" title="Ein paar Worte zu mir" />
+        <p class="mt-6 leading-relaxed text-taupe-ink/85">
+          Ich glaube daran, dass Menschen mehr Stärke in sich tragen, als sie
+          oft vermuten – und dass es manchmal nur ein Gegenüber braucht, das
+          zuhört und mitdenkt. Kraft schöpfe ich selbst aus Spaziergängen in der
+          Natur, aus guten Gesprächen und ruhigen Morgenstunden.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Vielleicht spüren Sie beim Lesen schon, ob es sich stimmig anfühlt. Den
+          besten Eindruck bekommen Sie aber im persönlichen Gespräch – und das
+          ist kostenlos und unverbindlich.
+        </p>
+        <a href="/kontakt#termin" class="link-arrow mt-6 inline-flex">
+          Lernen wir uns kennen
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-page pb-8">
+    <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-forest px-8 py-12 text-cream shadow-[var(--shadow-soft)] sm:px-14">
+      <span aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sage/20 blur-2xl"></span>
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <h2 class="text-cream text-2xl sm:text-3xl">Ich freue mich darauf, Sie kennenzulernen</h2>
+        <div class="flex flex-wrap gap-3">
+          <a href="/kontakt#termin" class="btn btn-light">Termin anfragen</a>
+          <a href={site.bookingUrl} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">Termin buchen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

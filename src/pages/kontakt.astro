@@ -1,0 +1,175 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Blob from "@/components/Blob.astro";
+import Icon from "@/components/Icon.astro";
+import { site } from "@/data/site";
+
+const inputClass =
+  "mt-2 w-full rounded-2xl border border-line bg-cream px-4 py-3 text-taupe-ink shadow-inner outline-none transition-colors placeholder:text-taupe-soft/70 focus:border-forest focus:ring-2 focus:ring-forest/20";
+
+const reassurances = [
+  { icon: "lock", text: "Vertraulich & der Schweigepflicht unterliegend" },
+  { icon: "clock", text: "Antwort in der Regel innerhalb von 1–2 Tagen" },
+  { icon: "heart", text: "Kein Druck – ein erstes Gespräch ist kostenlos" },
+];
+---
+<BaseLayout
+  title="Kontakt & Terminanfrage"
+  description="Nehmen Sie vertraulich Kontakt zu Elena Roehrborn auf. Stellen Sie unkompliziert eine Terminanfrage oder buchen Sie direkt ein kostenloses Erstgespräch."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
+    <Blob color="clay" class="left-[-9rem] top-[10rem] h-72 w-72" />
+    <div class="container-page py-14 text-center lg:py-20">
+      <div class="reveal mx-auto max-w-2xl">
+        <p class="eyebrow eyebrow--center justify-center">Kontakt</p>
+        <h1 class="mt-5 text-4xl sm:text-5xl">Schreiben Sie mir – ich freue mich</h1>
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
+          Der erste Schritt darf ganz klein sein. Ein paar Zeilen genügen. Sie
+          müssen weder das richtige Wort finden noch schon wissen, was Sie
+          brauchen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="termin" class="container-page scroll-mt-28 pb-10">
+    <div class="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
+      <!-- Form -->
+      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)] sm:p-10">
+        <h2 class="text-2xl">Terminanfrage</h2>
+        <p class="mt-2 text-taupe-ink/80">
+          Alle Angaben sind freiwillig und werden vertraulich behandelt.
+        </p>
+
+        <form
+          id="kontakt-form"
+          class="mt-7"
+          method="POST"
+          action="https://formspree.io/f/DEINE_FORM_ID"
+          novalidate
+        >
+          <!-- honeypot: hidden from humans, traps bots -->
+          <div class="absolute left-[-9999px]" aria-hidden="true">
+            <label>Bitte leer lassen<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="name" class="font-display text-sm font-semibold text-ink">Name *</label>
+              <input id="name" name="name" type="text" required autocomplete="name" class={inputClass} placeholder="Ihr Name" />
+            </div>
+            <div>
+              <label for="email" class="font-display text-sm font-semibold text-ink">E-Mail *</label>
+              <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} placeholder="name@beispiel.de" />
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="phone" class="font-display text-sm font-semibold text-ink">Telefon (optional)</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" class={inputClass} placeholder="Für einen Rückruf" />
+            </div>
+            <div>
+              <label for="topic" class="font-display text-sm font-semibold text-ink">Anliegen</label>
+              <select id="topic" name="topic" class={inputClass}>
+                <option>Einzeltherapie</option>
+                <option>Paartherapie</option>
+                <option>Sexualtherapie</option>
+                <option>Ich bin mir noch nicht sicher</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label for="message" class="font-display text-sm font-semibold text-ink">Ihre Nachricht</label>
+            <textarea id="message" name="message" rows="5" class={inputClass} placeholder="Worum geht es? Ein paar Stichworte reichen völlig."></textarea>
+          </div>
+
+          <div class="mt-5 flex items-start gap-3">
+            <input id="consent" name="consent" type="checkbox" required class="mt-1 h-5 w-5 shrink-0 rounded-md border-line text-forest focus:ring-forest/30" />
+            <label for="consent" class="text-sm leading-relaxed text-taupe-ink/85">
+              Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung
+              meiner Anfrage verarbeitet werden. Mehr dazu in der
+              <a href="/datenschutz" class="font-semibold text-forest underline underline-offset-2">Datenschutzerklärung</a>. *
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-7 w-full sm:w-auto">
+            Anfrage senden
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </button>
+          <p id="form-status" class="mt-4 text-sm text-forest" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="reveal flex flex-col gap-6">
+        <div class="rounded-[2rem] border border-line-soft bg-cream p-7 shadow-[var(--shadow-card)]">
+          <h2 class="text-xl">Direkt erreichen</h2>
+          <a href={`mailto:${site.email}`} class="mt-4 flex items-center gap-3 text-taupe-ink transition-colors hover:text-forest">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage-mist text-forest">
+              <Icon name="mail" class="h-5 w-5" />
+            </span>
+            <span class="break-all">{site.email}</span>
+          </a>
+          <a href={site.bookingUrl} class="btn btn-forest mt-6 w-full">
+            <Icon name="calendar" class="h-5 w-5" />
+            Direkt Termin buchen
+          </a>
+        </div>
+
+        <div class="rounded-[2rem] bg-forest p-7 text-cream shadow-[var(--shadow-card)]">
+          <h2 class="text-cream text-xl">Sie sind hier sicher</h2>
+          <ul class="mt-5 space-y-4">
+            {reassurances.map((r) => (
+              <li class="flex items-start gap-3 text-cream/85">
+                <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10">
+                  <Icon name={r.icon} class="h-4 w-4" />
+                </span>
+                <span>{r.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ email: site.email }}>
+    // The form posts to a real endpoint (Formspree/Web3Forms/Netlify …) once you
+    // replace DEINE_FORM_ID in the action above. Until then, it gracefully falls
+    // back to opening the visitor's email client with a pre-filled message.
+    const form = document.getElementById("kontakt-form");
+    const status = document.getElementById("form-status");
+    if (form) {
+      const usesPlaceholder = form.getAttribute("action").includes("DEINE_FORM_ID");
+      form.addEventListener("submit", (e) => {
+        if (form._gotcha && form._gotcha.value) {
+          e.preventDefault();
+          return;
+        }
+        if (!form.checkValidity()) {
+          e.preventDefault();
+          form.reportValidity();
+          return;
+        }
+        if (usesPlaceholder) {
+          e.preventDefault();
+          const f = new FormData(form);
+          const subject = `Terminanfrage (${f.get("topic")}) – ${f.get("name")}`;
+          const body =
+            `Name: ${f.get("name")}\n` +
+            `E-Mail: ${f.get("email")}\n` +
+            `Telefon: ${f.get("phone") || "–"}\n` +
+            `Anliegen: ${f.get("topic")}\n\n` +
+            `${f.get("message") || ""}`;
+          window.location.href =
+            `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          if (status) status.textContent = "Ihr E-Mail-Programm öffnet sich – bitte die Nachricht dort absenden.";
+        }
+      });
+    }
+  </script>
+</BaseLayout>

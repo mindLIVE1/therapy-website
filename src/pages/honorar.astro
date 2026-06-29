@@ -1,0 +1,181 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import Blob from "@/components/Blob.astro";
+import Icon from "@/components/Icon.astro";
+import { site } from "@/data/site";
+
+// NOTE: prices are placeholders — replace the values with Elena's real rates.
+const rates = [
+  {
+    title: "Einzel- & Sexualtherapie",
+    duration: "50 Minuten",
+    price: "00 €",
+    note: "pro Sitzung",
+    items: [
+      "Vertrauliches Einzelsetting",
+      "Per Video, deutschlandweit",
+      "Termine flexibel nach Absprache",
+    ],
+    featured: false,
+  },
+  {
+    title: "Paartherapie",
+    duration: "80 Minuten",
+    price: "00 €",
+    note: "pro Sitzung",
+    items: [
+      "Gemeinsames Setting für beide",
+      "Mehr Zeit für komplexe Themen",
+      "Per Video, von einem oder zwei Orten",
+    ],
+    featured: true,
+  },
+];
+
+const steps = [
+  {
+    icon: "mail",
+    title: "1 · Anfrage",
+    text: "Sie melden sich über das Kontaktformular oder per E-Mail – mit so vielen oder wenigen Worten, wie Sie möchten.",
+  },
+  {
+    icon: "speech",
+    title: "2 · Kostenloses Erstgespräch",
+    text: "Wir lernen uns in einem kurzen, unverbindlichen Videocall kennen und klären offene Fragen.",
+  },
+  {
+    icon: "calendar",
+    title: "3 · Erste Sitzung",
+    text: "Wenn es für Sie passt, vereinbaren wir einen ersten Termin und legen gemeinsam los.",
+  },
+];
+---
+<BaseLayout
+  title="Honorar & Ablauf"
+  description="Transparente Informationen zu Honorar, Ablauf und Zahlungsmodalitäten der Online-Therapie bei Elena Roehrborn. Kostenloses Erstgespräch, faire Konditionen."
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
+    <div class="container-page py-16 text-center lg:py-20">
+      <div class="reveal mx-auto max-w-2xl">
+        <p class="eyebrow eyebrow--center justify-center">Honorar &amp; Ablauf</p>
+        <h1 class="mt-5 text-4xl sm:text-5xl">Transparent und unkompliziert</h1>
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
+          Sie sollen wissen, worauf Sie sich einlassen – emotional und finanziell.
+          Deshalb finden Sie hier den Ablauf und die Konditionen klar und ohne
+          Kleingedrucktes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ablauf -->
+  <section class="container-page py-10 sm:py-14">
+    <SectionHeading eyebrow="So läuft es ab" title="Vom ersten Kontakt zur ersten Sitzung" class="reveal" />
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {steps.map((s, i) => (
+        <div class="reveal flex flex-col rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]" style={`--reveal-delay:${i * 90}ms`}>
+          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-forest text-cream">
+            <Icon name={s.icon} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-5 text-lg">{s.title}</h3>
+          <p class="mt-2 leading-relaxed text-taupe-ink/85">{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Honorar -->
+  <section class="container-page py-14 sm:py-20">
+    <SectionHeading
+      eyebrow="Honorar"
+      title="Faire, klare Konditionen"
+      lead="Das erste Kennenlernen ist immer kostenlos. Für die Sitzungen gelten folgende Sätze:"
+      align="center"
+      class="reveal"
+    />
+    <div class="mx-auto mt-12 grid max-w-3xl gap-6 sm:grid-cols-2">
+      {rates.map((r) => (
+        <div
+          class:list={[
+            "reveal relative flex flex-col rounded-[2rem] border p-8 shadow-[var(--shadow-card)]",
+            r.featured ? "border-forest bg-forest text-cream" : "border-line-soft bg-sand",
+          ]}
+        >
+          <h3 class:list={["text-xl", r.featured && "text-cream"]}>{r.title}</h3>
+          <p class:list={["mt-1 text-sm", r.featured ? "text-cream/70" : "text-taupe-soft"]}>{r.duration}</p>
+          <p class="mt-5 flex items-baseline gap-2">
+            <span class:list={["font-display text-4xl font-bold", r.featured ? "text-cream" : "text-ink"]}>{r.price}</span>
+            <span class:list={[r.featured ? "text-cream/70" : "text-taupe-soft"]}>{r.note}</span>
+          </p>
+          <ul class="mt-6 space-y-3">
+            {r.items.map((it) => (
+              <li class="flex items-start gap-3">
+                <span class:list={["mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full", r.featured ? "bg-white/15 text-cream" : "bg-forest/10 text-forest"]}>
+                  <Icon name="check" class="h-4 w-4" />
+                </span>
+                <span class:list={[r.featured ? "text-cream/90" : "text-taupe-ink/90"]}>{it}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="reveal mx-auto mt-6 max-w-3xl text-center text-sm text-taupe-soft">
+      Platzhalter-Beträge – bitte durch die tatsächlichen Honorarsätze ersetzen.
+    </p>
+  </section>
+
+  <!-- Hinweise -->
+  <section class="container-page pb-6">
+    <div class="reveal mx-auto max-w-3xl rounded-[2rem] border border-line-soft bg-sage-mist p-7 sm:p-10">
+      <div class="flex items-start gap-4">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest text-cream">
+          <Icon name="shield" class="h-6 w-6" />
+        </span>
+        <div>
+          <h2 class="text-xl">Gut zu wissen</h2>
+          <ul class="mt-4 space-y-3 text-taupe-ink/85">
+            <li class="flex gap-3">
+              <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0 text-forest" />
+              Als Heilpraktikerin für Psychotherapie rechne ich als
+              Selbstzahlerleistung ab. Die Kosten werden in der Regel nicht von
+              der gesetzlichen Krankenkasse übernommen.
+            </li>
+            <li class="flex gap-3">
+              <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0 text-forest" />
+              Private Zusatzversicherungen oder Beihilfe übernehmen je nach Tarif
+              einen Teil – bitte klären Sie das vorab mit Ihrer Versicherung.
+            </li>
+            <li class="flex gap-3">
+              <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0 text-forest" />
+              Termine, die nicht mindestens 24 Stunden vorher abgesagt werden,
+              berechne ich als Ausfallhonorar.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-page py-14">
+    <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-clay px-8 py-12 text-cream shadow-[var(--shadow-soft)] sm:px-14">
+      <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+        <div>
+          <h2 class="text-cream text-2xl sm:text-3xl">Fragen zu Kosten oder Ablauf?</h2>
+          <p class="mt-3 text-cream/85">Schreiben Sie mir – ich antworte persönlich.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="/kontakt#termin" class="btn btn-light">Kontakt aufnehmen</a>
+          <a href={`mailto:${site.email}`} class="btn btn-outline border-cream/50 !text-cream hover:!bg-white/10">
+            <Icon name="mail" class="h-5 w-5" />
+            E-Mail schreiben
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

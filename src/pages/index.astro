@@ -1,0 +1,392 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import ImagePlaceholder from "@/components/ImagePlaceholder.astro";
+import Blob from "@/components/Blob.astro";
+import Icon from "@/components/Icon.astro";
+import { site, services } from "@/data/site";
+import elenaPhoto from "@/assets/elena-roehrborn.webp";
+
+const heroChips = [
+  { icon: "lock", label: "100 % vertraulich" },
+  { icon: "video", label: "Per Video, deutschlandweit" },
+  { icon: "calendar", label: "Flexible Termine" },
+];
+
+const themes = [
+  "Anhaltende Erschöpfung, Stress oder das Gefühl, nicht mehr abschalten zu können",
+  "Ängste, Sorgen oder Panik, die enger machen",
+  "Niedergeschlagenheit, Antriebslosigkeit oder innere Leere",
+  "Konflikte, Distanz oder Sprachlosigkeit in der Partnerschaft",
+  "Fragen rund um Sexualität, Lust und Intimität",
+  "Lebenskrisen, Übergänge und die Suche nach Orientierung",
+];
+
+const steps = [
+  {
+    icon: "speech",
+    title: "Kostenloses Kennenlernen",
+    text: "In einem unverbindlichen Erstgespräch lernen wir uns kennen. Sie schildern, was Sie bewegt – und spüren, ob es sich für Sie stimmig anfühlt.",
+  },
+  {
+    icon: "compass",
+    title: "Gemeinsamer Rahmen",
+    text: "Wir klären Ihr Anliegen, Ihre Ziele und einen Rhythmus, der zu Ihrem Leben passt. Sie behalten jederzeit die Richtung in der Hand.",
+  },
+  {
+    icon: "bloom",
+    title: "Begleitung Schritt für Schritt",
+    text: "In regelmäßigen Sitzungen arbeiten wir zusammen – in Ihrem Tempo, mit echtem Verständnis und ohne Druck.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Ist Online-Therapie genauso wirksam wie vor Ort?",
+    a: "Ja. Studien zeigen, dass Online-Psychotherapie bei vielen Anliegen ähnlich wirksam ist wie eine Behandlung in der Praxis. Viele Menschen öffnen sich aus der vertrauten Umgebung zu Hause sogar leichter.",
+  },
+  {
+    q: "Wie vertraulich ist das Ganze?",
+    a: "Vollständig. Ich unterliege der Schweigepflicht, und wir sprechen über eine verschlüsselte, datenschutzkonforme Videoverbindung. Was Sie mir anvertrauen, bleibt zwischen uns.",
+  },
+  {
+    q: "Brauche ich eine Diagnose oder Überweisung?",
+    a: "Nein. Sie können sich direkt bei mir melden – ganz ohne Überweisung. Auch ohne klar benennbares Anliegen sind Sie willkommen.",
+  },
+  {
+    q: "Was brauche ich technisch?",
+    a: "Ein Gerät mit Kamera und Mikrofon, eine stabile Internetverbindung und einen ungestörten Ort. Den Videolink erhalten Sie bequem per E-Mail.",
+  },
+];
+
+// Structured data for search engines (a psychotherapy practice).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalBusiness", "ProfessionalService"],
+  name: `${site.name} – ${site.tagline}`,
+  description:
+    "Online-Praxis für Psychotherapie, Paar- und Sexualtherapie. Vertrauliche, einfühlsame Begleitung per Video – deutschlandweit.",
+  url: site.url,
+  email: site.email,
+  image: new URL("/og-image.svg", site.url).href,
+  areaServed: "DE",
+  availableLanguage: "de",
+  medicalSpecialty: "Psychiatric",
+  founder: {
+    "@type": "Person",
+    name: site.name,
+    jobTitle: site.role,
+  },
+  knowsAbout: ["Psychotherapie", "Paartherapie", "Sexualtherapie", "Online-Therapie"],
+};
+---
+<BaseLayout
+  title="Online-Psychotherapie, Paar- & Sexualtherapie | Elena Roehrborn"
+  description="Vertrauliche Online-Psychotherapie, Paar- und Sexualtherapie bei Elena Roehrborn. Einfühlsame, professionelle Begleitung per Video – deutschlandweit und ganz bequem von zu Hause."
+  jsonLd={jsonLd}
+>
+  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <section class="relative overflow-hidden">
+    <Blob color="sage" class="right-[-6rem] top-[-8rem] h-[28rem] w-[28rem]" />
+    <Blob color="clay" class="left-[-10rem] top-[18rem] h-[24rem] w-[24rem]" />
+
+    <div class="container-page grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+      <div class="reveal">
+        <p class="eyebrow">Online-Psychotherapie · Deutschlandweit</p>
+        <h1 class="mt-5 text-4xl sm:text-5xl lg:text-[3.4rem]">
+          Ein geschützter Raum für das,<br class="hidden sm:block" />
+          <span class="text-forest">was Sie gerade tragen.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-taupe-ink/85">
+          Psychotherapie, Paar- und Sexualtherapie – einfühlsam, vertraulich und
+          ganz bequem von zu Hause. Ich begleite Sie in Ihrem Tempo durch
+          Krisen, Belastungen und Veränderung. Sie müssen da nicht allein durch.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/kontakt#termin" class="btn btn-primary">
+            Kostenloses Erstgespräch anfragen
+          </a>
+          <a href={site.bookingUrl} class="btn btn-outline">
+            <Icon name="calendar" class="h-5 w-5" />
+            Direkt Termin buchen
+          </a>
+        </div>
+
+        <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-3">
+          {
+            heroChips.map((chip) => (
+              <li class="inline-flex items-center gap-2 text-sm font-medium text-taupe-ink/80">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-sage-mist text-forest">
+                  <Icon name={chip.icon} class="h-4 w-4" />
+                </span>
+                {chip.label}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Hero image -->
+      <div class="reveal relative mx-auto w-full max-w-md lg:max-w-none" style="--reveal-delay:120ms">
+        <ImagePlaceholder
+          shape="blob"
+          ratio="4/5"
+          tone="sage"
+          src={elenaPhoto}
+          alt="Elena Roehrborn, Heilpraktikerin für Psychotherapie, an ihrem Arbeitsplatz"
+          position="46% 22%"
+          class="w-full"
+        />
+        <!-- floating reassurance card -->
+        <div
+          class="absolute -bottom-5 left-1/2 w-[min(20rem,90%)] -translate-x-1/2 rounded-3xl border border-line-soft bg-cream/95 p-4 shadow-[var(--shadow-soft)] backdrop-blur sm:left-auto sm:right-[-1.5rem] sm:translate-x-0"
+        >
+          <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-clay/15 text-clay-deep">
+              <Icon name="check-circle" class="h-5 w-5" />
+            </span>
+            <p class="text-sm leading-snug text-taupe-ink">
+              <span class="font-display font-semibold text-ink">Erstgespräch kostenlos</span><br />
+              unverbindlich &amp; ohne Verpflichtung
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────── Therapieangebote ─────────────────── -->
+  <section class="container-page py-16 sm:py-20">
+    <SectionHeading
+      eyebrow="Therapieangebote"
+      title="Begleitung, die zu Ihrem Anliegen passt"
+      lead="Drei Wege, ein gemeinsames Ziel: dass Sie sich verstanden fühlen und wieder handlungsfähig werden. Wählen Sie, was Sie gerade brauchen."
+      align="center"
+      class="reveal"
+    />
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {
+        services.map((service, i) => (
+          <div class="reveal" style={`--reveal-delay:${i * 90}ms`}>
+            <ServiceCard service={service} feature />
+          </div>
+        ))
+      }
+    </div>
+    <div class="reveal mt-10 text-center">
+      <a href="/therapieangebote" class="btn btn-outline">
+        Alle Angebote im Überblick
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </div>
+  </section>
+
+  <!-- ─────────────────── Vielleicht kennen Sie das ──────────── -->
+  <section class="relative overflow-hidden bg-sage-mist py-16 sm:py-24">
+    <Blob color="sage" class="right-[-8rem] bottom-[-6rem] h-80 w-80" />
+    <div class="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div class="reveal relative order-2 lg:order-1">
+        <ImagePlaceholder
+          shape="rounded"
+          ratio="5/4"
+          tone="sand"
+          label="Warme Detailaufnahme – Hände, Tee, Fenster, Pflanze"
+        />
+      </div>
+      <div class="reveal order-1 lg:order-2">
+        <SectionHeading
+          eyebrow="Vielleicht kennen Sie das"
+          title="Manches lässt sich allein nur schwer tragen"
+          lead="Sie müssen nicht erst „funktionieren“ oder eine perfekte Erklärung haben, um sich Unterstützung zu holen. Wenn Sie sich in einem dieser Punkte wiederfinden, sind Sie hier richtig:"
+        />
+        <ul class="mt-7 grid gap-3 sm:grid-cols-1">
+          {
+            themes.map((t) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest/10 text-forest">
+                  <Icon name="leaf" class="h-4 w-4" />
+                </span>
+                <span class="text-taupe-ink/90">{t}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-7 text-taupe-ink/85">
+          Was auch immer Sie mitbringen – wir schauen gemeinsam und ohne Wertung
+          darauf.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Über-mich Teaser ────────────────── -->
+  <section class="container-page py-16 sm:py-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+      <div class="reveal relative mx-auto w-full max-w-sm">
+        <Blob color="clay" class="left-[-4rem] top-[-3rem] h-64 w-64" />
+        <ImagePlaceholder
+          shape="circle"
+          tone="sage"
+          src={elenaPhoto}
+          alt="Elena Roehrborn"
+          position="46% 24%"
+        />
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Schön, dass Sie hier sind</p>
+        <h2 class="mt-4 text-3xl sm:text-4xl">
+          Ich begleite Menschen mit Wärme&nbsp;– und mit Klarheit
+        </h2>
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
+          Mein Name ist Elena Roehrborn, Heilpraktikerin für Psychotherapie. Mir
+          ist wichtig, dass Sie sich von der ersten Minute an sicher und ernst
+          genommen fühlen. Mein Ansatz verbindet einfühlsames Zuhören mit einem
+          klaren, strukturierten Vorgehen.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Sie bestimmen, worüber wir sprechen und wie schnell wir gehen. Meine
+          Aufgabe ist es, einen Raum zu halten, in dem Sie sich zeigen dürfen –
+          mit allem, was dazugehört.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/ueber-mich" class="btn btn-forest">
+            Mehr über mich &amp; meinen Ansatz
+          </a>
+          <a href="/kontakt#termin" class="link-arrow self-center">
+            Lieber direkt anfragen
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Ablauf ──────────────────────── -->
+  <section class="relative overflow-hidden bg-sand-deep/50 py-16 sm:py-24">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="So einfach beginnt es"
+        title="In drei ruhigen Schritten"
+        lead="Der erste Schritt ist oft der schwerste. Deshalb halte ich den Einstieg so unkompliziert wie möglich."
+        align="center"
+        class="reveal"
+      />
+      <ol class="mt-14 grid gap-8 md:grid-cols-3">
+        {
+          steps.map((step, i) => (
+            <li class="reveal relative" style={`--reveal-delay:${i * 110}ms`}>
+              <div class="flex h-full flex-col rounded-[2rem] border border-line-soft bg-cream p-7 shadow-[var(--shadow-card)]">
+                <div class="flex items-center gap-4">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-forest text-cream">
+                    <Icon name={step.icon} class="h-6 w-6" />
+                  </span>
+                  <span class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-clay-deep">
+                    Schritt {i + 1}
+                  </span>
+                </div>
+                <h3 class="mt-5 text-xl">{step.title}</h3>
+                <p class="mt-3 leading-relaxed text-taupe-ink/85">{step.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="reveal mt-12 text-center">
+        <a href="/honorar" class="link-arrow">
+          Mehr zu Ablauf &amp; Honorar
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────── Mid-page CTA band ────────────────── -->
+  <section class="container-page py-16 sm:py-20">
+    <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-forest px-8 py-14 text-cream shadow-[var(--shadow-soft)] sm:px-14">
+      <span aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sage/20 blur-2xl"></span>
+      <span aria-hidden="true" class="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-clay/20 blur-2xl"></span>
+      <div class="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
+        <div>
+          <h2 class="text-cream text-3xl sm:text-4xl">
+            Sie müssen das nicht allein tragen
+          </h2>
+          <p class="mt-4 max-w-xl text-lg leading-relaxed text-cream/80">
+            Ein erstes Gespräch ist kostenlos und unverbindlich. Schreiben Sie
+            mir – in Ihren Worten, ohne Vorbereitung.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
+          <a href="/kontakt#termin" class="btn btn-light">Erstgespräch anfragen</a>
+          <a href={site.bookingUrl} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">
+            Termin buchen
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── FAQ ─────────────────────────── -->
+  <section class="container-page py-16 sm:py-20">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeading
+        eyebrow="Häufige Fragen"
+        title="Was Sie vielleicht noch wissen möchten"
+        lead="Und falls Ihre Frage hier nicht dabei ist: Schreiben Sie mir einfach."
+        class="reveal lg:sticky lg:top-28 lg:self-start"
+      />
+      <div class="reveal divide-y divide-line">
+        {
+          faqs.map((faq) => (
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-semibold text-ink marker:hidden">
+                {faq.q}
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sage-mist text-forest transition-transform duration-300 group-open:rotate-45">
+                  <Icon name="arrow-right" class="h-4 w-4 rotate-[-45deg] group-open:rotate-0" />
+                </span>
+              </summary>
+              <p class="mt-3 pr-12 leading-relaxed text-taupe-ink/85">{faq.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────── Final warm CTA band ───────────────── -->
+  <section class="relative overflow-hidden">
+    <div class="container-page py-8 sm:py-12">
+      <div class="reveal grid items-stretch gap-0 overflow-hidden rounded-[2.75rem] shadow-[var(--shadow-soft)] lg:grid-cols-2">
+        <div class="relative min-h-[18rem]">
+          <ImagePlaceholder
+            shape="rounded"
+            tone="clay"
+            ratio="1/1"
+            label="Ruhiger, warmer Moment – Sonnenlicht, Natur"
+            class="!rounded-none h-full"
+          />
+        </div>
+        <div class="flex flex-col justify-center bg-clay px-8 py-12 text-cream sm:px-12">
+          <p class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-cream/80">
+            Ich freue mich auf Sie
+          </p>
+          <h2 class="mt-4 text-cream text-3xl sm:text-4xl">
+            Lassen Sie uns ins Gespräch kommen
+          </h2>
+          <p class="mt-5 leading-relaxed text-cream/85">
+            Wenn Sie spüren, dass jetzt ein guter Moment ist: Ich nehme mir Zeit
+            für Sie. Der erste Schritt ist kleiner, als er sich anfühlt.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/kontakt#termin" class="btn btn-light">Termin anfragen</a>
+            <a href={`mailto:${site.email}`} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">
+              <Icon name="mail" class="h-5 w-5" />
+              Per E-Mail schreiben
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
