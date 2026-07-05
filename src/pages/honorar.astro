@@ -5,29 +5,28 @@ import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
 import { site } from "@/data/site";
 
-// NOTE: prices are placeholders — replace the values with actual rates.
 const rates = [
   {
     title: "Einzel- & Sexualtherapie",
-    duration: "50 Minuten",
-    price: "00 €",
+    duration: "45 Minuten",
+    price: "90 €",
     note: "pro Sitzung",
     items: [
-      "Vertrauliches Einzelsetting",
-      "Per Video, deutschlandweit",
-      "Termine flexibel nach Absprache",
+      "45 Minuten persönliche Begleitung",
+      "Individuell auf Ihr Anliegen abgestimmt",
+      "Online, deutschland- und europaweit",
     ],
     featured: false,
   },
   {
     title: "Paartherapie",
-    duration: "80 Minuten",
-    price: "00 €",
+    duration: "60 Minuten",
+    price: "150 €",
     note: "pro Sitzung",
     items: [
-      "Gemeinsames Setting für beide",
-      "Mehr Zeit für komplexe Themen",
-      "Per Video, von einem oder zwei Orten",
+      "Mehr Zeit für beide Perspektiven",
+      "Gemeinsames Arbeiten an Ihrer Beziehung",
+      "Teilnahme von einem oder zwei Standorten möglich",
     ],
     featured: true,
   },
@@ -36,24 +35,53 @@ const rates = [
 const steps = [
   {
     icon: "mail",
-    title: "1 · Anfrage",
-    text: "Sie melden sich über das Kontaktformular oder per E-Mail – mit so vielen oder wenigen Worten, wie Sie möchten.",
-  },
-  {
-    icon: "speech",
-    title: "2 · Kostenloses Erstgespräch",
-    text: "Wir lernen uns in einem kurzen, unverbindlichen Videocall kennen und klären offene Fragen.",
+    title: "Schritt 1 · Kontakt aufnehmen",
+    text: "Schreiben Sie mir über das Kontaktformular oder per E-Mail. Sie müssen noch nicht genau wissen, was Sie sagen möchten, ein paar Worte genügen. Ich melde mich zeitnah bei Ihnen zurück und wir besprechen die nächsten Schritte.",
   },
   {
     icon: "calendar",
-    title: "3 · Erste Sitzung",
-    text: "Wenn es für Sie passt, vereinbaren wir einen ersten Termin und legen gemeinsam los.",
+    title: "Schritt 2 · Termin vereinbaren",
+    text: "Gemeinsam finden wir einen passenden Termin für Ihre erste Sitzung. Vorab klären wir alle organisatorischen Fragen, damit Sie gut vorbereitet starten können.",
+  },
+  {
+    icon: "bloom",
+    title: "Schritt 3 · Erste Therapiesitzung",
+    text: "In der ersten Sitzung lernen wir uns kennen und widmen uns bereits Ihrem Anliegen. Gemeinsam klären wir Ihre aktuelle Situation, Ihre Ziele und Ihren Auftrag an die Therapie. Oft entstehen dabei schon erste neue Perspektiven und spürbare Entlastung.",
+  },
+];
+
+const erstgespraech = [
+  "Kennenlernen",
+  "Anliegen verstehen",
+  "Ziele klären",
+  "Fragen beantworten",
+  "gemeinsamer Auftrag",
+  "erste therapeutische Impulse",
+];
+
+const selbstzahler = [
+  { text: "Kurzfristige Termine statt monatelanger Wartezeiten." },
+  {
+    text: "Sie bestimmen Dauer und Häufigkeit der Therapie – gemeinsam mit mir, nicht die Krankenkasse.",
+  },
+  {
+    text: "Keine Diagnose in Ihrer Krankenakte.",
+    detail:
+      "Das kann beispielsweise bei einem Krankenkassenwechsel, einer Berufsunfähigkeitsversicherung oder einer Verbeamtung von Vorteil sein.",
+  },
+  {
+    text: "Sie benötigen keine psychische Diagnose, um Unterstützung in Anspruch zu nehmen.",
+    detail:
+      "Auch in belastenden Lebensphasen, Beziehungskrisen oder zur persönlichen Entwicklung können Sie sich jederzeit begleiten lassen.",
+  },
+  {
+    text: "Therapie richtet sich nach Ihren Bedürfnissen, nicht nach den Vorgaben der Krankenkassen.",
   },
 ];
 ---
 <BaseLayout
   title="Honorar & Ablauf"
-  description={`Transparente Informationen zu Honorar, Ablauf und Zahlungsmodalitäten der Online-Therapie bei ${site.name}. Kostenloses Erstgespräch, faire Konditionen.`}
+  description={`Transparente Informationen zu Honorar, Ablauf und Zahlungsmodalitäten der Online-Therapie bei ${site.name}. Faire Konditionen, klare Rahmenbedingungen.`}
 >
   <!-- Hero -->
   <section class="relative overflow-hidden">
@@ -63,9 +91,9 @@ const steps = [
         <p class="eyebrow eyebrow--center justify-center">Honorar &amp; Ablauf</p>
         <h1 class="mt-5 text-4xl sm:text-5xl">Transparent und unkompliziert</h1>
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
-          Sie sollen wissen, worauf Sie sich einlassen – emotional und finanziell.
-          Deshalb finden Sie hier den Ablauf und die Konditionen klar und ohne
-          Kleingedrucktes.
+          Sie sollen jederzeit wissen, was Sie erwartet: organisatorisch,
+          therapeutisch und finanziell. Deshalb finden Sie hier alle
+          Informationen zum Ablauf und Honorar übersichtlich an einem Ort.
         </p>
       </div>
     </div>
@@ -85,6 +113,19 @@ const steps = [
         </div>
       ))}
     </div>
+
+    <!-- Was Sie im Erstgespräch erwartet -->
+    <div class="reveal mt-8 rounded-[2rem] border border-line-soft bg-sage-mist p-7 sm:p-8">
+      <h3 class="font-display text-lg font-semibold text-ink">Was Sie im Erstgespräch erwartet</h3>
+      <ul class="mt-4 flex flex-wrap gap-3">
+        {erstgespraech.map((e) => (
+          <li class="inline-flex items-center gap-2 rounded-full bg-cream px-4 py-2 text-sm text-taupe-ink/90 shadow-sm">
+            <Icon name="check" class="h-4 w-4 text-forest" />
+            {e}
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 
   <!-- Honorar -->
@@ -92,7 +133,7 @@ const steps = [
     <SectionHeading
       eyebrow="Honorar"
       title="Faire, klare Konditionen"
-      lead="Das erste Kennenlernen ist immer kostenlos. Für die Sitzungen gelten folgende Sätze:"
+      lead="Transparenz schafft Vertrauen. Deshalb finden Sie hier alle Informationen zu Honorar, Abrechnung und organisatorischen Rahmenbedingungen auf einen Blick."
       align="center"
       class="reveal"
     />
@@ -123,45 +164,134 @@ const steps = [
         </div>
       ))}
     </div>
-    <p class="reveal mx-auto mt-6 max-w-3xl text-center text-sm text-taupe-soft">
-      Platzhalter-Beträge – bitte durch die tatsächlichen Honorarsätze ersetzen.
-    </p>
   </section>
 
-  <!-- Hinweise -->
-  <section class="container-page pb-6">
-    <div class="reveal mx-auto max-w-3xl rounded-[2rem] border border-line-soft bg-sage-mist p-7 sm:p-10">
-      <div class="flex items-start gap-4">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest text-cream">
-          <Icon name="shield" class="h-6 w-6" />
-        </span>
-        <div>
-          <h2 class="text-xl">Gut zu wissen</h2>
-          <ul class="mt-4 space-y-3 text-taupe-ink/85">
-            <li class="flex gap-3">
-              <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0 text-forest" />
-              Als Heilpraktikerin für Psychotherapie rechne ich als
-              Selbstzahlerleistung ab. Die Kosten werden in der Regel nicht von
-              der gesetzlichen Krankenkasse übernommen.
-            </li>
-            <li class="flex gap-3">
-              <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0 text-forest" />
-              Private Zusatzversicherungen oder Beihilfe übernehmen je nach Tarif
-              einen Teil – bitte klären Sie das vorab mit Ihrer Versicherung.
-            </li>
-            <li class="flex gap-3">
-              <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0 text-forest" />
-              Termine, die nicht mindestens 24 Stunden vorher abgesagt werden,
-              berechne ich als Ausfallhonorar.
-            </li>
-          </ul>
-        </div>
-      </div>
+  <!-- Vorteile als Selbstzahler -->
+  <section class="relative overflow-hidden bg-sage-mist py-14 sm:py-20">
+    <Blob color="clay" class="left-[-6rem] bottom-[-5rem] h-72 w-72" />
+    <div class="container-page">
+      <SectionHeading eyebrow="Selbstzahler" title="Vorteile als Selbstzahler" class="reveal" />
+      <ul class="reveal mt-8 grid gap-4 md:grid-cols-2">
+        {selbstzahler.map((s) => (
+          <li class="rounded-2xl border border-line-soft bg-cream/70 p-5">
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-forest/10 text-forest">
+                <Icon name="check" class="h-4 w-4" />
+              </span>
+              <div>
+                <p class="text-taupe-ink/90">{s.text}</p>
+                {s.detail && <p class="mt-1 text-sm text-taupe-soft">{s.detail}</p>}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
+  <!-- Gut zu wissen -->
+  <section class="container-page py-14 sm:py-20">
+    <SectionHeading eyebrow="Gut zu wissen" title="Rahmenbedingungen auf einen Blick" class="reveal" />
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      <!-- Abrechnung -->
+      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)] md:col-span-2">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-forest text-cream">
+            <Icon name="shield" class="h-5 w-5" />
+          </span>
+          <h3 class="text-lg">Abrechnung</h3>
+        </div>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Ich führe eine Online-Privatpraxis und rechne als Heilpraktikerin für
+          Psychotherapie auf Selbstzahlerbasis ab. Die gesetzlichen Krankenkassen
+          übernehmen die Kosten in der Regel nicht. Je nach Tarif beteiligen sich
+          private Zusatzversicherungen oder Beihilfestellen an den Kosten.
+        </p>
+        <p class="mt-3 leading-relaxed text-taupe-ink/85">
+          Alle psychotherapeutischen Leistungen sind mehrwertsteuerfrei. Je nach
+          persönlicher Situation können Therapieaufwendungen außerdem als
+          außergewöhnliche Belastung steuerlich geltend gemacht werden. Bitte
+          lassen Sie sich hierzu individuell steuerlich beraten.
+        </p>
+      </div>
+
+      <!-- Zahlung -->
+      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-forest text-cream">
+            <Icon name="mail" class="h-5 w-5" />
+          </span>
+          <h3 class="text-lg">Zahlung</h3>
+        </div>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Sie erhalten Ihre Rechnung vor dem vereinbarten Termin per E-Mail. Die
+          Bezahlung erfolgt in der Regel per Überweisung vor der Sitzung.
+        </p>
+      </div>
+
+      <!-- Sonderzeiten -->
+      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-forest text-cream">
+            <Icon name="clock" class="h-5 w-5" />
+          </span>
+          <h3 class="text-lg">Sonderzeiten</h3>
+        </div>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Termine außerhalb meiner regulären Sprechzeiten sind nach Verfügbarkeit
+          möglich.
+        </p>
+        <ul class="mt-3 space-y-1 text-taupe-ink/90">
+          <li class="flex items-center gap-2"><Icon name="check" class="h-4 w-4 text-forest" /> ab 19:00 Uhr: +20 %</li>
+          <li class="flex items-center gap-2"><Icon name="check" class="h-4 w-4 text-forest" /> Wochenenden &amp; Feiertage: +50 %</li>
+        </ul>
+        <p class="mt-3 text-sm text-taupe-soft">Sprechen Sie mich bei Bedarf gerne an.</p>
+      </div>
+
+      <!-- Terminabsagen -->
+      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-forest text-cream">
+            <Icon name="calendar" class="h-5 w-5" />
+          </span>
+          <h3 class="text-lg">Terminabsagen</h3>
+        </div>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Bitte sagen Sie Termine spätestens 48 Stunden vorher ab. Bei späteren
+          Absagen oder Nichterscheinen wird das vereinbarte Honorar vollständig
+          berechnet. Vielen Dank für Ihr Verständnis.
+        </p>
+      </div>
+
+      <!-- Ermäßigungen -->
+      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)]">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-forest text-cream">
+            <Icon name="heart" class="h-5 w-5" />
+          </span>
+          <h3 class="text-lg">Ermäßigungen</h3>
+        </div>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Mir ist wichtig, Therapie zugänglich zu machen. In begrenztem Umfang
+          vergebe ich ermäßigte Therapieplätze für Menschen in einer finanziell
+          belastenden Situation, beispielsweise Studierende, Alleinerziehende,
+          Arbeitssuchende oder Menschen in besonderen Lebenslagen.
+        </p>
+        <p class="mt-3 leading-relaxed text-taupe-ink/85">
+          Wenn Sie Fragen zu den Kosten haben oder eine Ermäßigung benötigen,
+          sprechen Sie mich gerne persönlich an. Gemeinsam finden wir eine
+          passende Lösung.
+        </p>
+      </div>
+    </div>
+
+    <p class="reveal mt-8 text-center text-taupe-soft">
+      Die Kontaktaufnahme ist selbstverständlich unverbindlich und kostenfrei.
+    </p>
+  </section>
+
   <!-- CTA -->
-  <section class="container-page py-14">
+  <section class="container-page py-6 pb-14">
     <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-clay px-8 py-12 text-cream shadow-[var(--shadow-soft)] sm:px-14">
       <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
         <div>

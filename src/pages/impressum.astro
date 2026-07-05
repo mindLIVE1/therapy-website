@@ -1,55 +1,65 @@
 ---
 import LegalLayout from "@/layouts/LegalLayout.astro";
-import { site } from "@/data/site";
+import { site, isDemo } from "@/data/site";
+
+// In demo mode the real address is replaced with a neutral placeholder.
+const addr = isDemo
+  ? { street: "Musterstraße 1", city: "12345 Musterstadt" }
+  : { street: "Wilmersdorfer Straße 95", city: "10629 Berlin" };
 ---
 <LegalLayout
   title="Impressum"
   description={`Impressum und Anbieterkennzeichnung der Online-Praxis von ${site.name}.`}
   heading="Impressum"
 >
-  <p>
-    <strong>Hinweis:</strong> Bitte ersetzen Sie die
-    <span class="placeholder">markierten Platzhalter</span> durch die echten
-    Angaben, bevor die Seite online geht. Ein vollständiges, korrektes Impressum
-    ist in Deutschland rechtlich verpflichtend (§ 5 TMG / § 18 MStV).
-  </p>
-
   <h2>Angaben gemäß § 5 TMG</h2>
   <p>
     {site.name}<br />
-    <span class="placeholder">Straße &amp; Hausnummer</span><br />
-    <span class="placeholder">PLZ Ort</span>
+    {addr.street}<br />
+    {addr.city}<br />
+    Deutschland
   </p>
 
   <h2>Kontakt</h2>
   <p>
-    E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a><br />
-    Telefon: <span class="placeholder">Telefonnummer (optional)</span>
+    E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+    {site.phone && <><br />Telefon: {site.phone}</>}
   </p>
 
   <h2>Berufsbezeichnung und berufsrechtliche Regelungen</h2>
   <p>
     Berufsbezeichnung: Heilpraktikerin für Psychotherapie<br />
-    Verliehen in: Deutschland<br />
-    Zuständige Aufsichtsbehörde: <span class="placeholder">zuständiges Gesundheitsamt</span>
+    Verliehen in: Deutschland
+  </p>
+  <p>
+    Die Berufsbezeichnung wurde in Deutschland verliehen. Das Bezirksamt
+    Tempelhof-Schöneberg von Berlin erteilte {site.name} die Erlaubnis zur
+    berufsmäßigen Ausübung der Heilkunde beschränkt auf das Gebiet der
+    Psychotherapie.
   </p>
   <p>
     Es gelten das Heilpraktikergesetz (HeilprG) und die zugehörige
     Durchführungsverordnung (HeilprGDV) in der jeweils gültigen Fassung,
-    einsehbar unter <a href="https://www.gesetze-im-internet.de" rel="noopener">gesetze-im-internet.de</a>.
+    einsehbar unter
+    <a href="https://www.gesetze-im-internet.de" rel="noopener">gesetze-im-internet.de</a>.
+  </p>
+
+  <h2>Zuständige Aufsichtsbehörde</h2>
+  <p>
+    Landesamt für Gesundheit und Soziales Berlin (LAGeSo)<br />
+    Turmstraße 21<br />
+    10559 Berlin, Deutschland<br />
+    <a href="https://www.berlin.de/lageso/" rel="noopener">www.berlin.de/lageso</a>
   </p>
 
   <h2>Umsatzsteuer</h2>
   <p>
-    Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG:
-    <span class="placeholder">USt-IdNr. oder „nicht vorhanden“</span>.
+    Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: „nicht vorhanden“.
     Heilbehandlungen können gemäß § 4 Nr. 14 UStG umsatzsteuerbefreit sein.
   </p>
 
   <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-  <p>
-    {site.name}, Anschrift wie oben.
-  </p>
+  <p>{site.name}, Anschrift wie oben.</p>
 
   <h2>Streitschlichtung</h2>
   <p>

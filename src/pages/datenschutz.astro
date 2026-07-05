@@ -1,6 +1,9 @@
 ---
 import LegalLayout from "@/layouts/LegalLayout.astro";
-import { site } from "@/data/site";
+import { site, isDemo } from "@/data/site";
+
+// In demo mode the real address is replaced with a neutral placeholder.
+const addr = isDemo ? "Musterstraße 1, 12345 Musterstadt" : "Wilmersdorfer Straße 95, 10629 Berlin";
 ---
 <LegalLayout
   title="Datenschutzerklärung"
@@ -20,7 +23,7 @@ import { site } from "@/data/site";
   <p>
     Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br />
     {site.name}<br />
-    <span class="placeholder">Straße &amp; Hausnummer, PLZ Ort</span><br />
+    {addr}<br />
     E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
   </p>
 
@@ -63,16 +66,19 @@ import { site } from "@/data/site";
     sie nicht mehr erforderlich sind.
   </p>
   <p>
-    <span class="placeholder">Falls ein Formulardienst (z. B. Formspree,
-    Web3Forms) eingesetzt wird, hier den Anbieter und die
-    Auftragsverarbeitung ergänzen.</span>
+    Für die Kontaktaufnahme wird <strong>kein externer Formulardienst</strong>
+    eingesetzt. Beim Absenden des Kontaktformulars öffnet sich Ihr eigenes
+    E-Mail-Programm mit einer vorausgefüllten Nachricht, die Sie selbst an uns
+    senden. Es werden dabei keine Daten an Dritte übertragen.
+    <span class="placeholder">Sollte künftig ein DSGVO-konformer
+    Formulardienst (EU) eingesetzt werden, ist dieser hier mit Anbieter und
+    Auftragsverarbeitung zu ergänzen.</span>
   </p>
 
   <h2>6. Terminbuchung</h2>
   <p>
-    <span class="placeholder">Falls ein externes Buchungstool (z. B. Calendly,
-    Doctolib) eingebunden wird, hier Anbieter, verarbeitete Daten und
-    Rechtsgrundlage ergänzen.</span>
+    Es wird <strong>kein externes Buchungstool</strong> eingebunden. Termine
+    werden ausschließlich persönlich per E-Mail vereinbart.
   </p>
 
   <h2>7. Besondere Kategorien personenbezogener Daten</h2>
@@ -83,10 +89,13 @@ import { site } from "@/data/site";
     und behandeln sie streng vertraulich.
   </p>
 
-  <h2>8. Verschlüsselung</h2>
+  <h2>8. Verschlüsselung & Video-Sitzungen</h2>
   <p>
     Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung.
-    Video-Sitzungen finden über einen datenschutzkonformen, verschlüsselten
-    Dienst statt (<span class="placeholder">Anbieter ergänzen</span>).
+    Die Video-Sitzungen finden über eine datenschutzkonforme, verschlüsselte
+    Plattform statt.
+    <span class="placeholder">Anbieter: It's Complicated (complicated.life)
+    bzw. therapie.de – bitte den tatsächlich genutzten Dienst auswählen und die
+    Auftragsverarbeitung ergänzen.</span>
   </p>
 </LegalLayout>

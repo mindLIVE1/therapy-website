@@ -14,12 +14,19 @@ const year = new Date().getFullYear();
           >
             <Icon name="leaf" class="h-6 w-6" />
           </span>
-          <span class="font-display text-lg font-semibold text-cream"
-            >{site.name}</span
-          >
+          <span class="leading-tight">
+            <span class="block font-display text-lg font-semibold text-cream"
+              >{site.name}</span
+            >
+            {
+              site.titles.map((t) => (
+                <span class="block text-[0.78rem] text-sage-soft">{t}</span>
+              ))
+            }
+          </span>
         </div>
         <p class="mt-5 leading-relaxed text-cream/70">
-          {site.role}. Vertrauliche Online-Begleitung in der Einzel-, Paar- und
+          Vertrauliche Online-Begleitung in der Einzel-, Paar- und
           Sexualtherapie – einfühlsam, professionell und ortsunabhängig.
         </p>
         <p

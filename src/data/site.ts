@@ -8,19 +8,25 @@ export const isDemo =
 export const site = {
   name: isDemo ? "Erika Mustermann" : "Elena Roehrborn",
   firstName: isDemo ? "Erika" : "Elena",
-  role: "Heilpraktikerin für Psychotherapie",
+  // Combined title (used for structured data / job title).
+  role: "Klinische Psychologin (M.Sc.) · Heilpraktikerin für Psychotherapie",
+  // Individual credential lines (footer, Über mich).
+  titles: [
+    "Klinische Psychologin (M.Sc.)",
+    "Heilpraktikerin für Psychotherapie",
+  ],
   tagline: "Online-Psychotherapie, Paar- & Sexualtherapie",
   // Used in SEO, structured data and the footer. Swap before launch.
   url: "https://www.elena-roehrborn.de",
   locale: "de-DE",
   lang: "de",
+  languages: "Deutsch & Englisch",
   email: isDemo ? "erika.mustermann@example.com" : "elena.roehrborn@gmail.com",
-  // Placeholder external booking link — replace with the real one
-  // (Calendly, Doctolib, eterminservice …) when it exists.
-  bookingUrl: "#termin",
+  // No external booking tool is used — all CTAs lead to the contact form.
+  bookingUrl: "/kontakt#termin",
   // Optional phone — leave empty to hide it everywhere.
   phone: "",
-  city: "Online · deutschlandweit",
+  city: "Online · deutschland- & europaweit",
 };
 
 export type NavItem = {
@@ -51,7 +57,7 @@ export type Service = {
   title: string;
   short: string; // one line, for cards / overview
   blurb: string; // 2–3 sentences, for the overview section
-  icon: "heart" | "rings" | "bloom";
+  icon: "heart" | "rings" | "bloom" | "speech" | "speech2";
 };
 
 export const services: Service[] = [
@@ -59,27 +65,30 @@ export const services: Service[] = [
     slug: "einzeltherapie",
     href: "/therapieangebote/einzeltherapie",
     title: "Einzeltherapie",
-    short: "Raum für Sie allein – bei Belastungen, Krisen und Veränderung.",
+    short:
+      "Ein geschützter Raum, um Gedanken zu ordnen, Emotionen zu verstehen und neue Wege im Umgang mit Ängsten, Stress, Selbstwert, Krisen oder persönlichen Herausforderungen zu entwickeln.",
     blurb:
-      "Ein vertraulicher Raum, in dem Sie in Ihrem Tempo verstehen, ordnen und Schritt für Schritt verändern dürfen – ob bei Ängsten, depressiven Phasen, Stress oder Lebensfragen.",
-    icon: "heart",
+      "Ein geschützter Raum, um Gedanken zu ordnen, Emotionen zu verstehen und neue Wege im Umgang mit Ängsten, Stress, Selbstwert, Krisen oder persönlichen Herausforderungen zu entwickeln.",
+    icon: "bloom",
   },
   {
     slug: "paartherapie",
     href: "/therapieangebote/paartherapie",
     title: "Paartherapie",
-    short: "Wieder ins Gespräch kommen – und einander neu zuhören.",
+    short:
+      "Für Paare, die festgefahrene Konflikte lösen, Vertrauen stärken oder wieder mehr Nähe und Verständnis füreinander entwickeln möchten.",
     blurb:
-      "Begleitung für Paare, die sich festgefahren fühlen, viel streiten oder einander verloren haben. Gemeinsam finden wir zurück zu Verständnis, Nähe und einer Sprache füreinander.",
-    icon: "rings",
+      "Für Paare, die festgefahrene Konflikte lösen, Vertrauen stärken oder wieder mehr Nähe und Verständnis füreinander entwickeln möchten.",
+    icon: "speech2",
   },
   {
     slug: "sexualtherapie",
     href: "/therapieangebote/sexualtherapie",
     title: "Sexualtherapie",
-    short: "Offen und ohne Scham über Intimität sprechen.",
+    short:
+      "Ein wertfreier Raum für Fragen rund um Sexualität, Intimität, Lust, Unsicherheiten oder unterschiedliche Bedürfnisse – einfühlsam und ohne Tabus.",
     blurb:
-      "Ein geschützter Rahmen für Fragen rund um Sexualität, Lust, Unsicherheiten und Veränderung – wertfrei, respektvoll und in Ihrem eigenen Tempo.",
-    icon: "bloom",
+      "Ein wertfreier Raum für Fragen rund um Sexualität, Intimität, Lust, Unsicherheiten oder unterschiedliche Bedürfnisse – einfühlsam und ohne Tabus.",
+    icon: "heart",
   },
 ];

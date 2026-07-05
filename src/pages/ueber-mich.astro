@@ -6,8 +6,14 @@ import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
 import { site, isDemo } from "@/data/site";
 import elenaPhoto from "@/assets/elena-roehrborn.webp";
+import arbeitsplatzImg from "@/assets/arbeitsplatz.png";
 
 const values = [
+  {
+    icon: "systemic",
+    title: "Systemisch denken",
+    text: "Wir betrachten nicht nur Symptome, sondern die Zusammenhänge zwischen Beziehungen, Erfahrungen, Gedanken und Gefühlen. Nicht nur Probleme stehen im Mittelpunkt, sondern auch das, was bereits in Ihnen steckt.",
+  },
   {
     icon: "heart",
     title: "Auf Augenhöhe",
@@ -19,15 +25,37 @@ const values = [
     text: "Schweigepflicht und ein sicherer Rahmen sind selbstverständlich. Was Sie mir anvertrauen, bleibt bei mir.",
   },
   {
+    icon: "bloom",
+    title: "Individuell & in Ihrem Tempo",
+    text: "Jeder Mensch bringt seine eigene Geschichte mit. Deshalb gibt es bei mir keine Standardlösungen. Sie bestimmen, wie schnell wir gehen und worüber wir sprechen, ohne Druck.",
+  },
+  {
     icon: "compass",
     title: "Klar & strukturiert",
     text: "Einfühlsames Zuhören und ein klares Vorgehen schließen sich nicht aus. Wir wissen gemeinsam, wohin wir gehen.",
   },
-  {
-    icon: "bloom",
-    title: "In Ihrem Tempo",
-    text: "Nichts muss. Sie bestimmen, wie schnell wir gehen und worüber wir sprechen – ohne Druck.",
-  },
+];
+
+const onlineBenefits = [
+  "bequem von zu Hause",
+  "keine Anfahrt",
+  "flexible Termine",
+  "deutschland- & europaweit",
+  "Deutsch & Englisch",
+  "vertraute Umgebung",
+  "leichter in den Alltag integrierbar",
+];
+
+const credentials = [
+  "Master in Klinischer Psychologie",
+  "10 Jahre psychologische Berufserfahrung",
+  "Psychotherapieerlaubnis nach dem HeilprG",
+  "systemische Paar- & Sexualtherapie",
+  "Deutschland- & europaweit online",
+  "Deutsch & Englisch",
+  "verschlüsselte Videositzungen",
+  "Flexible Terminvereinbarung",
+  "wertschätzend & urteilsfrei",
 ];
 
 const jsonLd = {
@@ -37,12 +65,12 @@ const jsonLd = {
   jobTitle: site.role,
   url: new URL("/ueber-mich", site.url).href,
   worksFor: { "@type": "MedicalBusiness", name: `${site.name} – ${site.tagline}` },
-  knowsLanguage: "de",
+  knowsLanguage: ["de", "en"],
 };
 ---
 <BaseLayout
   title={`Über mich – ${site.name}`}
-  description={`Lernen Sie ${site.name} kennen – Heilpraktikerin für Psychotherapie. Mein Werdegang, mein therapeutischer Ansatz und was Sie in der Zusammenarbeit erwartet.`}
+  description={`Lernen Sie ${site.name} kennen – Klinische Psychologin (M.Sc.) und Heilpraktikerin für Psychotherapie. Werdegang, therapeutischer Ansatz und was Sie in der Zusammenarbeit erwartet.`}
   jsonLd={jsonLd}
 >
   <!-- Hero -->
@@ -56,22 +84,26 @@ const jsonLd = {
           ratio="4/5"
           tone="sage"
           src={isDemo ? undefined : elenaPhoto}
-          alt={`Porträt von ${site.name}, Heilpraktikerin für Psychotherapie`}
+          alt={`Porträt von ${site.name}`}
           position="46% 22%"
         />
       </div>
       <div class="reveal">
         <p class="eyebrow">Schön, dass Sie hier sind</p>
-        <h1 class="mt-5 text-4xl sm:text-5xl">Hallo, ich bin {site.firstName}</h1>
+        <h1 class="mt-5 text-4xl sm:text-5xl">Die Person hinter der Therapie</h1>
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
-          Als Heilpraktikerin für Psychotherapie begleite ich Menschen dabei,
-          sich selbst wieder näherzukommen – in Krisen, in Übergängen und überall
-          dort, wo das Leben gerade schwer wiegt. Mir liegt am Herzen, dass Sie
-          sich bei mir vom ersten Moment an sicher, willkommen und ernst genommen
-          fühlen.
+          Mein Name ist {site.name}. Ich bin Klinische Psychologin (M.Sc.),
+          Heilpraktikerin für Psychotherapie und systemische Paartherapeutin
+          sowie Sexualtherapeutin.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Seit über zehn Jahren begleite ich Kinder, Jugendliche und Erwachsene
+          in unterschiedlichen psychologischen und therapeutischen Kontexten.
+          Heute arbeite ich ausschließlich online und unterstütze Menschen
+          deutschland- und europaweit in deutscher und englischer Sprache.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/kontakt#termin" class="btn btn-primary">Kostenloses Erstgespräch</a>
+          <a href="/kontakt#termin" class="btn btn-primary">Erstgespräch anfragen</a>
           <a href="/therapieangebote" class="btn btn-outline">Meine Angebote</a>
         </div>
       </div>
@@ -84,17 +116,20 @@ const jsonLd = {
       <div class="reveal max-w-2xl">
         <SectionHeading title="Mein Weg zu dieser Arbeit" eyebrow="Hintergrund" />
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
-          Schon früh hat mich beschäftigt, was Menschen im Innersten bewegt und
-          was sie wieder ins Gleichgewicht bringt. Aus dieser Neugier wurde mein
-          Beruf: die Ausbildung zur Heilpraktikerin für Psychotherapie und die
-          fortlaufende Weiterbildung in Verfahren, die Wärme und Wirksamkeit
-          verbinden.
+          Mich hat schon immer fasziniert, wie Menschen Krisen bewältigen,
+          Beziehungen gestalten und trotz schwieriger Erfahrungen wieder Hoffnung
+          und Lebensfreude entwickeln können.
         </p>
         <p class="mt-4 leading-relaxed text-taupe-ink/85">
-          Heute arbeite ich ausschließlich online – nicht als Notlösung, sondern
-          aus Überzeugung. So kann ich Menschen begleiten, für die der Weg in
-          eine Praxis schwierig wäre, und Therapie dorthin bringen, wo Sie sich
-          am wohlsten fühlen: nach Hause.
+          Diese Neugier führte mich zunächst zum Studium der Klinischen
+          Psychologie und später in die psychotherapeutische Arbeit. Mit den
+          Jahren wurde mir immer deutlicher, dass nachhaltige Veränderung dort
+          entsteht, wo Menschen sich verstanden, angenommen und gleichzeitig
+          ehrlich begleitet fühlen.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Deshalb verbinde ich in meiner Arbeit Empathie mit Klarheit, Struktur
+          und einem systemischen Blick auf den Menschen und seine Beziehungen.
         </p>
       </div>
       <figure class="reveal relative self-start rounded-[2rem] bg-forest p-8 text-cream sm:p-10">
@@ -106,13 +141,33 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- Werte -->
+  <!-- Warum Online-Therapie -->
+  <section class="relative overflow-hidden bg-sand-deep/50 py-14 sm:py-20">
+    <Blob color="sage" class="right-[-7rem] top-[-5rem] h-80 w-80" />
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Warum online"
+        title="Warum Online-Therapie?"
+        lead="Viele Menschen erleben Online-Therapie inzwischen als besonders angenehm."
+        class="reveal"
+      />
+      <ul class="reveal mt-8 flex flex-wrap gap-3">
+        {onlineBenefits.map((b) => (
+          <li class="inline-flex items-center gap-2 rounded-full border border-line-soft bg-cream px-5 py-2.5 text-taupe-ink/90 shadow-sm">
+            <Icon name="check" class="h-4 w-4 text-forest" />
+            {b}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Ansatz / Werte -->
   <section class="relative overflow-hidden bg-sage-mist py-14 sm:py-24">
     <div class="container-page">
       <SectionHeading
         eyebrow="Mein Ansatz"
-        title="Wie ich mit Ihnen arbeite"
-        lead="Vier Haltungen, die meine Arbeit tragen – und auf die Sie sich bei mir verlassen können."
+        title="Wie ich arbeite"
         align="center"
         class="reveal"
       />
@@ -138,23 +193,29 @@ const jsonLd = {
       <div class="reveal relative mx-auto w-full max-w-md">
         <ImagePlaceholder
           shape="rounded"
-          ratio="4/3"
+          ratio="3/2"
           tone="sand"
-          label="Persönliches Detail – Arbeitsplatz, Pflanzen, Lieblingsort"
+          src={arbeitsplatzImg}
+          alt="Ruhiger Arbeitsplatz mit Eukalyptus, Notizbuch und Sessel"
         />
       </div>
       <div class="reveal">
-        <SectionHeading eyebrow="Abseits der Praxis" title="Ein paar Worte zu mir" />
+        <SectionHeading
+          eyebrow="Abseits der Praxis"
+          title="Ein paar Worte zu mir & meinem Hintergrund"
+        />
         <p class="mt-6 leading-relaxed text-taupe-ink/85">
-          Ich glaube daran, dass Menschen mehr Stärke in sich tragen, als sie
-          oft vermuten – und dass es manchmal nur ein Gegenüber braucht, das
-          zuhört und mitdenkt. Kraft schöpfe ich selbst aus Spaziergängen in der
-          Natur, aus guten Gesprächen und ruhigen Morgenstunden.
+          Als Tochter einer Chilenin und mit einem Teil meiner Kindheit und
+          Jugend in Frankreich habe ich früh erlebt, wie unterschiedlich Menschen
+          leben, denken und fühlen können. Diese Offenheit prägt auch meine
+          therapeutische Arbeit.
         </p>
         <p class="mt-4 leading-relaxed text-taupe-ink/85">
-          Vielleicht spüren Sie beim Lesen schon, ob es sich stimmig anfühlt. Den
-          besten Eindruck bekommen Sie aber im persönlichen Gespräch – und das
-          ist kostenlos und unverbindlich.
+          Ich begegne Menschen unabhängig von ihrer Geschichte, ihrer Identität
+          oder ihrer Lebensform mit Neugier, Respekt und Wertschätzung. Kraft
+          finde ich selbst in der Natur, beim Reisen, guten Gesprächen und ruhigen
+          Momenten. Vielleicht ist es genau diese Mischung aus Gelassenheit und
+          Klarheit, die viele Menschen in meiner Arbeit schätzen.
         </p>
         <a href="/kontakt#termin" class="link-arrow mt-6 inline-flex">
           Lernen wir uns kennen
@@ -164,15 +225,32 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- Das erwartet Sie -->
+  <section class="container-page pb-6">
+    <div class="reveal rounded-[2.5rem] border border-line-soft bg-sand p-8 shadow-[var(--shadow-card)] sm:p-12">
+      <SectionHeading eyebrow="Auf einen Blick" title="Das erwartet Sie" />
+      <ul class="mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+        {credentials.map((c) => (
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest/10 text-forest">
+              <Icon name="check" class="h-4 w-4" />
+            </span>
+            <span class="text-taupe-ink/90">{c}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <!-- CTA -->
-  <section class="container-page pb-8">
+  <section class="container-page py-14">
     <div class="reveal relative overflow-hidden rounded-[2.75rem] bg-forest px-8 py-12 text-cream shadow-[var(--shadow-soft)] sm:px-14">
       <span aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sage/20 blur-2xl"></span>
       <div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
         <h2 class="text-cream text-2xl sm:text-3xl">Ich freue mich darauf, Sie kennenzulernen</h2>
         <div class="flex flex-wrap gap-3">
           <a href="/kontakt#termin" class="btn btn-light">Termin anfragen</a>
-          <a href={site.bookingUrl} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">Termin buchen</a>
+          <a href="/kontakt" class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">Kontakt aufnehmen</a>
         </div>
       </div>
     </div>

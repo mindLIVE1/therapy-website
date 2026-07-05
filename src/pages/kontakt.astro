@@ -9,13 +9,13 @@ const inputClass =
 
 const reassurances = [
   { icon: "lock", text: "Vertraulich & der Schweigepflicht unterliegend" },
-  { icon: "clock", text: "Antwort in der Regel innerhalb von 1–2 Tagen" },
-  { icon: "heart", text: "Kein Druck – ein erstes Gespräch ist kostenlos" },
+  { icon: "clock", text: "Antwort in der Regel innerhalb kurzer Zeit" },
+  { icon: "heart", text: "Kein Druck – ganz unverbindlich" },
 ];
 ---
 <BaseLayout
   title="Kontakt & Terminanfrage"
-  description={`Nehmen Sie vertraulich Kontakt zu ${site.name} auf. Stellen Sie unkompliziert eine Terminanfrage oder buchen Sie direkt ein kostenloses Erstgespräch.`}
+  description={`Nehmen Sie vertraulich Kontakt zu ${site.name} auf. Stellen Sie unkompliziert und unverbindlich eine Terminanfrage – per Formular oder E-Mail.`}
 >
   <!-- Hero -->
   <section class="relative overflow-hidden">
@@ -24,7 +24,7 @@ const reassurances = [
     <div class="container-page py-14 text-center lg:py-20">
       <div class="reveal mx-auto max-w-2xl">
         <p class="eyebrow eyebrow--center justify-center">Kontakt</p>
-        <h1 class="mt-5 text-4xl sm:text-5xl">Schreiben Sie mir – ich freue mich</h1>
+        <h1 class="mt-5 text-4xl sm:text-5xl">Schreiben Sie mir</h1>
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
           Der erste Schritt darf ganz klein sein. Ein paar Zeilen genügen. Sie
           müssen weder das richtige Wort finden noch schon wissen, was Sie
@@ -108,15 +108,14 @@ const reassurances = [
       <aside class="reveal flex flex-col gap-6">
         <div class="rounded-[2rem] border border-line-soft bg-cream p-7 shadow-[var(--shadow-card)]">
           <h2 class="text-xl">Direkt erreichen</h2>
+          <p class="mt-3 text-taupe-ink/80">
+            Am liebsten per E-Mail – dort gehen auch die Formularanfragen ein.
+          </p>
           <a href={`mailto:${site.email}`} class="mt-4 flex items-center gap-3 text-taupe-ink transition-colors hover:text-forest">
             <span class="flex h-10 w-10 items-center justify-center rounded-full bg-sage-mist text-forest">
               <Icon name="mail" class="h-5 w-5" />
             </span>
             <span class="break-all">{site.email}</span>
-          </a>
-          <a href={site.bookingUrl} class="btn btn-forest mt-6 w-full">
-            <Icon name="calendar" class="h-5 w-5" />
-            Direkt Termin buchen
           </a>
         </div>
 

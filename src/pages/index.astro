@@ -5,58 +5,69 @@ import ServiceCard from "@/components/ServiceCard.astro";
 import ImagePlaceholder from "@/components/ImagePlaceholder.astro";
 import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
+import { Image } from "astro:assets";
 import { site, services, isDemo } from "@/data/site";
 import elenaPhoto from "@/assets/elena-roehrborn.webp";
+import heroRaum from "@/assets/hero-raum.png";
+import pflanzeImg from "@/assets/pflanze.png";
+import momentImg from "@/assets/moment-natur.png";
 
 const heroChips = [
-  { icon: "lock", label: "100 % vertraulich" },
-  { icon: "video", label: "Per Video, deutschlandweit" },
-  { icon: "calendar", label: "Flexible Termine" },
+  { icon: "lock", label: "100 % vertraulich & DSGVO-konform" },
+  { icon: "video", label: "Per Video, Telefon oder Text, deutschlandweit" },
 ];
 
 const themes = [
-  "Anhaltende Erschöpfung, Stress oder das Gefühl, nicht mehr abschalten zu können",
-  "Ängste, Sorgen oder Panik, die enger machen",
-  "Niedergeschlagenheit, Antriebslosigkeit oder innere Leere",
+  "Anhaltender Stress, Erschöpfung oder das Gefühl, ständig funktionieren zu müssen",
+  "Ängste, Sorgen oder Panik",
+  "Niedergeschlagenheit, Selbstzweifel oder innere Leere",
   "Konflikte, Distanz oder Sprachlosigkeit in der Partnerschaft",
-  "Fragen rund um Sexualität, Lust und Intimität",
-  "Lebenskrisen, Übergänge und die Suche nach Orientierung",
+  "Fragen zu Sexualität, Intimität oder unterschiedlichen Bedürfnissen",
+  "Lebenskrisen, Veränderungen oder schwierige Entscheidungen",
 ];
 
 const steps = [
   {
     icon: "speech",
-    title: "Kostenloses Kennenlernen",
-    text: "In einem unverbindlichen Erstgespräch lernen wir uns kennen. Sie schildern, was Sie bewegt – und spüren, ob es sich für Sie stimmig anfühlt.",
+    title: "Kontakt aufnehmen",
+    text: "Schreiben Sie mir über das Kontaktformular oder per E-Mail. Ich melde mich zeitnah persönlich zurück, beantworte offene Fragen und wir finden gemeinsam einen passenden Termin. Oft auch kurzfristig.",
   },
   {
     icon: "compass",
-    title: "Gemeinsamer Rahmen",
-    text: "Wir klären Ihr Anliegen, Ihre Ziele und einen Rhythmus, der zu Ihrem Leben passt. Sie behalten jederzeit die Richtung in der Hand.",
+    title: "Erstgespräch & Orientierung",
+    text: "In der ersten Sitzung lernen wir uns kennen und widmen uns bereits Ihrem Anliegen. Wir klären Ihre aktuelle Situation, Ihre Ziele und Ihren Auftrag an die Therapie. Oft entstehen dabei schon erste neue Perspektiven und spürbare Entlastung.",
   },
   {
     icon: "bloom",
-    title: "Begleitung Schritt für Schritt",
-    text: "In regelmäßigen Sitzungen arbeiten wir zusammen – in Ihrem Tempo, mit echtem Verständnis und ohne Druck.",
+    title: "Verstehen. Verändern. Festigen.",
+    text: "Gemeinsam verstehen wir die Zusammenhänge hinter Ihren Belastungen, erkennen wiederkehrende Muster und entwickeln neue Handlungsmöglichkeiten. Schritt für Schritt entsteht mehr Klarheit, Selbstvertrauen und nachhaltige Veränderung.",
   },
 ];
 
 const faqs = [
   {
-    q: "Ist Online-Therapie genauso wirksam wie vor Ort?",
-    a: "Ja. Studien zeigen, dass Online-Psychotherapie bei vielen Anliegen ähnlich wirksam ist wie eine Behandlung in der Praxis. Viele Menschen öffnen sich aus der vertrauten Umgebung zu Hause sogar leichter.",
+    q: "Wie schnell bekomme ich einen Termin?",
+    a: "In der Regel kann ich kurzfristig Termine anbieten. Schreiben Sie mir einfach über das Kontaktformular oder per E-Mail. Ich melde mich zeitnah persönlich bei Ihnen zurück und wir finden gemeinsam einen passenden Termin.",
   },
   {
-    q: "Wie vertraulich ist das Ganze?",
-    a: "Vollständig. Ich unterliege der Schweigepflicht, und wir sprechen über eine verschlüsselte, datenschutzkonforme Videoverbindung. Was Sie mir anvertrauen, bleibt zwischen uns.",
+    q: "Muss ich genau wissen, worüber ich sprechen möchte?",
+    a: "Nein. Viele Menschen kommen mit dem Gefühl, dass etwas belastet, ohne es genau benennen zu können. Gemeinsam schaffen wir Schritt für Schritt Klarheit. Sie müssen nichts vorbereitet haben.",
+  },
+  {
+    q: "Was passiert in der ersten Sitzung?",
+    a: "In der ersten Sitzung lernen wir uns kennen und besprechen Ihr Anliegen ausführlich. Gemeinsam klären wir, was Sie beschäftigt, welche Ziele Sie haben und wie eine passende Zusammenarbeit aussehen kann. Bereits die erste Sitzung ist eine vollständige therapeutische Sitzung.",
+  },
+  {
+    q: "Kann ich auch aus dem Ausland teilnehmen?",
+    a: "Ja. Solange Sie sich während der Sitzung an einem ruhigen Ort mit stabiler Internetverbindung befinden, können Sie auch aus dem Ausland teilnehmen.",
+  },
+  {
+    q: "Ist Online-Therapie genauso wirksam wie vor Ort?",
+    a: "Ja. Studien zeigen, dass Online-Psychotherapie bei vielen Anliegen genauso wirksam sein kann wie eine Therapie vor Ort. Viele Menschen erleben es sogar als hilfreich, sich in ihrer vertrauten Umgebung zu öffnen.",
   },
   {
     q: "Brauche ich eine Diagnose oder Überweisung?",
-    a: "Nein. Sie können sich direkt bei mir melden – ganz ohne Überweisung. Auch ohne klar benennbares Anliegen sind Sie willkommen.",
-  },
-  {
-    q: "Was brauche ich technisch?",
-    a: "Ein Gerät mit Kamera und Mikrofon, eine stabile Internetverbindung und einen ungestörten Ort. Den Videolink erhalten Sie bequem per E-Mail.",
+    a: "Nein. Sie benötigen weder eine Diagnose noch eine Überweisung. Sie können sich jederzeit aus eigener Entscheidung Unterstützung holen – auch dann, wenn Sie sich einfach mehr Orientierung, Entlastung oder persönliche Entwicklung wünschen.",
   },
 ];
 
@@ -87,38 +98,53 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <!-- ───────────────────────── Hero ───────────────────────── -->
-  <section class="relative overflow-hidden">
-    <Blob color="sage" class="right-[-6rem] top-[-8rem] h-[28rem] w-[28rem]" />
-    <Blob color="clay" class="left-[-10rem] top-[18rem] h-[24rem] w-[24rem]" />
+  <section class="container-page pt-8 sm:pt-12">
+    <div class="reveal relative isolate overflow-hidden rounded-[2.5rem] shadow-[var(--shadow-soft)]">
+      <!-- background photo -->
+      <Image
+        src={heroRaum}
+        alt="Ruhiger, warm eingerichteter Raum mit Sessel und Pflanzen"
+        widths={[640, 960, 1280, 1600]}
+        sizes="(min-width: 1280px) 1200px, 100vw"
+        class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+      />
+      <!-- legibility scrim: cream on the text side -->
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-b from-cream/85 via-cream/70 to-cream/70 sm:bg-gradient-to-r sm:from-cream sm:from-30% sm:via-cream/85 sm:to-transparent"
+      ></div>
 
-    <div class="container-page grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
-      <div class="reveal">
-        <p class="eyebrow">Online-Psychotherapie · Deutschlandweit</p>
+      <div class="max-w-xl px-6 py-14 sm:px-10 sm:py-20 lg:px-14 lg:py-24">
+        <p class="eyebrow">Online-Psychotherapie · deutschlandweit</p>
         <h1 class="mt-5 text-4xl sm:text-5xl lg:text-[3.4rem]">
           Ein geschützter Raum für das,<br class="hidden sm:block" />
-          <span class="text-forest">was Sie gerade tragen.</span>
+          <span class="text-forest">was Sie gerade bewegt.</span>
         </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-taupe-ink/85">
-          Psychotherapie, Paar- und Sexualtherapie – einfühlsam, vertraulich und
-          ganz bequem von zu Hause. Ich begleite Sie in Ihrem Tempo durch
-          Krisen, Belastungen und Veränderung. Sie müssen da nicht allein durch.
+        <p class="mt-6 text-lg leading-relaxed text-taupe-ink/90">
+          Online-Psychotherapie, Paartherapie &amp; Sexualtherapie – professionell,
+          einfühlsam und vertraulich. Ich begleite Sie bei Selbstwertthemen,
+          Beziehungsproblemen, Sexualität, Krisen, emotionalen Belastungen und
+          persönlicher Entwicklung.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/80">
+          Es braucht Mut, sich Unterstützung zu suchen. Und manchmal ist genau
+          dieser Schritt der Beginn einer nachhaltigen Veränderung.
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/kontakt#termin" class="btn btn-primary">
-            Kostenloses Erstgespräch anfragen
+            Erstgespräch anfragen
           </a>
-          <a href={site.bookingUrl} class="btn btn-outline">
-            <Icon name="calendar" class="h-5 w-5" />
-            Direkt Termin buchen
+          <a href="/kontakt" class="btn btn-outline">
+            <Icon name="mail" class="h-5 w-5" />
+            Kontakt aufnehmen
           </a>
         </div>
 
         <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-3">
           {
             heroChips.map((chip) => (
-              <li class="inline-flex items-center gap-2 text-sm font-medium text-taupe-ink/80">
-                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-sage-mist text-forest">
+              <li class="inline-flex items-center gap-2 text-sm font-medium text-taupe-ink/90">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-cream/80 text-forest ring-1 ring-forest/10">
                   <Icon name={chip.icon} class="h-4 w-4" />
                 </span>
                 {chip.label}
@@ -127,33 +153,6 @@ const jsonLd = {
           }
         </ul>
       </div>
-
-      <!-- Hero image -->
-      <div class="reveal relative mx-auto w-full max-w-md lg:max-w-none" style="--reveal-delay:120ms">
-        <ImagePlaceholder
-          shape="blob"
-          ratio="4/5"
-          tone="sage"
-          src={isDemo ? undefined : elenaPhoto}
-          alt={`${site.name}, Heilpraktikerin für Psychotherapie, an ihrem Arbeitsplatz`}
-          position="46% 22%"
-          class="w-full"
-        />
-        <!-- floating reassurance card -->
-        <div
-          class="absolute -bottom-5 left-1/2 w-[min(20rem,90%)] -translate-x-1/2 rounded-3xl border border-line-soft bg-cream/95 p-4 shadow-[var(--shadow-soft)] backdrop-blur sm:left-auto sm:right-[-1.5rem] sm:translate-x-0"
-        >
-          <div class="flex items-start gap-3">
-            <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-clay/15 text-clay-deep">
-              <Icon name="check-circle" class="h-5 w-5" />
-            </span>
-            <p class="text-sm leading-snug text-taupe-ink">
-              <span class="font-display font-semibold text-ink">Erstgespräch kostenlos</span><br />
-              unverbindlich &amp; ohne Verpflichtung
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -161,8 +160,8 @@ const jsonLd = {
   <section class="container-page py-16 sm:py-20">
     <SectionHeading
       eyebrow="Therapieangebote"
-      title="Begleitung, die zu Ihrem Anliegen passt"
-      lead="Drei Wege, ein gemeinsames Ziel: dass Sie sich verstanden fühlen und wieder handlungsfähig werden. Wählen Sie, was Sie gerade brauchen."
+      title="Das passende Therapieangebot für Ihr Anliegen"
+      lead="Ob Sie sich selbst besser verstehen möchten, Ihre Beziehung stärken oder Fragen rund um Sexualität klären wollen – gemeinsam finden wir einen Weg, der zu Ihnen passt."
       align="center"
       class="reveal"
     />
@@ -190,16 +189,17 @@ const jsonLd = {
       <div class="reveal relative order-2 lg:order-1">
         <ImagePlaceholder
           shape="rounded"
-          ratio="5/4"
+          ratio="6/5"
           tone="sand"
-          label="Warme Detailaufnahme – Hände, Tee, Fenster, Pflanze"
+          src={pflanzeImg}
+          alt="Sonnendurchflutetes Zimmer mit Pflanze"
         />
       </div>
       <div class="reveal order-1 lg:order-2">
         <SectionHeading
-          eyebrow="Vielleicht kennen Sie das"
-          title="Manches lässt sich allein nur schwer tragen"
-          lead="Sie müssen nicht erst „funktionieren“ oder eine perfekte Erklärung haben, um sich Unterstützung zu holen. Wenn Sie sich in einem dieser Punkte wiederfinden, sind Sie hier richtig:"
+          eyebrow="Vielleicht erkennen Sie sich hier wieder"
+          title="Der erste Schritt beginnt oft mit dem Gefühl, dass etwas anders werden darf"
+          lead="Sie brauchen keine Diagnose, keine perfekte Erklärung und keinen „triftigen Grund“, um sich Unterstützung zu erlauben. Oft reicht das Gefühl, dass etwas nicht mehr stimmig ist. Wenn Sie sich in einem oder mehreren dieser Punkte wiederfinden, begleite ich Sie gerne."
         />
         <ul class="mt-7 grid gap-3 sm:grid-cols-1">
           {
@@ -213,10 +213,6 @@ const jsonLd = {
             ))
           }
         </ul>
-        <p class="mt-7 text-taupe-ink/85">
-          Was auch immer Sie mitbringen – wir schauen gemeinsam und ohne Wertung
-          darauf.
-        </p>
       </div>
     </div>
   </section>
@@ -237,18 +233,24 @@ const jsonLd = {
       <div class="reveal">
         <p class="eyebrow">Schön, dass Sie hier sind</p>
         <h2 class="mt-4 text-3xl sm:text-4xl">
-          Ich begleite Menschen mit Wärme&nbsp;– und mit Klarheit
+          Ich begleite Menschen mit Wärme, Klarheit und Struktur
         </h2>
         <p class="mt-6 text-lg leading-relaxed text-taupe-ink/85">
-          Mein Name ist {site.name}, Heilpraktikerin für Psychotherapie. Mir
-          ist wichtig, dass Sie sich von der ersten Minute an sicher und ernst
-          genommen fühlen. Mein Ansatz verbindet einfühlsames Zuhören mit einem
-          klaren, strukturierten Vorgehen.
+          Viele Menschen wünschen sich jemanden, der wirklich zuhört und
+          gleichzeitig dabei hilft, Gedanken zu ordnen und neue Perspektiven zu
+          entwickeln. Genauso verstehe ich Therapie.
         </p>
         <p class="mt-4 leading-relaxed text-taupe-ink/85">
-          Sie bestimmen, worüber wir sprechen und wie schnell wir gehen. Meine
-          Aufgabe ist es, einen Raum zu halten, in dem Sie sich zeigen dürfen –
-          mit allem, was dazugehört.
+          Ich begegne Ihnen auf Augenhöhe: empathisch, wertschätzend und ohne
+          Urteil. Gleichzeitig arbeite ich klar, strukturiert und
+          lösungsorientiert. Gemeinsam verstehen wir, was Sie belastet, erkennen
+          wiederkehrende Muster und entwickeln Schritt für Schritt Wege, die zu
+          Ihnen und Ihrem Leben passen.
+        </p>
+        <p class="mt-4 leading-relaxed text-taupe-ink/85">
+          Sie bestimmen das Tempo. Ich sorge für einen sicheren Rahmen,
+          Orientierung und einen klaren roten Faden, damit Veränderung nicht
+          überwältigend wirkt, sondern möglich wird.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/ueber-mich" class="btn btn-forest">
@@ -268,8 +270,8 @@ const jsonLd = {
     <div class="container-page">
       <SectionHeading
         eyebrow="So einfach beginnt es"
-        title="In drei ruhigen Schritten"
-        lead="Der erste Schritt ist oft der schwerste. Deshalb halte ich den Einstieg so unkompliziert wie möglich."
+        title="In drei klaren Schritten"
+        lead="Der erste Schritt muss sich nicht groß anfühlen. Wir beginnen dort, wo Sie gerade stehen, in Ihrem Tempo und ohne Druck."
         align="center"
         class="reveal"
       />
@@ -313,14 +315,14 @@ const jsonLd = {
             Sie müssen das nicht allein tragen
           </h2>
           <p class="mt-4 max-w-xl text-lg leading-relaxed text-cream/80">
-            Ein erstes Gespräch ist kostenlos und unverbindlich. Schreiben Sie
-            mir – in Ihren Worten, ohne Vorbereitung.
+            Schreiben Sie mir – in Ihren Worten, ohne Vorbereitung. Ich melde
+            mich zeitnah persönlich bei Ihnen zurück.
           </p>
         </div>
         <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
           <a href="/kontakt#termin" class="btn btn-light">Erstgespräch anfragen</a>
-          <a href={site.bookingUrl} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">
-            Termin buchen
+          <a href="/kontakt" class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">
+            Kontakt aufnehmen
           </a>
         </div>
       </div>
@@ -330,12 +332,17 @@ const jsonLd = {
   <!-- ───────────────────────── FAQ ─────────────────────────── -->
   <section class="container-page py-16 sm:py-20">
     <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-      <SectionHeading
-        eyebrow="Häufige Fragen"
-        title="Was Sie vielleicht noch wissen möchten"
-        lead="Und falls Ihre Frage hier nicht dabei ist: Schreiben Sie mir einfach."
-        class="reveal lg:sticky lg:top-28 lg:self-start"
-      />
+      <div class="reveal lg:sticky lg:top-28 lg:self-start">
+        <SectionHeading
+          eyebrow="Häufige Fragen"
+          title="Häufige Fragen – kurz beantwortet"
+          lead="Ihre Frage war nicht dabei? Schreiben Sie mir gerne unverbindlich. Ich beantworte Ihre Fragen persönlich und melde mich in der Regel innerhalb kurzer Zeit zurück."
+        />
+        <a href="/kontakt#termin" class="link-arrow mt-6 inline-flex">
+          Termin anfragen
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
       <div class="reveal divide-y divide-line">
         {
           faqs.map((faq) => (
@@ -363,7 +370,8 @@ const jsonLd = {
             shape="rounded"
             tone="clay"
             ratio="1/1"
-            label="Ruhiger, warmer Moment – Sonnenlicht, Natur"
+            src={momentImg}
+            alt="Sonnenuntergang über einem Pfad am Meer"
             class="!rounded-none h-full"
           />
         </div>

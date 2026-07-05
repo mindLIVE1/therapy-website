@@ -7,6 +7,16 @@ import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
 import { serviceContent } from "@/data/serviceContent";
 import { services, site } from "@/data/site";
+import type { ImageMetadata } from "astro";
+import einzelImg from "@/assets/einzeltherapie.png";
+import paarImg from "@/assets/paartherapie.png";
+import sexualImg from "@/assets/sexualtherapie.png";
+
+const serviceImages: Record<string, ImageMetadata> = {
+  einzeltherapie: einzelImg,
+  paartherapie: paarImg,
+  sexualtherapie: sexualImg,
+};
 
 export async function getStaticPaths() {
   return Object.values(serviceContent).map((content) => ({
@@ -18,6 +28,7 @@ export async function getStaticPaths() {
 const { content } = Astro.props;
 const current = services.find((s) => s.slug === content.slug)!;
 const others = services.filter((s) => s.slug !== content.slug);
+const heroImage = serviceImages[content.slug];
 
 const jsonLd = [
   {
@@ -90,19 +101,21 @@ const jsonLd = [
           </p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="/kontakt#termin" class="btn btn-primary">
-              Kostenloses Erstgespräch
+              Termin anfragen
             </a>
-            <a href={site.bookingUrl} class="btn btn-outline">
-              <Icon name="calendar" class="h-5 w-5" />
-              Termin buchen
+            <a href="/kontakt" class="btn btn-outline">
+              <Icon name="mail" class="h-5 w-5" />
+              Kontakt aufnehmen
             </a>
           </div>
         </div>
         <div class="reveal relative mx-auto w-full max-w-md" style="--reveal-delay:120ms">
           <ImagePlaceholder
             shape="blob"
-            ratio="1/1"
+            ratio="5/4"
             tone="sage"
+            src={heroImage}
+            alt={content.heroTitle}
             label={content.imageLabel}
           />
         </div>
@@ -132,13 +145,16 @@ const jsonLd = [
   <section class="relative overflow-hidden bg-sage-mist py-14 sm:py-20">
     <Blob color="clay" class="left-[-6rem] bottom-[-5rem] h-72 w-72" />
     <div class="container-page">
-      <SectionHeading
-        eyebrow={content.eyebrow}
-        title={content.forWhomHeading}
-        lead={content.forWhomIntro}
-        class="reveal"
-      />
-      <ul class="reveal mt-10 grid gap-4 sm:grid-cols-2">
+      <SectionHeading eyebrow={content.eyebrow} title={content.forWhomHeading} class="reveal" />
+      {content.forWhomSubheading && (
+        <p class="reveal mt-4 font-display text-lg font-semibold text-forest">
+          {content.forWhomSubheading}
+        </p>
+      )}
+      <p class="reveal mt-4 max-w-2xl text-lg leading-relaxed text-taupe-ink/85">
+        {content.forWhomIntro}
+      </p>
+      <ul class="reveal mt-8 grid gap-4 sm:grid-cols-2">
         {content.forWhom.map((item) => (
           <li class="flex items-start gap-3 rounded-2xl border border-line-soft bg-cream/70 px-5 py-4">
             <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-forest/10 text-forest">
@@ -148,6 +164,11 @@ const jsonLd = [
           </li>
         ))}
       </ul>
+      {content.forWhomClosing && (
+        <p class="reveal mt-8 max-w-2xl text-lg text-taupe-ink/85">
+          {content.forWhomClosing}
+        </p>
+      )}
     </div>
   </section>
 
@@ -201,12 +222,12 @@ const jsonLd = [
         <div>
           <h2 class="text-cream text-2xl sm:text-3xl">Bereit für einen ersten Schritt?</h2>
           <p class="mt-3 max-w-xl text-cream/80">
-            Schreiben Sie mir, was Sie bewegt – das Erstgespräch ist kostenlos und unverbindlich.
+            Schreiben Sie mir, was Sie bewegt – unverbindlich und in Ihren eigenen Worten.
           </p>
         </div>
         <div class="flex flex-wrap gap-3">
           <a href="/kontakt#termin" class="btn btn-light">Termin anfragen</a>
-          <a href={site.bookingUrl} class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">Termin buchen</a>
+          <a href="/kontakt" class="btn btn-outline border-cream/40 !text-cream hover:!bg-white/10">Kontakt aufnehmen</a>
         </div>
       </div>
     </div>
