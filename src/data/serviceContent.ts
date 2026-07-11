@@ -54,6 +54,7 @@ export const serviceContent: Record<string, ServiceContent> = {
       "Schwierigkeiten, Grenzen zu setzen und für sich einzustehen",
       "Wut, intensiven Emotionen und emotionaler Regulation",
       "Trauer, Verlust und einschneidenden Veränderungen",
+      "Lebenskrisen & berufliche Neuorientierung",
     ],
     forWhomClosing:
       "Ganz gleich, mit welchem Anliegen Sie kommen – wir beginnen dort, wo Sie gerade stehen.",
@@ -125,7 +126,7 @@ export const serviceContent: Record<string, ServiceContent> = {
       "Veränderungen durch Familie, Elternschaft oder Kinderwunsch",
       "Berufliche Belastungen und neue Lebensphasen als Paar",
       "Trennungsgedanken oder Begleitung einer respektvollen Trennung",
-      "Polyamore und ethisch nicht-monogame Beziehungen",
+      "Polyamore und nicht-monogame Beziehungen",
     ],
     approachHeading: "Wie wir zusammenarbeiten",
     approachIntro:
@@ -178,14 +179,13 @@ export const serviceContent: Record<string, ServiceContent> = {
     introHeading: "Sexualität verstehen statt bewerten",
     introParagraphs: [
       "Über Sexualität zu sprechen fällt vielen Menschen schwer. Häufig prägen persönliche Erfahrungen, gesellschaftliche Erwartungen oder Beziehungsdynamiken unser sexuelles Erleben und führen zu Unsicherheit, Druck oder dem Gefühl, mit den eigenen Fragen allein zu sein.",
-      "In der Sexualtherapie schaffen wir einen geschützten Raum, in dem alles Platz haben darf. Gemeinsam erkunden wir Ihre Wünsche, Bedürfnisse und Grenzen, verstehen hinderliche Muster und entwickeln neue Wege zu einer erfüllteren Sexualität und mehr Intimität.",
+      "In der Sexualtherapie schaffen wir einen geschützten Raum, in dem alles Platz haben darf. Gemeinsam erkunden wir Ihre Wünsche, Bedürfnisse und Grenzen, verstehen hinderliche Muster und entwickeln neue Wege zu einer erfüllteren Sexualität und Intimität.",
     ],
     forWhomHeading: "Wobei Sexualtherapie unterstützen kann",
     forWhomIntro:
       "Ob alleine oder in Beziehung, in der Sexualtherapie dürfen alle Fragen rund um Sexualität, Intimität und Beziehungen ihren Platz haben. Zum Beispiel:",
     forWhom: [
       "Unterschiedliche Lust und sexuelles Verlangen in der Partnerschaft",
-      "Weniger Nähe oder Intimität in der Beziehung",
       "Veränderungen nach Geburt, Krankheit oder in neuen Lebensphasen",
       "Erektions-, Erregungs- oder Orgasmusschwierigkeiten",
       "Schmerzen beim Sex",
