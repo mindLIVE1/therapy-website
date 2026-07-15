@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import { isSiteInProgress, site } from "@/data/site";
+import { getSocialMeta, socialImage } from "@/data/social";
 import Seo from "@/components/Seo.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -16,6 +17,7 @@ interface Props {
 const { title, description, image, noindex, jsonLd } = Astro.props;
 const maintenanceTitle = `Website in Bearbeitung | ${site.name}`;
 const maintenanceDescription = `Die Website von ${site.name} befindet sich derzeit in Bearbeitung.`;
+const socialMeta = isSiteInProgress ? undefined : getSocialMeta(Astro.url.pathname);
 ---
 <!doctype html>
 <html lang={site.lang}>
@@ -27,7 +29,13 @@ const maintenanceDescription = `Die Website von ${site.name} befindet sich derze
     <Seo
       title={isSiteInProgress ? maintenanceTitle : title}
       description={isSiteInProgress ? maintenanceDescription : description}
-      image={image}
+      socialTitle={socialMeta?.title}
+      socialDescription={socialMeta?.description}
+      image={image || socialImage.path}
+      imageAlt={socialImage.alt}
+      imageWidth={socialImage.width}
+      imageHeight={socialImage.height}
+      imageType={socialImage.type}
       noindex={noindex || isSiteInProgress}
       nofollow={isSiteInProgress}
       jsonLd={jsonLd}

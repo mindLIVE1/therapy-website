@@ -13,7 +13,7 @@ Abgehakt = erledigt. Reihenfolge ist eine Empfehlung, keine Pflicht.
 - [ ] Texte gegenlesen (Tonalität, Anrede, evtl. Telefonnummer ergänzen in `src/data/site.ts`)
 - [x] Porträtfoto von Elena einsetzen (Hero, Über-mich, Teaser)
 - [ ] Weitere Fotos einsetzen (Detailaufnahmen, „ruhiger Moment“) — siehe verbleibende `<ImagePlaceholder>` in den Seiten
-- [ ] Eigenes OG-Share-Bild gestalten (ersetzt `public/og-image.svg`), optional mit Foto
+- [x] Eigenes OG-Share-Bild unter `public/og-image-v2.jpg` hinterlegt
 
 ## Phase 2 — Funktionen anbinden
 

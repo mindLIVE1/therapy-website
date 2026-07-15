@@ -4,8 +4,15 @@ import { site } from "@/data/site";
 interface Props {
   title: string;
   description: string;
+  /** Optional copy tailored specifically to social share cards. */
+  socialTitle?: string;
+  socialDescription?: string;
   /** Path to an OG image in /public, or absolute URL. */
   image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  imageType?: string;
   /** Set true on legal / utility pages you don't want indexed-as-primary. */
   noindex?: boolean;
   /** Prevent crawlers from following links, e.g. while the complete site is private. */
@@ -17,7 +24,13 @@ interface Props {
 const {
   title,
   description,
-  image = "/og-image.svg",
+  socialTitle,
+  socialDescription,
+  image = "/og-image-v2.jpg",
+  imageAlt = `Social-Media-Vorschau der Online-Praxis von ${site.name}.`,
+  imageWidth = 1200,
+  imageHeight = 630,
+  imageType = "image/jpeg",
   noindex = false,
   nofollow = false,
   jsonLd,
@@ -30,6 +43,12 @@ const ogImage = image.startsWith("http") ? image : new URL(image, site.url).href
 const fullTitle = title.includes(site.name)
   ? title
   : `${title} | ${site.name}`;
+const fullSocialTitle = socialTitle
+  ? socialTitle.includes(site.name)
+    ? socialTitle
+    : `${socialTitle} | ${site.name}`
+  : fullTitle;
+const fullSocialDescription = socialDescription || description;
 
 const ldBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
@@ -49,16 +68,22 @@ const ldBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={site.name} />
 <meta property="og:locale" content="de_DE" />
-<meta property="og:title" content={fullTitle} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={fullSocialTitle} />
+<meta property="og:description" content={fullSocialDescription} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:secure_url" content={ogImage} />
+<meta property="og:image:type" content={imageType} />
+<meta property="og:image:width" content={String(imageWidth)} />
+<meta property="og:image:height" content={String(imageHeight)} />
+<meta property="og:image:alt" content={imageAlt} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={fullTitle} />
-<meta name="twitter:description" content={description} />
+<meta name="twitter:title" content={fullSocialTitle} />
+<meta name="twitter:description" content={fullSocialDescription} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
 <!-- Structured data -->
 {
