@@ -46,15 +46,58 @@ Abgehakt = erledigt. Reihenfolge ist eine Empfehlung, keine Pflicht.
 
 ## Phase 5 — Deployment / Hosting
 
-- [ ] Git-Repository anlegen (ist aktuell **kein** Git-Repo)
-- [ ] Host wählen. Empfehlung für DSGVO/EU:
-  - **Cloudflare Pages** (EU-Datenstandort möglich, kostenlos, einfach), oder
-  - **Netlify / Vercel** (sehr komfortabel, inkl. Formulardienst bei Netlify), oder
-  - klassischer **deutscher Webspace** (statisches `dist/` per FTP/Deploy)
-- [ ] Build-Command `npm run build`, Output-Verzeichnis `dist/` hinterlegen
+- [x] Git-Repository auf GitHub angelegt
+- [x] ALL-INKL Privat+ als Hosting gewählt
+- [x] GitHub-Workflow für Build und FTPS-Deployment angelegt
+- [x] GitHub-Secrets `FTP_SERVER`, `FTP_USERNAME` und `FTP_PASSWORD` eintragen
+- [ ] In KAS prüfen, dass `elena-roehrborn.de` auf das Verzeichnis
+      `/elena-roehrborn.de/` zeigt
+- [ ] Ersten Workflow manuell starten und Ergebnis auf der Domain prüfen
 - [ ] Domain verbinden + **HTTPS/SSL** aktivieren (i. d. R. automatisch)
 - [ ] `www`- und Nicht-`www`-Variante auf eine Form weiterleiten (Canonical)
 - [ ] 404-Seite greift (ist vorhanden: `src/pages/404.astro`)
+
+### Automatisches Deployment zu ALL-INKL
+
+Der Workflow `.github/workflows/deploy.yml` wird bei jedem Push auf `main`
+ausgeführt. Er installiert die festgeschriebenen Abhängigkeiten mit `npm ci`,
+baut die Astro-Seite mit `npm run build` und synchronisiert anschließend nur
+den Inhalt von `dist/` per verschlüsseltem FTPS in das Domainverzeichnis.
+
+#### 1. FTP-Ziel bei ALL-INKL prüfen
+
+Im KAS unter `Domain` die Domain `elena-roehrborn.de` bearbeiten und prüfen,
+dass ihr Ziel das Verzeichnis `/elena-roehrborn.de/` ist. Das entspricht dem
+gleichnamigen Ordner in WebFTP. Der Account-Stamm mit `cgi-bin` und der
+ALL-INKL-Datei `index.htm` ist nicht das Deployment-Ziel.
+
+#### 2. GitHub-Secrets anlegen
+
+Im GitHub-Repository zu `Settings` -> `Secrets and variables` -> `Actions`
+gehen und unter `Repository secrets` diese drei Secrets anlegen:
+
+| Secret | Wert |
+| --- | --- |
+| `FTP_SERVER` | ALL-INKL-FTP-Server, normalerweise `<KAS-Login>.kasserver.com` |
+| `FTP_USERNAME` | Benutzername des FTP-Zugangs |
+| `FTP_PASSWORD` | Passwort des FTP-Zugangs |
+
+Keine Zugangsdaten in Dateien, Commits oder Workflow-Text eintragen. Für das
+Deployment nach Möglichkeit einen eigenen FTP-Benutzer verwenden, dessen
+Startverzeichnis direkt `/elena-roehrborn.de/` ist. Wenn dessen Startverzeichnis
+bereits der Domainordner ist, muss `server-dir` im Workflow stattdessen auf `./`
+gesetzt werden.
+
+#### 3. Ersten Deploy starten
+
+Zuerst die Secrets anlegen, danach den Workflow committen und auf `main`
+pushen. Alternativ kann er in GitHub unter `Actions` ->
+`Deploy website to ALL-INKL` -> `Run workflow` manuell gestartet werden.
+
+Der erste Lauf lädt die vollständige Seite hoch. Spätere Läufe übertragen nur
+Änderungen und entfernen Dateien, die von einem früheren Deployment stammen,
+aber inzwischen nicht mehr im Build enthalten sind. Unbekannte bestehende
+Dateien werden nicht pauschal gelöscht.
 
 ## Phase 6 — Optionale Ausbaustufen
 
