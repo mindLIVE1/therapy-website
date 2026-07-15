@@ -6,11 +6,11 @@ export type SocialMeta = {
 };
 
 export const socialImage = {
-  path: "/og-image-v2.jpg",
+  path: "/og-image-v3.jpg",
   width: 1200,
   height: 630,
   type: "image/jpeg",
-  alt: `Social-Media-Vorschau der Online-Praxis von ${site.name}: Spross-Logo, der Claim „Ein geschützter Raum für das, was Sie gerade bewegt.“ und ein Ausschnitt der Website.`,
+  alt: `Social-Media-Vorschau der Online-Praxis von ${site.name}: Spross-Logo und der Claim „Ein geschützter Raum für das, was Sie gerade bewegt.“ auf einem ruhigen creme- und salbeifarbenen Hintergrund.`,
 } as const;
 
 const socialMetaByPath: Record<string, SocialMeta> = {
