@@ -1,9 +1,10 @@
 ---
 import "@/styles/global.css";
-import { site } from "@/data/site";
+import { isSiteInProgress, site } from "@/data/site";
 import Seo from "@/components/Seo.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import MaintenanceOverlay from "@/components/MaintenanceOverlay.astro";
 
 interface Props {
   title: string;
@@ -13,6 +14,8 @@ interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 const { title, description, image, noindex, jsonLd } = Astro.props;
+const maintenanceTitle = `Website in Bearbeitung | ${site.name}`;
+const maintenanceDescription = `Die Website von ${site.name} befindet sich derzeit in Bearbeitung.`;
 ---
 <!doctype html>
 <html lang={site.lang}>
@@ -22,25 +25,34 @@ const { title, description, image, noindex, jsonLd } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <Seo
-      title={title}
-      description={description}
+      title={isSiteInProgress ? maintenanceTitle : title}
+      description={isSiteInProgress ? maintenanceDescription : description}
       image={image}
-      noindex={noindex}
+      noindex={noindex || isSiteInProgress}
+      nofollow={isSiteInProgress}
       jsonLd={jsonLd}
     />
   </head>
   <body class="min-h-screen overflow-x-hidden">
-    <a
-      href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-forest focus:px-5 focus:py-2.5 focus:font-display focus:text-sm focus:text-cream"
-    >
-      Zum Inhalt springen
-    </a>
-    <Header />
-    <main id="main">
-      <slot />
-    </main>
-    <Footer />
+    {
+      isSiteInProgress ? (
+        <MaintenanceOverlay />
+      ) : (
+        <>
+          <a
+            href="#main"
+            class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-forest focus:px-5 focus:py-2.5 focus:font-display focus:text-sm focus:text-cream"
+          >
+            Zum Inhalt springen
+          </a>
+          <Header />
+          <main id="main">
+            <slot />
+          </main>
+          <Footer />
+        </>
+      )
+    }
 
     <script>
       // Gentle scroll-reveal. Respects prefers-reduced-motion (handled in CSS).

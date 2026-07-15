@@ -5,6 +5,9 @@ export const isDemo =
   import.meta.env.PUBLIC_IS_DEMO === "true" ||
   import.meta.env.IS_DEMO === "true";
 
+export const isSiteInProgress =
+  import.meta.env.PUBLIC_SITE_IN_PROGRESS === "true";
+
 export const site = {
   name: isDemo ? "Erika Mustermann" : "Elena Roehrborn",
   firstName: isDemo ? "Erika" : "Elena",

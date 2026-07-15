@@ -8,12 +8,20 @@ interface Props {
   image?: string;
   /** Set true on legal / utility pages you don't want indexed-as-primary. */
   noindex?: boolean;
+  /** Prevent crawlers from following links, e.g. while the complete site is private. */
+  nofollow?: boolean;
   /** Optional extra JSON-LD object(s) merged into the page. */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, image = "/og-image.svg", noindex = false, jsonLd } =
-  Astro.props;
+const {
+  title,
+  description,
+  image = "/og-image.svg",
+  noindex = false,
+  nofollow = false,
+  jsonLd,
+} = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, site.url).href.replace(/\/$/, "") || site.url;
 const ogImage = image.startsWith("http") ? image : new URL(image, site.url).href;
@@ -30,7 +38,10 @@ const ldBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-<meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
+<meta
+  name="robots"
+  content={`${noindex ? "noindex" : "index"}, ${nofollow ? "nofollow" : "follow"}`}
+/>
 <meta name="author" content={site.name} />
 <meta name="theme-color" content="#3f5141" />
 

@@ -100,6 +100,28 @@ enthalten sind. Das von ALL-INKL beziehungsweise Let's Encrypt verwendete
 Verzeichnis `.well-known` ist davon ausgenommen. Manuelle Uploads deshalb nicht
 im Domainverzeichnis, sondern in einem separaten Ordner ablegen.
 
+### Bearbeitungsmodus
+
+Die Build-Variable `PUBLIC_SITE_IN_PROGRESS` steuert die bildschirmfüllende
+Wartungsansicht. Im Bearbeitungsmodus werden Navigation, Seiteninhalt, Formulare
+und Links nicht ausgegeben. Alle Seiten erhalten zusätzlich `noindex, nofollow`.
+
+Die Variable im GitHub-Repository unter `Settings` -> `Secrets and variables`
+-> `Actions` -> `Variables` als Repository-Variable anlegen:
+
+| Wert | Verhalten |
+| --- | --- |
+| `true` | Wartungsansicht aktiv, Website nicht bedienbar, Indexierung deaktiviert |
+| `false` | Vollständige Website aktiv, normale Indexierung aktiviert |
+
+Solange die Variable nicht existiert, baut der Deployment-Workflow die Website
+vorsichtshalber mit dem Wert `true`. Eine Änderung der Variable startet keinen
+Build. Danach unter `Actions` -> `Deploy website to ALL-INKL` den Workflow über
+`Run workflow` neu ausführen.
+
+Für die lokale Entwicklung kann derselbe Wert in einer nicht eingecheckten
+`.env`-Datei gesetzt werden; `.env.example` dient als Vorlage.
+
 ## Phase 6 — Optionale Ausbaustufen
 
 - [ ] **Cookie-freie Analytik** (datensparsam): Plausible oder Umami (self-hosted/EU) statt Google Analytics
