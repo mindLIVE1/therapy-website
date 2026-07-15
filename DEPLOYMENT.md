@@ -95,9 +95,10 @@ pushen. Alternativ kann er in GitHub unter `Actions` ->
 `Deploy website to ALL-INKL` -> `Run workflow` manuell gestartet werden.
 
 Der erste Lauf lädt die vollständige Seite hoch. Spätere Läufe übertragen nur
-Änderungen und entfernen Dateien, die von einem früheren Deployment stammen,
-aber inzwischen nicht mehr im Build enthalten sind. Unbekannte bestehende
-Dateien werden nicht pauschal gelöscht.
+Änderungen und entfernen Dateien im Domainverzeichnis, die nicht mehr im Build
+enthalten sind. Das von ALL-INKL beziehungsweise Let's Encrypt verwendete
+Verzeichnis `.well-known` ist davon ausgenommen. Manuelle Uploads deshalb nicht
+im Domainverzeichnis, sondern in einem separaten Ordner ablegen.
 
 ## Phase 6 — Optionale Ausbaustufen
 
