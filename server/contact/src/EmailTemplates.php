@@ -6,8 +6,11 @@ namespace TherapyWebsite\Contact;
 
 final class EmailTemplates
 {
-    /** @return array{subject: string, html: string, text: string} */
-    public static function internal(ContactSubmission $submission): array
+    /**
+     * @param array{senderName: string, infoEmail: string, replyWithin: string, siteUrl: string, siteLabel: string, practiceAddress: string} $settings
+     * @return array{subject: string, html: string, text: string}
+     */
+    public static function internal(ContactSubmission $submission, array $settings): array
     {
         $phone = $submission->phone !== '' ? self::escape($submission->phone) : 'Nicht angegeben';
         $message = $submission->message !== ''
@@ -26,11 +29,12 @@ final class EmailTemplates
           </div>';
 
         $textMessage = $submission->message !== '' ? $submission->message : 'Keine Nachricht angegeben';
+        $siteLabel = $settings['siteLabel'];
 
         return [
-            'subject' => 'Neue Kontaktanfrage über elena-roehrborn.de',
-            'html' => self::layout('Kontaktformular', 'Neue Kontaktanfrage', $content),
-            'text' => "Neue Kontaktanfrage über elena-roehrborn.de\n\n"
+            'subject' => "Neue Kontaktanfrage über {$siteLabel}",
+            'html' => self::layout('Kontaktformular', 'Neue Kontaktanfrage', $content, $settings),
+            'text' => "Neue Kontaktanfrage über {$siteLabel}\n\n"
                 . "Name: {$submission->name}\n"
                 . "E-Mail: {$submission->email}\n"
                 . 'Telefon: ' . ($submission->phone !== '' ? $submission->phone : 'Nicht angegeben') . "\n"
@@ -39,10 +43,14 @@ final class EmailTemplates
         ];
     }
 
-    /** @return array{subject: string, html: string, text: string} */
-    public static function confirmation(ContactSubmission $submission, string $replyWithin): array
+    /**
+     * @param array{senderName: string, infoEmail: string, replyWithin: string, siteUrl: string, siteLabel: string, practiceAddress: string} $settings
+     * @return array{subject: string, html: string, text: string}
+     */
+    public static function confirmation(ContactSubmission $submission, array $settings): array
     {
         $name = self::escape($submission->name);
+        $replyWithin = $settings['replyWithin'];
         $time = self::escape($replyWithin);
         $content = '
           <p style="margin:0 0 18px;color:#463b32;font-size:16px;line-height:1.7">Guten Tag ' . $name . ',</p>
@@ -54,14 +62,14 @@ final class EmailTemplates
 
         return [
             'subject' => 'Ihre Anfrage ist bei mir eingegangen',
-            'html' => self::layout('Elena Roehrborn Onlinetherapie', 'Vielen Dank für Ihre Nachricht', $content),
+            'html' => self::layout($settings['senderName'], 'Vielen Dank für Ihre Nachricht', $content, $settings),
             'text' => "Guten Tag {$submission->name},\n\n"
                 . "vielen Dank für Ihre Nachricht. Ihre Anfrage ist bei mir eingegangen.\n\n"
                 . "Ich melde mich in der Regel {$replyWithin} persönlich bei Ihnen.\n\n"
                 . "Diese Eingangsbestätigung wurde automatisch versendet. Bei Rückfragen können Sie direkt auf diese E-Mail antworten.\n\n"
-                . "Elena Roehrborn Onlinetherapie\n"
-                . "Wilmersdorfer Straße 95, 10629 Berlin\n"
-                . "info@elena-roehrborn.de · https://elena-roehrborn.de\n",
+                . "{$settings['senderName']}\n"
+                . "{$settings['practiceAddress']}\n"
+                . "{$settings['infoEmail']} · {$settings['siteUrl']}\n",
         ];
     }
 
@@ -73,8 +81,15 @@ final class EmailTemplates
             . '</div>';
     }
 
-    private static function layout(string $eyebrow, string $title, string $content): string
+    /** @param array{senderName: string, infoEmail: string, replyWithin: string, siteUrl: string, siteLabel: string, practiceAddress: string} $settings */
+    private static function layout(string $eyebrow, string $title, string $content, array $settings): string
     {
+        $senderName = self::escape($settings['senderName']);
+        $practiceAddress = self::escape($settings['practiceAddress']);
+        $infoEmail = self::escape($settings['infoEmail']);
+        $siteUrl = self::escape($settings['siteUrl']);
+        $siteLabel = self::escape($settings['siteLabel']);
+
         return '<!doctype html>
 <html lang="de">
   <body style="margin:0;padding:0;background:#f6f1e9;font-family:Arial,sans-serif;color:#463b32">
@@ -93,10 +108,10 @@ final class EmailTemplates
             </tr>
             <tr>
               <td style="padding:20px 34px;background:#efe7d8;color:#6b5b4d;font-size:12px;line-height:1.7">
-                Elena Roehrborn Onlinetherapie<br>
-                Wilmersdorfer Straße 95 · 10629 Berlin<br>
-                <a href="mailto:info@elena-roehrborn.de" style="color:#3f5141;text-decoration:underline">info@elena-roehrborn.de</a>
-                · <a href="https://elena-roehrborn.de" style="color:#3f5141;text-decoration:underline">elena-roehrborn.de</a>
+                ' . $senderName . '<br>
+                ' . $practiceAddress . '<br>
+                <a href="mailto:' . $infoEmail . '" style="color:#3f5141;text-decoration:underline">' . $infoEmail . '</a>
+                · <a href="' . $siteUrl . '" style="color:#3f5141;text-decoration:underline">' . $siteLabel . '</a>
               </td>
             </tr>
           </table>

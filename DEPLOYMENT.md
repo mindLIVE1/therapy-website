@@ -96,13 +96,26 @@ Domain-Webroots an. Der öffentliche Webroot bleibt `/elena-roehrborn.de/`.
 Ein FTP-Benutzer, der auf den Domainordner eingeschränkt ist, reicht für diese
 Struktur nicht aus.
 
-Der SMTP-Server ist als nicht geheime Voreinstellung
-`w021d308.kasserver.com`. Nur wenn ALL-INKL diesen Host später ändert, muss
-zusätzlich die Repository-Variable `SMTP_HOST` angepasst werden.
-Die bestätigten SMTP-Benutzernamen `formular@elena-roehrborn.de` und
-`info@elena-roehrborn.de` sind nicht geheim und deshalb fest in der privaten
-Konfigurationserzeugung hinterlegt. Gleichnamige Username-Secrets werden nicht
-benötigt.
+#### 2.1 Nicht geheime Deployment-Variablen
+
+Im selben Bereich unter `Repository variables` können diese Werte angepasst
+werden. Sie sind keine Secrets: E-Mail-Adressen und Absendername erscheinen
+absichtlich auf der Website beziehungsweise in versendeten E-Mails.
+
+| Variable | Voreinstellung | Zweck |
+| --- | --- | --- |
+| `CONTACT_INFO_EMAIL` | `info@elena-roehrborn.de` | Öffentliches Praxispostfach, Empfänger der Anfrage und Absender der Bestätigung |
+| `CONTACT_FORM_EMAIL` | `formular@elena-roehrborn.de` | SMTP-Absender der internen Formularnachricht |
+| `CONTACT_SENDER_NAME` | `Elena Roehrborn Onlinetherapie` | Sichtbarer Absendername beider E-Mails |
+| `CONTACT_RECIPIENT_NAME` | `Elena Roehrborn` | Anzeigename des internen Empfängers |
+| `CONTACT_REPLY_WITHIN` | `innerhalb von zwei Werktagen` | Antwortzeit in der Eingangsbestätigung |
+| `SMTP_HOST` | `w021d308.kasserver.com` | SMTP-Server von ALL-INKL |
+| `CONTACT_FORM_ENABLED` | folgt dem Bearbeitungsmodus | Optionale separate Freigabe des PHP-Endpunkts, insbesondere für Tests |
+
+Wenn eine Postfachadresse geändert wird, muss das entsprechende Postfach bei
+ALL-INKL existieren und das zugehörige Passwort weiterhin im passenden Secret
+`SMTP_FORM_PASSWORD` beziehungsweise `SMTP_INFO_PASSWORD` liegen. Eine Änderung
+an Variables oder Secrets wird erst mit einem neuen Deployment wirksam.
 
 #### 3. Ersten Deploy starten
 
@@ -120,7 +133,27 @@ Die SMTP-Passwörter werden nicht in den Astro-Build eingebettet. GitHub Actions
 erzeugt daraus eine PHP-Konfiguration, lädt sie mit Dateirechten `0600` nach
 `/private/form-backend/config.php` und veröffentlicht ausschließlich den kleinen
 Endpunkt `/api/contact.php`. Im Bearbeitungsmodus ist auch dieser Endpunkt
-deaktiviert.
+standardmäßig deaktiviert.
+
+Es müssen keine PHP-Dateien manuell in WebFTP angelegt werden. Der Workflow
+erstellt und aktualisiert automatisch diese Struktur:
+
+```text
+/elena-roehrborn.de/api/contact.php        öffentlich erreichbarer Endpunkt
+/private/form-backend/config.php           private Konfiguration mit SMTP-Passwörtern
+/private/form-backend/server/contact/src/  PHP-Anwendungslogik
+/private/form-backend/vendor/              PHPMailer und Composer-Autoloader
+```
+
+Die Konfiguration liegt außerhalb des Domain-Webroots und ist daher nicht über
+eine Website-URL abrufbar. `0600` beschränkt den Dateizugriff zusätzlich auf den
+Account-Benutzer. Die Passwörter müssen für die SMTP-Anmeldung zur Laufzeit im
+Klartext lesbar sein; die Base64-Darstellung in der PHP-Datei ist keine
+Verschlüsselung. Geschützt werden sie durch GitHub Secrets, verschlüsseltes
+FTPS, den privaten Speicherort und die Dateirechte. Wer vollständigen Zugriff
+auf den ALL-INKL-Account oder den GitHub-Actions-Workflow erlangt, könnte sie
+trotzdem auslesen; deshalb gehören dort starke, nur für diese Postfächer
+verwendete Passwörter hinein.
 
 Im ALL-INKL-KAS für die Domain eine unterstützte PHP-Version ab 8.1 auswählen;
 empfohlen ist PHP 8.3 oder neuer. Für das Formular werden keine Datenbank und
@@ -144,6 +177,33 @@ Solange die Variable nicht existiert, baut der Deployment-Workflow die Website
 vorsichtshalber mit dem Wert `true`. Eine Änderung der Variable startet keinen
 Build. Danach unter `Actions` -> `Deploy website to ALL-INKL` den Workflow über
 `Run workflow` neu ausführen.
+
+### Formular testen, während die Wartungsseite aktiv bleibt
+
+Für einen echten SMTP-Test kann die Wartungsseite aktiv bleiben:
+
+1. `PUBLIC_SITE_IN_PROGRESS=true` belassen.
+2. Repository-Variable `CONTACT_FORM_ENABLED=true` setzen.
+3. Den Deployment-Workflow manuell ausführen.
+4. Den folgenden Befehl lokal ausführen und `DEINE-TESTADRESSE` ersetzen:
+
+```bash
+curl 'https://elena-roehrborn.de/api/contact.php' \
+  --request POST \
+  --header 'Origin: https://elena-roehrborn.de' \
+  --header 'Content-Type: application/json' \
+  --data '{"name":"Technischer Test","email":"DEINE-TESTADRESSE","phone":"","topic":"unsicher","message":"Test des Kontaktformulars","consent":true,"website":""}'
+```
+
+Erwartet wird `{"success":true,"confirmationSent":true}`. Danach müssen eine
+interne Formularnachricht im `info`-Postfach und eine Eingangsbestätigung an der
+Testadresse angekommen sein. Anschließend `CONTACT_FORM_ENABLED` wieder löschen
+und erneut deployen. Ohne diese Override-Variable folgt der Endpunkt automatisch
+dem Bearbeitungsmodus und liefert bei aktiver Wartungsseite wieder HTTP 503.
+
+Der `curl`-Test prüft den kompletten PHP-, SMTP- und Bestätigungsfluss. Die
+Animation und Bedienung des Formulars werden beim endgültigen Abschalten der
+Wartungsseite zusätzlich direkt im Browser getestet.
 
 Für die lokale Entwicklung kann derselbe Wert in einer nicht eingecheckten
 `.env`-Datei gesetzt werden; `.env.example` dient als Vorlage.

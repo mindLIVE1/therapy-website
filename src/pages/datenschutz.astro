@@ -1,6 +1,6 @@
 ---
 import LegalLayout from "@/layouts/LegalLayout.astro";
-import { site, isDemo } from "@/data/site";
+import { formEmail, site, isDemo } from "@/data/site";
 
 const addr = isDemo ? "Musterstraße 1, 12345 Musterstadt" : "Wilmersdorfer Straße 95, 10629 Berlin";
 ---
@@ -90,8 +90,8 @@ const addr = isDemo ? "Musterstraße 1, 12345 Musterstadt" : "Wilmersdorfer Stra
     Das Formular wird ohne externen Formulardienst betrieben. Ein
     serverseitiges Skript im ALL-INKL-Webspace prüft die Angaben und sendet sie
     unmittelbar über eine TLS-gesicherte SMTP-Verbindung vom Postfach
-    <strong>formular@elena-roehrborn.de</strong> an das Praxispostfach
-    <strong>info@elena-roehrborn.de</strong>. Eine separate Datenbank für
+    <strong>{formEmail}</strong> an das Praxispostfach
+    <strong>{site.email}</strong>. Eine separate Datenbank für
     Formulareingaben wird nicht geführt. Nach erfolgreicher Zustellung erhält
     die angegebene E-Mail-Adresse eine neutrale automatische
     Eingangsbestätigung vom Praxispostfach. In dieser Bestätigung werden weder

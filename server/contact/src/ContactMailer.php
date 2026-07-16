@@ -15,7 +15,7 @@ final class ContactMailer
 
     public function sendInternal(ContactSubmission $submission): void
     {
-        $content = EmailTemplates::internal($submission);
+        $content = EmailTemplates::internal($submission, $this->templateSettings());
         $mail = $this->mailer('form');
         $mail->setFrom($this->username('form'), $this->senderName());
         $mail->addAddress($this->username('info'), (string) $this->config['recipientName']);
@@ -26,7 +26,7 @@ final class ContactMailer
 
     public function sendConfirmation(ContactSubmission $submission): void
     {
-        $content = EmailTemplates::confirmation($submission, (string) $this->config['replyWithin']);
+        $content = EmailTemplates::confirmation($submission, $this->templateSettings());
         $mail = $this->mailer('info');
         $mail->setFrom($this->username('info'), $this->senderName());
         $mail->addAddress($submission->email, $submission->name);
@@ -70,5 +70,27 @@ final class ContactMailer
     private function senderName(): string
     {
         return (string) $this->config['senderName'];
+    }
+
+    /**
+     * @return array{
+     *   senderName: string,
+     *   infoEmail: string,
+     *   replyWithin: string,
+     *   siteUrl: string,
+     *   siteLabel: string,
+     *   practiceAddress: string
+     * }
+     */
+    private function templateSettings(): array
+    {
+        return [
+            'senderName' => $this->senderName(),
+            'infoEmail' => $this->username('info'),
+            'replyWithin' => (string) $this->config['replyWithin'],
+            'siteUrl' => (string) $this->config['siteUrl'],
+            'siteLabel' => (string) $this->config['siteLabel'],
+            'practiceAddress' => (string) $this->config['practiceAddress'],
+        ];
     }
 }

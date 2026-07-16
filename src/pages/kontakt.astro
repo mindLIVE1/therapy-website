@@ -2,14 +2,18 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Blob from "@/components/Blob.astro";
 import Icon from "@/components/Icon.astro";
-import { site } from "@/data/site";
+import {
+  contactRecipientName,
+  contactReplyWithin,
+  site,
+} from "@/data/site";
 
 const inputClass =
   "mt-2 w-full rounded-2xl border border-line bg-cream px-4 py-3 text-taupe-ink shadow-inner outline-none transition-colors placeholder:text-taupe-soft/70 focus:border-forest focus:ring-2 focus:ring-forest/20";
 
 const reassurances = [
   { icon: "lock", text: "Verschlüsselte Übertragung an das Praxispostfach" },
-  { icon: "clock", text: "Antwort in der Regel innerhalb von zwei Werktagen" },
+  { icon: "clock", text: `Antwort in der Regel ${contactReplyWithin}` },
   { icon: "heart", text: "Unverbindliche erste Kontaktaufnahme" },
 ];
 ---
@@ -52,6 +56,9 @@ const reassurances = [
             class="mt-7"
             method="POST"
             action="/api/contact.php"
+            data-contact-email={site.email}
+            data-recipient-name={contactRecipientName}
+            data-reply-within={contactReplyWithin}
             novalidate
           >
             <div class="absolute left-[-9999px]" aria-hidden="true">
@@ -249,6 +256,9 @@ const reassurances = [
     const submitButton = document.querySelector<HTMLButtonElement>("#submit-button");
     const submitLabel = document.querySelector<HTMLElement>("#submit-label");
     const resetButton = document.querySelector<HTMLButtonElement>("#form-reset");
+    const contactEmail = form?.dataset.contactEmail || "info@elena-roehrborn.de";
+    const recipientName = form?.dataset.recipientName || "Elena Roehrborn";
+    const replyWithin = form?.dataset.replyWithin || "innerhalb von zwei Werktagen";
 
     const setLoading = (loading: boolean) => {
       if (!form || !panel || !submitButton || !submitLabel || !status) return;
@@ -274,9 +284,9 @@ const reassurances = [
         return "Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut.";
       }
       if (statusCode === 503) {
-        return "Das Formular ist vorübergehend nicht erreichbar. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an info@elena-roehrborn.de.";
+        return `Das Formular ist vorübergehend nicht erreichbar. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an ${contactEmail}.`;
       }
-      return "Die Anfrage konnte gerade nicht übermittelt werden. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an info@elena-roehrborn.de.";
+      return `Die Anfrage konnte gerade nicht übermittelt werden. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an ${contactEmail}.`;
     };
 
     form?.addEventListener("submit", async (event) => {
@@ -323,8 +333,8 @@ const reassurances = [
 
         if (!panel || !formContent || !success || !successHeading || !successMessage) return;
         successMessage.textContent = result.confirmationSent
-          ? "Eine Eingangsbestätigung wurde an Ihre E-Mail-Adresse gesendet. Elena Roehrborn meldet sich in der Regel innerhalb von zwei Werktagen persönlich bei Ihnen."
-          : "Ihre Anfrage ist angekommen. Elena Roehrborn meldet sich in der Regel innerhalb von zwei Werktagen persönlich bei Ihnen. Eine automatische Eingangsbestätigung konnte nicht versendet werden.";
+          ? `Eine Eingangsbestätigung wurde an Ihre E-Mail-Adresse gesendet. ${recipientName} meldet sich in der Regel ${replyWithin} persönlich bei Ihnen.`
+          : `Ihre Anfrage ist angekommen. ${recipientName} meldet sich in der Regel ${replyWithin} persönlich bei Ihnen. Eine automatische Eingangsbestätigung konnte nicht versendet werden.`;
         form.inert = true;
         formContent.setAttribute("aria-hidden", "true");
         success.inert = false;

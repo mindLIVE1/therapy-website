@@ -68,15 +68,25 @@ $tests['email templates escape content and keep confirmation neutral'] = static 
         'consent' => true,
     ]);
 
-    $internal = EmailTemplates::internal($submission);
-    $confirmation = EmailTemplates::confirmation($submission, 'innerhalb von zwei Werktagen');
+    $settings = [
+        'senderName' => 'Testpraxis',
+        'infoEmail' => 'praxis@example.test',
+        'replyWithin' => 'innerhalb von zwei Werktagen',
+        'siteUrl' => 'https://example.test',
+        'siteLabel' => 'example.test',
+        'practiceAddress' => 'Teststraße 1, 12345 Teststadt',
+    ];
+    $internal = EmailTemplates::internal($submission, $settings);
+    $confirmation = EmailTemplates::confirmation($submission, $settings);
 
     assertTrue(str_contains($internal['html'], '&lt;script&gt;'));
     assertTrue(!str_contains($internal['html'], '<script>'));
     assertTrue(!str_contains($confirmation['html'], 'Sexualtherapie'));
     assertTrue(!str_contains($confirmation['html'], 'alert(1)'));
     assertTrue(str_contains($confirmation['text'], 'innerhalb von zwei Werktagen'));
-    assertTrue(str_contains($confirmation['html'], 'info@elena-roehrborn.de'));
+    assertTrue(str_contains($confirmation['html'], 'praxis@example.test'));
+    assertTrue(str_contains($confirmation['text'], 'Testpraxis'));
+    assertTrue(str_contains($internal['subject'], 'example.test'));
 };
 
 $tests['rate limiter blocks after configured threshold'] = static function (): void {

@@ -70,7 +70,8 @@ Alle Platzhalter sind bewusst markiert. Bitte ergänzen:
    **rechtlich prüfen lassen**. Die Texte sind sorgfältige Vorlagen, keine
    Rechtsberatung.
 6. **Bilder** – die runden Platzhalter durch echte Fotos ersetzen (siehe unten).
-7. **E-Mail** – `email` in [`src/data/site.ts`](src/data/site.ts) prüfen.
+7. **E-Mail** – die sichtbare und technische E-Mail-Konfiguration wird über
+   GitHub Repository Variables gesteuert; siehe [`DEPLOYMENT.md`](DEPLOYMENT.md).
 
 ## Bilder einsetzen
 

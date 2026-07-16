@@ -8,6 +8,24 @@ export const isDemo =
 export const isSiteInProgress =
   import.meta.env.PUBLIC_SITE_IN_PROGRESS === "true";
 
+const configuredContactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL?.trim();
+const configuredFormEmail = import.meta.env.PUBLIC_FORM_EMAIL?.trim();
+const configuredContactRecipientName =
+  import.meta.env.PUBLIC_CONTACT_RECIPIENT_NAME?.trim();
+const configuredContactReplyWithin =
+  import.meta.env.PUBLIC_CONTACT_REPLY_WITHIN?.trim();
+
+export const formEmail = isDemo
+  ? "formular@example.com"
+  : configuredFormEmail || "formular@elena-roehrborn.de";
+
+export const contactRecipientName = isDemo
+  ? "Erika Mustermann"
+  : configuredContactRecipientName || "Elena Roehrborn";
+
+export const contactReplyWithin =
+  configuredContactReplyWithin || "innerhalb von zwei Werktagen";
+
 export const site = {
   name: isDemo ? "Erika Mustermann" : "Elena Roehrborn",
   firstName: isDemo ? "Erika" : "Elena",
@@ -24,7 +42,9 @@ export const site = {
   locale: "de-DE",
   lang: "de",
   languages: "Deutsch & Englisch",
-  email: isDemo ? "erika.mustermann@example.com" : "info@elena-roehrborn.de",
+  email: isDemo
+    ? "erika.mustermann@example.com"
+    : configuredContactEmail || "info@elena-roehrborn.de",
   // No external booking tool is used — all CTAs lead to the contact form.
   bookingUrl: "/kontakt#termin",
   // Optional phone — leave empty to hide it everywhere.

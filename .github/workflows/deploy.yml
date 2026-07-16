@@ -51,11 +51,21 @@ jobs:
         env:
           PUBLIC_IS_DEMO: "false"
           PUBLIC_SITE_IN_PROGRESS: ${{ vars.PUBLIC_SITE_IN_PROGRESS || 'true' }}
+          PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_INFO_EMAIL || 'info@elena-roehrborn.de' }}
+          PUBLIC_FORM_EMAIL: ${{ vars.CONTACT_FORM_EMAIL || 'formular@elena-roehrborn.de' }}
+          PUBLIC_CONTACT_RECIPIENT_NAME: ${{ vars.CONTACT_RECIPIENT_NAME || 'Elena Roehrborn' }}
+          PUBLIC_CONTACT_REPLY_WITHIN: ${{ vars.CONTACT_REPLY_WITHIN || 'innerhalb von zwei Werktagen' }}
 
       - name: Generate private contact configuration
         run: node scripts/generate-contact-config.mjs
         env:
           SITE_IN_PROGRESS: ${{ vars.PUBLIC_SITE_IN_PROGRESS || 'true' }}
+          CONTACT_FORM_ENABLED: ${{ vars.CONTACT_FORM_ENABLED }}
+          SMTP_FORM_USERNAME: ${{ vars.CONTACT_FORM_EMAIL || 'formular@elena-roehrborn.de' }}
+          SMTP_INFO_USERNAME: ${{ vars.CONTACT_INFO_EMAIL || 'info@elena-roehrborn.de' }}
+          CONTACT_SENDER_NAME: ${{ vars.CONTACT_SENDER_NAME || 'Elena Roehrborn Onlinetherapie' }}
+          CONTACT_RECIPIENT_NAME: ${{ vars.CONTACT_RECIPIENT_NAME || 'Elena Roehrborn' }}
+          CONTACT_REPLY_WITHIN: ${{ vars.CONTACT_REPLY_WITHIN || 'innerhalb von zwei Werktagen' }}
           SMTP_HOST: ${{ vars.SMTP_HOST || 'w021d308.kasserver.com' }}
           SMTP_FORM_PASSWORD: ${{ secrets.SMTP_FORM_PASSWORD }}
           SMTP_INFO_PASSWORD: ${{ secrets.SMTP_INFO_PASSWORD }}
