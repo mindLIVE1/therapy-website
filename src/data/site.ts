@@ -24,7 +24,7 @@ export const site = {
   locale: "de-DE",
   lang: "de",
   languages: "Deutsch & Englisch",
-  email: isDemo ? "erika.mustermann@example.com" : "elena.roehrborn@gmail.com",
+  email: isDemo ? "erika.mustermann@example.com" : "info@elena-roehrborn.de",
   // No external booking tool is used — all CTAs lead to the contact form.
   bookingUrl: "/kontakt#termin",
   // Optional phone — leave empty to hide it everywhere.

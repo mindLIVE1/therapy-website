@@ -60,11 +60,10 @@ Alle Platzhalter sind bewusst markiert. Bitte ergänzen:
 2. **Buchungslink** – `bookingUrl` in [`src/data/site.ts`](src/data/site.ts)
    (z. B. Calendly/Doctolib). Solange `#termin` gesetzt ist, springen die
    „Termin buchen“-Buttons zum Kontaktformular.
-3. **Kontaktformular** – in [`src/pages/kontakt.astro`](src/pages/kontakt.astro)
-   das `action`-Attribut (`DEINE_FORM_ID`) durch einen echten Formular-Dienst
-   ersetzen (Formspree, Web3Forms, Netlify Forms …). **Solange das nicht
-   geschieht, funktioniert das Formular trotzdem** – es öffnet automatisch das
-   E-Mail-Programm der Besucher:innen mit vorausgefüllter Nachricht.
+3. **Kontaktformular** – der PHP-Endpunkt unter `public/api/contact.php` sendet
+   über die beiden ALL-INKL-Postfächer. Zugangsdaten liegen ausschließlich in
+   GitHub Actions Secrets; Einrichtung und Produktionstest stehen in
+   [`DEPLOYMENT.md`](DEPLOYMENT.md).
 4. **Honorar** – echte Preise in [`src/pages/honorar.astro`](src/pages/honorar.astro)
    (aktuell `00 €` als Platzhalter).
 5. **Impressum & Datenschutz** – alle <span>-Platzhalter ausfüllen und

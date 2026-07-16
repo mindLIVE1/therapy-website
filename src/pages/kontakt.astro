@@ -8,16 +8,15 @@ const inputClass =
   "mt-2 w-full rounded-2xl border border-line bg-cream px-4 py-3 text-taupe-ink shadow-inner outline-none transition-colors placeholder:text-taupe-soft/70 focus:border-forest focus:ring-2 focus:ring-forest/20";
 
 const reassurances = [
-  { icon: "lock", text: "Vertraulich & der Schweigepflicht unterliegend" },
-  { icon: "clock", text: "Antwort in der Regel innerhalb kurzer Zeit" },
-  { icon: "heart", text: "Kein Druck – ganz unverbindlich" },
+  { icon: "lock", text: "Verschlüsselte Übertragung an das Praxispostfach" },
+  { icon: "clock", text: "Antwort in der Regel innerhalb von zwei Werktagen" },
+  { icon: "heart", text: "Unverbindliche erste Kontaktaufnahme" },
 ];
 ---
 <BaseLayout
   title="Kontakt & Terminanfrage"
   description={`Nehmen Sie vertraulich Kontakt zu ${site.name} auf. Stellen Sie unkompliziert und unverbindlich eine Terminanfrage – per Formular oder E-Mail.`}
 >
-  <!-- Hero -->
   <section class="relative overflow-hidden">
     <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
     <Blob color="clay" class="left-[-9rem] top-[10rem] h-72 w-72" />
@@ -36,75 +35,177 @@ const reassurances = [
 
   <section id="termin" class="container-page scroll-mt-28 pb-10">
     <div class="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
-      <!-- Form -->
-      <div class="reveal rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)] sm:p-10">
-        <h2 class="text-2xl">Terminanfrage</h2>
-        <p class="mt-2 text-taupe-ink/80">
-          Alle Angaben sind freiwillig und werden vertraulich behandelt.
-        </p>
+      <div
+        id="form-panel"
+        class="form-panel reveal relative overflow-hidden rounded-[2rem] border border-line-soft bg-sand p-7 shadow-[var(--shadow-card)] sm:p-10"
+        data-state="idle"
+      >
+        <div id="form-content" class="form-content">
+          <h2 class="text-2xl">Terminanfrage</h2>
+          <p class="mt-2 text-taupe-ink/80">
+            Name und E-Mail sind für eine Antwort erforderlich. Telefonnummer
+            und Nachricht können Sie freiwillig ergänzen.
+          </p>
 
-        <form
-          id="kontakt-form"
-          class="mt-7"
-          method="POST"
-          action="https://formspree.io/f/DEINE_FORM_ID"
-          novalidate
+          <form
+            id="kontakt-form"
+            class="mt-7"
+            method="POST"
+            action="/api/contact.php"
+            novalidate
+          >
+            <div class="absolute left-[-9999px]" aria-hidden="true">
+              <label>
+                Website
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="name" class="font-display text-sm font-semibold text-ink">Name *</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  maxlength="120"
+                  autocomplete="name"
+                  class={inputClass}
+                  placeholder="Ihr Name"
+                />
+              </div>
+              <div>
+                <label for="email" class="font-display text-sm font-semibold text-ink">E-Mail *</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  maxlength="254"
+                  autocomplete="email"
+                  inputmode="email"
+                  class={inputClass}
+                  placeholder="name@beispiel.de"
+                />
+              </div>
+            </div>
+
+            <div class="mt-5 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="phone" class="font-display text-sm font-semibold text-ink">Telefon (optional)</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  maxlength="50"
+                  autocomplete="tel"
+                  class={inputClass}
+                  placeholder="Für einen Rückruf"
+                />
+              </div>
+              <div>
+                <label for="topic" class="font-display text-sm font-semibold text-ink">Interesse *</label>
+                <select id="topic" name="topic" required class={inputClass}>
+                  <option value="" selected disabled>Bitte auswählen</option>
+                  <option value="einzeltherapie">Einzeltherapie</option>
+                  <option value="paartherapie">Paartherapie</option>
+                  <option value="sexualtherapie">Sexualtherapie</option>
+                  <option value="unsicher">Noch nicht sicher</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <label for="message" class="font-display text-sm font-semibold text-ink">Ihre Nachricht (optional)</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                maxlength="2000"
+                aria-describedby="message-warning"
+                class={inputClass}
+                placeholder="Worum geht es? Ein paar Stichworte reichen völlig."
+              ></textarea>
+              <div id="message-warning" class="mt-3 flex items-start gap-2.5 text-sm leading-relaxed text-taupe-ink/80">
+                <Icon name="lock" class="mt-0.5 h-4 w-4 shrink-0 text-forest" />
+                <p>
+                  Bitte schildern Sie Ihr Anliegen nur kurz. Tragen Sie hier
+                  keine Diagnosen, Befunde, Medikamentenangaben oder andere
+                  besonders sensible Gesundheitsdaten ein.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-5 border-t border-line pt-5 text-sm leading-relaxed text-taupe-ink/80">
+              <p>
+                Es gibt keine separate Formulardatenbank. Ihre Angaben werden
+                über eine verschlüsselte Verbindung an das Praxispostfach
+                übermittelt und ausschließlich zur Kontaktaufnahme verwendet.
+                Kommt keine Zusammenarbeit zustande, wird die Anfrage nach einem
+                Monat gelöscht, soweit keine gesetzlichen Pflichten
+                entgegenstehen.
+              </p>
+            </div>
+
+            <div class="mt-5 flex items-start gap-3">
+              <input
+                id="consent"
+                name="consent"
+                type="checkbox"
+                required
+                class="mt-1 h-5 w-5 shrink-0 rounded-md border-line text-forest focus:ring-forest/30"
+              />
+              <label for="consent" class="text-sm leading-relaxed text-taupe-ink/85">
+                Ich willige ausdrücklich ein, dass meine Angaben, einschließlich
+                möglicher Angaben zu Gesundheit oder Sexualleben, zur Bearbeitung
+                und Beantwortung meiner Anfrage per E-Mail verarbeitet werden.
+                Die Einwilligung kann ich jederzeit mit Wirkung für die Zukunft
+                widerrufen. Mehr dazu in der
+                <a href="/datenschutz" class="font-semibold text-forest underline underline-offset-2">Datenschutzerklärung</a>. *
+              </label>
+            </div>
+
+            <div
+              id="form-error"
+              class="mt-6 border-l-2 border-clay-deep pl-4 text-sm leading-relaxed text-clay-deep"
+              role="alert"
+              tabindex="-1"
+              hidden
+            ></div>
+
+            <button id="submit-button" type="submit" class="btn btn-primary mt-7 w-full sm:w-auto">
+              <span id="submit-label">Anfrage senden</span>
+              <span class="submit-arrow" aria-hidden="true">
+                <Icon name="arrow-right" class="h-4 w-4" />
+              </span>
+              <span class="submit-spinner" aria-hidden="true"></span>
+            </button>
+            <p id="form-status" class="sr-only" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div
+          id="form-success"
+          class="form-success"
+          role="status"
+          aria-live="polite"
+          aria-hidden="true"
+          tabindex="-1"
+          inert
         >
-          <!-- honeypot: hidden from humans, traps bots -->
-          <div class="absolute left-[-9999px]" aria-hidden="true">
-            <label>Bitte leer lassen<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
-          </div>
-
-          <div class="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label for="name" class="font-display text-sm font-semibold text-ink">Name *</label>
-              <input id="name" name="name" type="text" required autocomplete="name" class={inputClass} placeholder="Ihr Name" />
-            </div>
-            <div>
-              <label for="email" class="font-display text-sm font-semibold text-ink">E-Mail *</label>
-              <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} placeholder="name@beispiel.de" />
-            </div>
-          </div>
-
-          <div class="mt-5 grid gap-5 sm:grid-cols-2">
-            <div>
-              <label for="phone" class="font-display text-sm font-semibold text-ink">Telefon (optional)</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" class={inputClass} placeholder="Für einen Rückruf" />
-            </div>
-            <div>
-              <label for="topic" class="font-display text-sm font-semibold text-ink">Anliegen</label>
-              <select id="topic" name="topic" class={inputClass}>
-                <option>Einzeltherapie</option>
-                <option>Paartherapie</option>
-                <option>Sexualtherapie</option>
-                <option>Ich bin mir noch nicht sicher</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="mt-5">
-            <label for="message" class="font-display text-sm font-semibold text-ink">Ihre Nachricht</label>
-            <textarea id="message" name="message" rows="5" class={inputClass} placeholder="Worum geht es? Ein paar Stichworte reichen völlig."></textarea>
-          </div>
-
-          <div class="mt-5 flex items-start gap-3">
-            <input id="consent" name="consent" type="checkbox" required class="mt-1 h-5 w-5 shrink-0 rounded-md border-line text-forest focus:ring-forest/30" />
-            <label for="consent" class="text-sm leading-relaxed text-taupe-ink/85">
-              Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung
-              meiner Anfrage verarbeitet werden. Mehr dazu in der
-              <a href="/datenschutz" class="font-semibold text-forest underline underline-offset-2">Datenschutzerklärung</a>. *
-            </label>
-          </div>
-
-          <button type="submit" class="btn btn-primary mt-7 w-full sm:w-auto">
-            Anfrage senden
-            <Icon name="arrow-right" class="h-4 w-4" />
+          <span class="success-mark flex h-24 w-24 items-center justify-center rounded-full bg-sage-mist text-forest">
+            <Icon name="check-circle" class="h-14 w-14" />
+          </span>
+          <p class="eyebrow eyebrow--center mt-7 justify-center">Vielen Dank</p>
+          <h2 id="success-heading" class="mt-3 text-3xl outline-none sm:text-4xl" tabindex="-1">Erfolgreich übermittelt</h2>
+          <p id="success-message" class="mt-5 max-w-lg text-base leading-relaxed text-taupe-ink/80 sm:text-lg"></p>
+          <button id="form-reset" type="button" class="btn btn-outline mt-8">
+            Weitere Anfrage senden
           </button>
-          <p id="form-status" class="mt-4 text-sm text-forest" role="status" aria-live="polite"></p>
-        </form>
+        </div>
       </div>
 
-      <!-- Sidebar -->
       <aside class="reveal flex flex-col gap-6">
         <div class="rounded-[2rem] border border-line-soft bg-cream p-7 shadow-[var(--shadow-card)]">
           <h2 class="text-xl">Direkt erreichen</h2>
@@ -120,14 +221,14 @@ const reassurances = [
         </div>
 
         <div class="rounded-[2rem] bg-forest p-7 text-cream shadow-[var(--shadow-card)]">
-          <h2 class="text-cream text-xl">Sie sind hier sicher</h2>
+          <h2 class="text-xl text-cream">Vertraulich anfragen</h2>
           <ul class="mt-5 space-y-4">
-            {reassurances.map((r) => (
+            {reassurances.map((reassurance) => (
               <li class="flex items-start gap-3 text-cream/85">
                 <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10">
-                  <Icon name={r.icon} class="h-4 w-4" />
+                  <Icon name={reassurance.icon} class="h-4 w-4" />
                 </span>
-                <span>{r.text}</span>
+                <span>{reassurance.text}</span>
               </li>
             ))}
           </ul>
@@ -136,39 +237,206 @@ const reassurances = [
     </div>
   </section>
 
-  <script is:inline define:vars={{ email: site.email }}>
-    // The form posts to a real endpoint (Formspree/Web3Forms/Netlify …) once you
-    // replace DEINE_FORM_ID in the action above. Until then, it gracefully falls
-    // back to opening the visitor's email client with a pre-filled message.
-    const form = document.getElementById("kontakt-form");
-    const status = document.getElementById("form-status");
-    if (form) {
-      const usesPlaceholder = form.getAttribute("action").includes("DEINE_FORM_ID");
-      form.addEventListener("submit", (e) => {
-        if (form._gotcha && form._gotcha.value) {
-          e.preventDefault();
+  <script>
+    const form = document.querySelector<HTMLFormElement>("#kontakt-form");
+    const panel = document.querySelector<HTMLElement>("#form-panel");
+    const formContent = document.querySelector<HTMLElement>("#form-content");
+    const success = document.querySelector<HTMLElement>("#form-success");
+    const successHeading = document.querySelector<HTMLElement>("#success-heading");
+    const successMessage = document.querySelector<HTMLElement>("#success-message");
+    const errorMessage = document.querySelector<HTMLElement>("#form-error");
+    const status = document.querySelector<HTMLElement>("#form-status");
+    const submitButton = document.querySelector<HTMLButtonElement>("#submit-button");
+    const submitLabel = document.querySelector<HTMLElement>("#submit-label");
+    const resetButton = document.querySelector<HTMLButtonElement>("#form-reset");
+
+    const setLoading = (loading: boolean) => {
+      if (!form || !panel || !submitButton || !submitLabel || !status) return;
+      panel.dataset.state = loading ? "loading" : "idle";
+      form.setAttribute("aria-busy", loading ? "true" : "false");
+      submitButton.disabled = loading;
+      submitLabel.textContent = loading ? "Wird übermittelt" : "Anfrage senden";
+      status.textContent = loading ? "Ihre Anfrage wird übermittelt." : "";
+    };
+
+    const showError = (message: string) => {
+      if (!errorMessage) return;
+      errorMessage.textContent = message;
+      errorMessage.hidden = false;
+      errorMessage.focus?.();
+    };
+
+    const errorForStatus = (statusCode: number) => {
+      if (statusCode === 429) {
+        return "Das Formular wurde in kurzer Zeit mehrfach verwendet. Bitte warten Sie etwa 15 Minuten und versuchen Sie es dann erneut.";
+      }
+      if (statusCode === 422) {
+        return "Bitte prüfen Sie Ihre Angaben und versuchen Sie es erneut.";
+      }
+      if (statusCode === 503) {
+        return "Das Formular ist vorübergehend nicht erreichbar. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an info@elena-roehrborn.de.";
+      }
+      return "Die Anfrage konnte gerade nicht übermittelt werden. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an info@elena-roehrborn.de.";
+    };
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      if (errorMessage) {
+        errorMessage.hidden = true;
+        errorMessage.textContent = "";
+      }
+      setLoading(true);
+
+      const data = new FormData(form);
+      const payload = {
+        name: String(data.get("name") || ""),
+        email: String(data.get("email") || ""),
+        phone: String(data.get("phone") || ""),
+        topic: String(data.get("topic") || ""),
+        message: String(data.get("message") || ""),
+        consent: data.get("consent") === "on",
+        website: String(data.get("website") || ""),
+      };
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || result.success !== true) {
+          showError(errorForStatus(response.status));
+          setLoading(false);
           return;
         }
-        if (!form.checkValidity()) {
-          e.preventDefault();
-          form.reportValidity();
-          return;
-        }
-        if (usesPlaceholder) {
-          e.preventDefault();
-          const f = new FormData(form);
-          const subject = `Terminanfrage (${f.get("topic")}) – ${f.get("name")}`;
-          const body =
-            `Name: ${f.get("name")}\n` +
-            `E-Mail: ${f.get("email")}\n` +
-            `Telefon: ${f.get("phone") || "–"}\n` +
-            `Anliegen: ${f.get("topic")}\n\n` +
-            `${f.get("message") || ""}`;
-          window.location.href =
-            `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          if (status) status.textContent = "Ihr E-Mail-Programm öffnet sich – bitte die Nachricht dort absenden.";
-        }
-      });
-    }
+
+        if (!panel || !formContent || !success || !successHeading || !successMessage) return;
+        successMessage.textContent = result.confirmationSent
+          ? "Eine Eingangsbestätigung wurde an Ihre E-Mail-Adresse gesendet. Elena Roehrborn meldet sich in der Regel innerhalb von zwei Werktagen persönlich bei Ihnen."
+          : "Ihre Anfrage ist angekommen. Elena Roehrborn meldet sich in der Regel innerhalb von zwei Werktagen persönlich bei Ihnen. Eine automatische Eingangsbestätigung konnte nicht versendet werden.";
+        form.inert = true;
+        formContent.setAttribute("aria-hidden", "true");
+        success.inert = false;
+        success.setAttribute("aria-hidden", "false");
+        panel.dataset.state = "success";
+        window.setTimeout(() => {
+          successHeading.focus({ preventScroll: true });
+          successHeading.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "auto"
+              : "smooth",
+            block: "center",
+          });
+        }, 250);
+      } catch (error) {
+        showError(errorForStatus(0));
+        setLoading(false);
+      }
+    });
+
+    resetButton?.addEventListener("click", () => {
+      if (!form || !panel || !formContent || !success || !errorMessage) return;
+      form.reset();
+      form.inert = false;
+      formContent.setAttribute("aria-hidden", "false");
+      success.inert = true;
+      success.setAttribute("aria-hidden", "true");
+      errorMessage.hidden = true;
+      panel.dataset.state = "idle";
+      form.querySelector<HTMLInputElement>("#name")?.focus();
+    });
   </script>
 </BaseLayout>
+
+<style>
+  .form-content,
+  .form-success {
+    transition:
+      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .form-success {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(18px);
+  }
+
+  .form-panel[data-state="success"] .form-content {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-18px);
+  }
+
+  .form-panel[data-state="success"] {
+    height: clamp(32rem, 72svh, 42rem);
+  }
+
+  .form-panel[data-state="success"] .form-success {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .submit-spinner {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgb(255 255 255 / 45%);
+    border-top-color: #fff;
+    border-radius: 9999px;
+    animation: form-spin 700ms linear infinite;
+  }
+
+  .form-panel[data-state="loading"] .submit-arrow {
+    display: none;
+  }
+
+  .form-panel[data-state="loading"] .submit-spinner {
+    display: block;
+  }
+
+  .form-panel[data-state="loading"] #submit-button {
+    cursor: wait;
+    opacity: 0.88;
+  }
+
+  .form-panel[data-state="success"] .success-mark {
+    animation: success-arrive 560ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes form-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes success-arrive {
+    from {
+      opacity: 0;
+      transform: scale(0.72);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>

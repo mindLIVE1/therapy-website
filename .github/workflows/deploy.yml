@@ -17,7 +17,7 @@ jobs:
   build-and-deploy:
     name: Build and deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Check out repository
@@ -32,18 +32,37 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install PHP and deployment tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends composer lftp php-cli php-mbstring
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - name: Validate contact backend
+        run: |
+          composer validate --strict
+          find public/api server/contact -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+          composer test
+
       - name: Build website
         run: npm run build
         env:
           PUBLIC_IS_DEMO: "false"
           PUBLIC_SITE_IN_PROGRESS: ${{ vars.PUBLIC_SITE_IN_PROGRESS || 'true' }}
 
-      - name: Install FTPS client
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends lftp
+      - name: Generate private contact configuration
+        run: node scripts/generate-contact-config.mjs
+        env:
+          SITE_IN_PROGRESS: ${{ vars.PUBLIC_SITE_IN_PROGRESS || 'true' }}
+          SMTP_HOST: ${{ vars.SMTP_HOST || 'w021d308.kasserver.com' }}
+          SMTP_FORM_USERNAME: ${{ secrets.SMTP_FORM_USERNAME }}
+          SMTP_FORM_PASSWORD: ${{ secrets.SMTP_FORM_PASSWORD }}
+          SMTP_INFO_USERNAME: ${{ secrets.SMTP_INFO_USERNAME }}
+          SMTP_INFO_PASSWORD: ${{ secrets.SMTP_INFO_PASSWORD }}
 
-      - name: Deploy dist directory via FTPS
+      - name: Deploy website and private contact backend via FTPS
         shell: bash
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
@@ -59,6 +78,12 @@ jobs:
           set ftp:ssl-auth TLS
           set ftp:ssl-protect-data true
           set ssl:verify-certificate true
+          mkdir -p /private/form-backend/vendor
+          mkdir -p /private/form-backend/server/contact/src
+          mirror --reverse --delete --no-perms --verbose=1 ./vendor/ /private/form-backend/vendor/
+          mirror --reverse --delete --no-perms --verbose=1 ./server/contact/src/ /private/form-backend/server/contact/src/
+          put ./.deploy/contact-config.php -o /private/form-backend/config.php
+          chmod 600 /private/form-backend/config.php
           mirror --reverse --delete --no-perms --verbose=1 --exclude-glob .well-known/** ./dist/ /elena-roehrborn.de/
           bye
           LFTP

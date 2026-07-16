@@ -1,0 +1,25 @@
+{
+  "name": "elena-roehrborn/contact-form",
+  "description": "Serverseitiger E-Mail-Versand fuer das Kontaktformular",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*",
+    "ext-openssl": "*",
+    "phpmailer/phpmailer": "^7.1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "TherapyWebsite\\Contact\\": "server/contact/src/"
+    }
+  },
+  "scripts": {
+    "test": "php server/contact/tests/run.php"
+  },
+  "config": {
+    "allow-plugins": {},
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}
