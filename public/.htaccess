@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Use one canonical HTTPS hostname instead of serving duplicate URLs.
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^www\.elena-roehrborn\.de$ [NC]
+RewriteRule ^ https://www.elena-roehrborn.de%{REQUEST_URI} [R=301,L,NE]
+
+# Keep the original 404 status while displaying the website's own error page.
+ErrorDocument 404 /404.html
