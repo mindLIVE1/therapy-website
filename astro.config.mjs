@@ -12,6 +12,7 @@ export default defineConfig({
   trailingSlash: "ignore",
   integrations: [
     sitemap({
+      filter: (page) => !page.includes("/icon-qa"),
       i18n: {
         defaultLocale: "de",
         locales: { de: "de-DE" },

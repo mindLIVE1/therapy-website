@@ -111,6 +111,7 @@ absichtlich auf der Website beziehungsweise in versendeten E-Mails.
 | `CONTACT_REPLY_WITHIN` | `innerhalb von zwei Werktagen` | Antwortzeit in der Eingangsbestätigung |
 | `SMTP_HOST` | `w021d308.kasserver.com` | SMTP-Server von ALL-INKL |
 | `CONTACT_FORM_ENABLED` | folgt dem Bearbeitungsmodus | Optionale separate Freigabe des PHP-Endpunkts, insbesondere für Tests |
+| `ENABLE_DEV_ROUTES` | `false` | Interne QA-Seiten in einem Vorschau-Build mitbauen; in Produktion immer `false` lassen |
 
 Wenn eine Postfachadresse geändert wird, muss das entsprechende Postfach bei
 ALL-INKL existieren und das zugehörige Passwort weiterhin im passenden Secret
@@ -177,6 +178,14 @@ Solange die Variable nicht existiert, baut der Deployment-Workflow die Website
 vorsichtshalber mit dem Wert `true`. Eine Änderung der Variable startet keinen
 Build. Danach unter `Actions` -> `Deploy website to ALL-INKL` den Workflow über
 `Run workflow` neu ausführen.
+
+### Interne QA-Seiten
+
+Die interne Icon-Übersicht unter `/icon-qa/` ist bei `npm run dev` lokal
+verfügbar. Normale Produktions-Builds erzeugen diese Route nicht; sie erscheint
+daher weder auf dem Webspace noch in der Sitemap. Nur für einen bewusst
+geteilten Vorschau-Build kann `ENABLE_DEV_ROUTES=true` gesetzt werden. Die
+Variable bleibt beim regulären ALL-INKL-Deployment `false`.
 
 ### Formular testen, während die Wartungsseite aktiv bleibt
 

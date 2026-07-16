@@ -2,6 +2,13 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 
+export function getStaticPaths() {
+  const enabled =
+    import.meta.env.DEV || process.env.ENABLE_DEV_ROUTES === "true";
+
+  return enabled ? [{ params: { path: undefined } }] : [];
+}
+
 const icons = [
   "leaf",
   "bloom",
@@ -28,7 +35,11 @@ const icons = [
 ];
 ---
 
-<BaseLayout title="Icon QA">
+<BaseLayout
+  title="Icon QA"
+  description="Interne Übersicht zur visuellen Prüfung der Website-Icons."
+  noindex
+>
   <section class="container-page py-12">
     <h1 class="text-3xl">Icon QA</h1>
     <div class="mt-8 grid gap-5" style="grid-template-columns:repeat(6,minmax(0,1fr));">

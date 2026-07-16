@@ -50,6 +50,7 @@ jobs:
         run: npm run build
         env:
           PUBLIC_IS_DEMO: "false"
+          ENABLE_DEV_ROUTES: ${{ vars.ENABLE_DEV_ROUTES || 'false' }}
           PUBLIC_SITE_IN_PROGRESS: ${{ vars.PUBLIC_SITE_IN_PROGRESS || 'true' }}
           PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_INFO_EMAIL || 'info@elena-roehrborn.de' }}
           PUBLIC_FORM_EMAIL: ${{ vars.CONTACT_FORM_EMAIL || 'formular@elena-roehrborn.de' }}
