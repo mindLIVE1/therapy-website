@@ -25,13 +25,16 @@ Abgehakt = erledigt. Reihenfolge ist eine Empfehlung, keine Pflicht.
       Eingangsbestätigung erreicht die Absenderadresse
 - [ ] Organisatorischen Löschprozess im `info`-Postfach festlegen: Anfragen ohne
       Zusammenarbeit einen Monat nach Abschluss der Kommunikation löschen
-- [ ] **Video-Tool** festlegen (z. B. RED medical, sprechstunde.online, Doxy.me — DSGVO-/Heilberufe-konform) und im Datenschutz benennen
+- [x] **Video-Tool** therapie.de im Datenschutz benennen
+- [ ] Bei therapie.de keine Namen oder anderen personenbezogenen Angaben in
+      der optionalen Terminnotiz eintragen. Andernfalls vor der Nutzung einen
+      Vertrag zur Auftragsverarbeitung mit Pro Psychotherapie e.V. abschließen.
 
 ## Phase 3 — Recht & Datenschutz (vor Veröffentlichung zwingend)
 
-- [ ] **Impressum** vollständig ausfüllen (`src/pages/impressum.astro`): Anschrift, Aufsichtsbehörde/Gesundheitsamt, ggf. USt-IdNr.
+- [x] **Impressum** mit Anschrift und LAGeSo als Aufsichtsbehörde ausfüllen
 - [ ] **Datenschutzerklärung** abschließend prüfen (`src/pages/datenschutz.astro`):
-      Hoster und Formular sind eingetragen; der tatsächliche Video-Dienst fehlt noch
+      Hoster, Formular und therapie.de sind eingetragen
 - [ ] Vertrag zur Auftragsverarbeitung mit ALL-INKL im Kundenbereich prüfen und
       für die Datenschutzdokumentation ablegen
 - [ ] Beides **juristisch prüfen lassen** (die Vorlagen sind keine Rechtsberatung)
