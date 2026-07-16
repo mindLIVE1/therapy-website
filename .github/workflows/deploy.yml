@@ -86,8 +86,10 @@ jobs:
           set ftp:ssl-auth TLS
           set ftp:ssl-protect-data true
           set ssl:verify-certificate true
+          set cmd:fail-exit no
           mkdir -p /private/form-backend/vendor
           mkdir -p /private/form-backend/server/contact/src
+          set cmd:fail-exit yes
           mirror --reverse --delete --no-perms --verbose=1 ./vendor/ /private/form-backend/vendor/
           mirror --reverse --delete --no-perms --verbose=1 ./server/contact/src/ /private/form-backend/server/contact/src/
           put ./.deploy/contact-config.php -o /private/form-backend/config.php
