@@ -2,23 +2,15 @@ import { randomBytes } from "node:crypto";
 import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-const expectedMailboxes = {
-  SMTP_FORM_USERNAME: "formular@elena-roehrborn.de",
-  SMTP_INFO_USERNAME: "info@elena-roehrborn.de",
+const mailboxes = {
+  form: "formular@elena-roehrborn.de",
+  info: "info@elena-roehrborn.de",
 };
 
 function required(name) {
   const value = process.env[name]?.trim();
   if (!value) {
     throw new Error(`Required deployment value ${name} is missing.`);
-  }
-  return value;
-}
-
-function mailbox(name) {
-  const value = required(name).toLowerCase();
-  if (value !== expectedMailboxes[name]) {
-    throw new Error(`${name} does not match the confirmed ALL-INKL mailbox.`);
   }
   return value;
 }
@@ -41,11 +33,11 @@ const config = {
     host: process.env.SMTP_HOST?.trim() || "w021d308.kasserver.com",
     port: 465,
     form: {
-      username: mailbox("SMTP_FORM_USERNAME"),
+      username: mailboxes.form,
       password: required("SMTP_FORM_PASSWORD"),
     },
     info: {
-      username: mailbox("SMTP_INFO_USERNAME"),
+      username: mailboxes.info,
       password: required("SMTP_INFO_PASSWORD"),
     },
   },

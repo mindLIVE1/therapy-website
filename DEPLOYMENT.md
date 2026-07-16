@@ -86,9 +86,7 @@ gehen und unter `Repository secrets` diese Secrets anlegen:
 | `FTP_SERVER` | ALL-INKL-FTP-Server, normalerweise `<KAS-Login>.kasserver.com` |
 | `FTP_USERNAME` | Benutzername des FTP-Zugangs |
 | `FTP_PASSWORD` | Passwort des FTP-Zugangs |
-| `SMTP_FORM_USERNAME` | `formular@elena-roehrborn.de` |
 | `SMTP_FORM_PASSWORD` | Passwort des Formular-Postfachs |
-| `SMTP_INFO_USERNAME` | `info@elena-roehrborn.de` |
 | `SMTP_INFO_PASSWORD` | Passwort des Praxispostfachs |
 
 Keine Zugangsdaten in Dateien, Commits oder Workflow-Text eintragen. Der
@@ -101,6 +99,10 @@ Struktur nicht aus.
 Der SMTP-Server ist als nicht geheime Voreinstellung
 `w021d308.kasserver.com`. Nur wenn ALL-INKL diesen Host später ändert, muss
 zusätzlich die Repository-Variable `SMTP_HOST` angepasst werden.
+Die bestätigten SMTP-Benutzernamen `formular@elena-roehrborn.de` und
+`info@elena-roehrborn.de` sind nicht geheim und deshalb fest in der privaten
+Konfigurationserzeugung hinterlegt. Gleichnamige Username-Secrets werden nicht
+benötigt.
 
 #### 3. Ersten Deploy starten
 

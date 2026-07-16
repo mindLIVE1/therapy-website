@@ -57,9 +57,7 @@ jobs:
         env:
           SITE_IN_PROGRESS: ${{ vars.PUBLIC_SITE_IN_PROGRESS || 'true' }}
           SMTP_HOST: ${{ vars.SMTP_HOST || 'w021d308.kasserver.com' }}
-          SMTP_FORM_USERNAME: ${{ secrets.SMTP_FORM_USERNAME }}
           SMTP_FORM_PASSWORD: ${{ secrets.SMTP_FORM_PASSWORD }}
-          SMTP_INFO_USERNAME: ${{ secrets.SMTP_INFO_USERNAME }}
           SMTP_INFO_PASSWORD: ${{ secrets.SMTP_INFO_PASSWORD }}
 
       - name: Deploy website and private contact backend via FTPS
