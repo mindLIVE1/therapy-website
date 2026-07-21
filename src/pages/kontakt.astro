@@ -21,7 +21,7 @@ const reassurances = [
   title="Kontakt & Terminanfrage"
   description={`Nehmen Sie vertraulich Kontakt zu ${site.name} auf. Stellen Sie unkompliziert und unverbindlich eine Terminanfrage – per Formular oder E-Mail.`}
 >
-  <section class="relative overflow-hidden">
+  <section class="relative isolate overflow-x-clip">
     <Blob color="sage" class="right-[-7rem] top-[-6rem] h-96 w-96" />
     <Blob color="clay" class="left-[-9rem] top-[10rem] h-72 w-72" />
     <div class="container-page py-14 text-center lg:py-20">
@@ -37,7 +37,7 @@ const reassurances = [
     </div>
   </section>
 
-  <section id="termin" class="container-page scroll-mt-28 pb-10">
+  <section id="termin" class="container-page scroll-mt-28 pb-10 pt-6 sm:pt-10">
     <div class="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
       <div
         id="form-panel"

@@ -29,7 +29,7 @@ const benefits = [
   description={`Die Online-Therapieangebote von ${site.name} im Überblick: Einzeltherapie, Paartherapie und Sexualtherapie – vertraulich, einfühlsam und per Video.`}
 >
   <!-- Hero -->
-  <section class="relative overflow-hidden">
+  <section class="relative isolate overflow-x-clip">
     <Blob color="sage" class="right-[-6rem] top-[-7rem] h-96 w-96" />
     <Blob color="clay" class="left-[-9rem] top-[12rem] h-72 w-72" />
     <div class="container-page py-16 text-center lg:py-24">
@@ -48,7 +48,7 @@ const benefits = [
   </section>
 
   <!-- Service cards -->
-  <section class="container-page pb-4">
+  <section class="container-page pb-4 pt-6 sm:pt-10">
     <div class="grid gap-6 md:grid-cols-3">
       {services.map((service, i) => (
         <div class="reveal" style={`--reveal-delay:${i * 90}ms`}>
