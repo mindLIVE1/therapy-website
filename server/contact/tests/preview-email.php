@@ -18,6 +18,7 @@ $submission = ContactSubmission::fromPayload([
 
 $settings = [
     'senderName' => 'Elena Roehrborn Onlinetherapie',
+    'recipientName' => 'Elena Roehrborn',
     'infoEmail' => 'info@elena-roehrborn.de',
     'replyWithin' => 'innerhalb von zwei Werktagen',
     'siteUrl' => 'https://elena-roehrborn.de',

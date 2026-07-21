@@ -70,6 +70,7 @@ $tests['email templates escape content and keep confirmation neutral'] = static 
 
     $settings = [
         'senderName' => 'Testpraxis',
+        'recipientName' => 'Elena Roehrborn',
         'infoEmail' => 'praxis@example.test',
         'replyWithin' => 'innerhalb von zwei Werktagen',
         'siteUrl' => 'https://example.test',
@@ -84,6 +85,10 @@ $tests['email templates escape content and keep confirmation neutral'] = static 
     assertTrue(!str_contains($confirmation['html'], 'Sexualtherapie'));
     assertTrue(!str_contains($confirmation['html'], 'alert(1)'));
     assertTrue(str_contains($confirmation['text'], 'innerhalb von zwei Werktagen'));
+    assertSame('Vielen Dank für Ihre Nachricht', $confirmation['subject']);
+    assertTrue(str_contains($confirmation['html'], 'Vielen Dank für Ihr Vertrauen'));
+    assertTrue(str_contains($confirmation['html'], 'Liebe Grüße,<br>Elena Roehrborn'));
+    assertTrue(str_contains($confirmation['text'], "Liebe Grüße,\nElena Roehrborn"));
     assertTrue(str_contains($confirmation['html'], 'praxis@example.test'));
     assertTrue(str_contains($confirmation['text'], 'Testpraxis'));
     assertTrue(str_contains($internal['subject'], 'example.test'));

@@ -75,6 +75,7 @@ final class ContactMailer
     /**
      * @return array{
      *   senderName: string,
+     *   recipientName: string,
      *   infoEmail: string,
      *   replyWithin: string,
      *   siteUrl: string,
@@ -86,6 +87,7 @@ final class ContactMailer
     {
         return [
             'senderName' => $this->senderName(),
+            'recipientName' => (string) $this->config['recipientName'],
             'infoEmail' => $this->username('info'),
             'replyWithin' => (string) $this->config['replyWithin'],
             'siteUrl' => (string) $this->config['siteUrl'],

@@ -44,7 +44,7 @@ final class EmailTemplates
     }
 
     /**
-     * @param array{senderName: string, infoEmail: string, replyWithin: string, siteUrl: string, siteLabel: string, practiceAddress: string} $settings
+     * @param array{senderName: string, recipientName: string, infoEmail: string, replyWithin: string, siteUrl: string, siteLabel: string, practiceAddress: string} $settings
      * @return array{subject: string, html: string, text: string}
      */
     public static function confirmation(ContactSubmission $submission, array $settings): array
@@ -52,21 +52,25 @@ final class EmailTemplates
         $name = self::escape($submission->name);
         $replyWithin = $settings['replyWithin'];
         $time = self::escape($replyWithin);
+        $recipientName = self::escape($settings['recipientName']);
         $content = '
           <p class="email-copy" style="margin:0 0 18px;color:#463b32;font-size:16px;line-height:1.7">Guten Tag ' . $name . ',</p>
-          <p class="email-copy" style="margin:0 0 18px;color:#463b32;font-size:16px;line-height:1.7">vielen Dank für Ihre Nachricht. Ihre Anfrage ist bei mir eingegangen.</p>
-          <p class="email-copy" style="margin:0;color:#463b32;font-size:16px;line-height:1.7">Ich melde mich in der Regel ' . $time . ' persönlich bei Ihnen.</p>
+          <p class="email-copy" style="margin:0 0 18px;color:#463b32;font-size:16px;line-height:1.7">vielen Dank, dass Sie sich mit Ihrem Anliegen an mich gewandt haben. Ihre Nachricht ist bei mir angekommen.</p>
+          <p class="email-copy" style="margin:0;color:#463b32;font-size:16px;line-height:1.7">Ich weiß, dass es manchmal Überwindung kosten kann, den ersten Schritt zu gehen und Unterstützung zu suchen. Umso wichtiger ist es mir, Ihre Anfrage aufmerksam und persönlich zu beantworten. In der Regel melde ich mich ' . $time . ' bei Ihnen zurück.</p>
           <div class="email-note" style="margin-top:28px;padding:18px 20px;background-color:#eef1e8;border:1px solid #dfe4d7;border-radius:8px;color:#3f5141;font-size:14px;line-height:1.6">
-            Diese Eingangsbestätigung wurde automatisch versendet. Bei Rückfragen können Sie direkt auf diese E-Mail antworten.
-          </div>';
+            Diese Eingangsbestätigung wurde automatisch versendet. Sollten Sie Ihrer Nachricht noch etwas hinzufügen wollen, können Sie gerne direkt auf diese E-Mail antworten.
+          </div>
+          <p class="email-copy" style="margin:24px 0 0;color:#463b32;font-size:16px;line-height:1.7">Liebe Grüße,<br>' . $recipientName . '</p>';
 
         return [
-            'subject' => 'Ihre Anfrage ist bei mir eingegangen',
-            'html' => self::layout($settings['senderName'], 'Vielen Dank für Ihre Nachricht', $content, $settings),
+            'subject' => 'Vielen Dank für Ihre Nachricht',
+            'html' => self::layout($settings['senderName'], 'Vielen Dank für Ihr Vertrauen', $content, $settings),
             'text' => "Guten Tag {$submission->name},\n\n"
-                . "vielen Dank für Ihre Nachricht. Ihre Anfrage ist bei mir eingegangen.\n\n"
-                . "Ich melde mich in der Regel {$replyWithin} persönlich bei Ihnen.\n\n"
-                . "Diese Eingangsbestätigung wurde automatisch versendet. Bei Rückfragen können Sie direkt auf diese E-Mail antworten.\n\n"
+                . "vielen Dank, dass Sie sich mit Ihrem Anliegen an mich gewandt haben. Ihre Nachricht ist bei mir angekommen.\n\n"
+                . "Ich weiß, dass es manchmal Überwindung kosten kann, den ersten Schritt zu gehen und Unterstützung zu suchen. Umso wichtiger ist es mir, Ihre Anfrage aufmerksam und persönlich zu beantworten. In der Regel melde ich mich {$replyWithin} bei Ihnen zurück.\n\n"
+                . "Diese Eingangsbestätigung wurde automatisch versendet. Sollten Sie Ihrer Nachricht noch etwas hinzufügen wollen, können Sie gerne direkt auf diese E-Mail antworten.\n\n"
+                . "Liebe Grüße,\n"
+                . "{$settings['recipientName']}\n\n"
                 . "{$settings['senderName']}\n"
                 . "{$settings['practiceAddress']}\n"
                 . "{$settings['infoEmail']} · {$settings['siteUrl']}\n",
